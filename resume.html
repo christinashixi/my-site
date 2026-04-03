@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人简历</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f5f0;
+            padding: 20px;
+        }
+        
+        /* 容器 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #d1c4b0;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 复古装饰 */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, #8b4513, #d2b48c, #8b4513);
+        }
+        
+        .container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, #8b4513, #d2b48c, #8b4513);
+        }
+        
+        /* 头部 */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #f5f0e6;
+            border-bottom: 2px solid #d1c4b0;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            color: #5d4037;
+            margin-bottom: 10px;
+            font-weight: normal;
+            letter-spacing: 2px;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            color: #8d6e63;
+            font-style: italic;
+        }
+        
+        /* 个人信息 */
+        .personal-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+            background-color: #faf7f2;
+            border-bottom: 1px solid #d1c4b0;
+        }
+        
+        .info-item {
+            text-align: center;
+        }
+        
+        .info-item .label {
+            font-size: 0.9em;
+            color: #8d6e63;
+            margin-bottom: 5px;
+        }
+        
+        .info-item .value {
+            font-size: 1em;
+            color: #5d4037;
+        }
+        
+        /* 主要内容 */
+        .content {
+            padding: 30px;
+        }
+        
+        /* 章节 */
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            color: #5d4037;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #d1c4b0;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: #8b4513;
+        }
+        
+        /* 教育背景 */
+        .education {
+            margin-bottom: 20px;
+        }
+        
+        .education-item {
+            margin-bottom: 15px;
+        }
+        
+        .education-item .school {
+            font-weight: bold;
+            color: #5d4037;
+        }
+        
+        .education-item .period {
+            font-size: 0.9em;
+            color: #8d6e63;
+            margin-left: 10px;
+        }
+        
+        .education-item .details {
+            margin-top: 5px;
+            margin-left: 20px;
+            color: #666;
+        }
+        
+        /* 技能 */
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .skill-category {
+            margin-bottom: 15px;
+        }
+        
+        .skill-category .category-title {
+            font-weight: bold;
+            color: #5d4037;
+            margin-bottom: 10px;
+        }
+        
+        .skill-category .skill-list {
+            list-style-type: none;
+        }
+        
+        .skill-category .skill-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        
+        .skill-category .skill-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #8b4513;
+            font-size: 1.2em;
+        }
+        
+        /* 文学素养 */
+        .literature {
+            background-color: #f5f0e6;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .literature p {
+            margin-bottom: 10px;
+            color: #5d4037;
+        }
+        
+        /* 实践经历 */
+        .experience-item {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #8b4513;
+        }
+        
+        .experience-item .title {
+            font-weight: bold;
+            color: #5d4037;
+        }
+        
+        .experience-item .period {
+            font-size: 0.9em;
+            color: #8d6e63;
+            margin-left: 10px;
+        }
+        
+        .experience-item .description {
+            margin-top: 5px;
+            color: #666;
+        }
+        
+        /* 个人特质 */
+        .traits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .trait-item {
+            background-color: #f5f0e6;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #5d4037;
+            border: 1px solid #d1c4b0;
+        }
+        
+        /* 兴趣爱好 */
+        .hobbies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .hobby-item {
+            padding: 8px 12px;
+            background-color: #faf7f2;
+            border: 1px solid #d1c4b0;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        /* 自我评价 */
+        .self-evaluation {
+            background-color: #faf7f2;
+            padding: 20px;
+            border-radius: 5px;
+            border-left: 4px solid #8b4513;
+        }
+        
+        .self-evaluation p {
+            color: #5d4037;
+            line-height: 1.8;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f5f0e6;
+            border-top: 1px solid #d1c4b0;
+            font-size: 0.9em;
+            color: #8d6e63;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .personal-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .skills {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>[您的姓名]</h1>
+            <div class="subtitle">数据分析爱好者 | 诺贝尔文学奖阅读者</div>
+        </div>
+        
+        <!-- 个人信息 -->
+        <div class="personal-info">
+            <div class="info-item">
+                <div class="label">联系电话</div>
+                <div class="value">[电话号码]</div>
+            </div>
+            <div class="info-item">
+                <div class="label">电子邮箱</div>
+                <div class="value">[邮箱地址]</div>
+            </div>
+            <div class="info-item">
+                <div class="label">所在院校</div>
+                <div class="value">广东科学技术职业学院</div>
+            </div>
+        </div>
+        
+        <!-- 主要内容 -->
+        <div class="content">
+            <!-- 教育背景 -->
+            <div class="section">
+                <h2 class="section-title">教育背景</h2>
+                <div class="education">
+                    <div class="education-item">
+                        <div class="school">广东科学技术职业学院 <span class="period">202X年 - 至今</span></div>
+                        <div class="details">
+                            <p>专业：[具体专业]</p>
+                            <p>主修课程：数据分析、统计学、计算机基础等</p>
+                            <p>成绩：[GPA或专业排名，如有]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 专业技能 -->
+            <div class="section">
+                <h2 class="section-title">专业技能</h2>
+                <div class="skills">
+                    <div class="skill-category">
+                        <div class="category-title">数据分析</div>
+                        <ul class="skill-list">
+                            <li>Excel高级函数</li>
+                            <li>SQL数据库查询</li>
+                            <li>Python数据分析库（Pandas、NumPy）</li>
+                            <li>数据可视化（Tableau、Power BI）</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">其他技能</div>
+                        <ul class="skill-list">
+                            <li>办公软件（Word、PowerPoint）</li>
+                            <li>基础编程能力</li>
+                            <li>数据清洗与预处理</li>
+                            <li>报告撰写</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 文学素养 -->
+            <div class="section">
+                <h2 class="section-title">文学素养</h2>
+                <div class="literature">
+                    <p>深度阅读诺贝尔文学奖获奖作品，包括但不限于：</p>
+                    <p>• 加西亚·马尔克斯《百年孤独》</p>
+                    <p>• 川端康成《雪国》</p>
+                    <p>• 海明威《老人与海》</p>
+                    <p>• 托尔斯泰《安娜·卡列尼娜》</p>
+                    <p>通过阅读这些经典作品，培养了深刻的思考能力和人文素养，能够从文学中汲取灵感，为数据分析工作增添创意视角。</p>
+                </div>
+            </div>
+            
+            <!-- 实践经历 -->
+            <div class="section">
+                <h2 class="section-title">实践经历</h2>
+                <div class="experience-item">
+                    <div class="title">[实习/项目名称] <span class="period">[时间]</span></div>
+                    <div class="description">
+                        <p>负责[具体工作内容，如数据收集、分析、可视化等]</p>
+                        <p>成果：[具体成果，如优化流程、提高效率等]</p>
+                    </div>
+                </div>
+                <div class="experience-item">
+                    <div class="title">[校园活动/项目] <span class="period">[时间]</span></div>
+                    <div class="description">
+                        <p>参与[活动内容]</p>
+                        <p>收获：[技能提升、团队合作经验等]</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 个人特质 -->
+            <div class="section">
+                <h2 class="section-title">个人特质</h2>
+                <div class="traits">
+                    <div class="trait-item">严谨细致</div>
+                    <div class="trait-item">文学底蕴</div>
+                    <div class="trait-item">创新思维</div>
+                    <div class="trait-item">团队协作</div>
+                    <div class="trait-item">逻辑分析</div>
+                    <div class="trait-item">持续学习</div>
+                </div>
+            </div>
+            
+            <!-- 兴趣爱好 -->
+            <div class="section">
+                <h2 class="section-title">兴趣爱好</h2>
+                <div class="hobbies">
+                    <div class="hobby-item">阅读诺贝尔文学奖作品</div>
+                    <div class="hobby-item">数据分析与可视化</div>
+                    <div class="hobby-item">古典音乐</div>
+                    <div class="hobby-item">徒步旅行</div>
+                    <div class="hobby-item">摄影</div>
+                </div>
+            </div>
+            
+            <!-- 自我评价 -->
+            <div class="section">
+                <h2 class="section-title">自我评价</h2>
+                <div class="self-evaluation">
+                    <p>作为一名广东科学技术职业学院的学生，我将数据分析的理性思维与文学阅读的感性认知相结合，形成了独特的思维方式。我期待能够在数据分析领域发挥自己的专业技能，同时运用文学素养为工作增添创意视角。</p>
+                    <p>我具备严谨的数据分析能力，能够从复杂的数据中提取有价值的信息；同时，通过阅读诺贝尔文学奖作品，我培养了深刻的人文素养和批判性思维能力，这使我在解决问题时能够从多个角度思考，寻找创新的解决方案。</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 页脚 -->
+        <div class="footer">
+            <p>© 2026 [您的姓名] | 现代复古风格简历</p>
+        </div>
+    </div>
+</body>
+</html>
