@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python 基础课程</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f8f5f0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #d1c4b0;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, #8b4513, #d2b48c, #8b4513);
+        }
+        
+        .container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, #8b4513, #d2b48c, #8b4513);
+        }
+        
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #f5f0e6;
+            border-bottom: 2px solid #d1c4b0;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            color: #5d4037;
+            margin-bottom: 10px;
+            font-weight: normal;
+            letter-spacing: 2px;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            color: #8d6e63;
+            font-style: italic;
+        }
+        
+        .nav-back {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #f5f0e6;
+            border: 1px solid #d1c4b0;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #5d4037;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-back:hover {
+            background-color: #e8e0d5;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .intro {
+            background-color: #faf7f2;
+            padding: 30px;
+            border-radius: 5px;
+            border-left: 4px solid #8b4513;
+            margin-bottom: 40px;
+        }
+        
+        .intro h2 {
+            color: #5d4037;
+            margin-bottom: 15px;
+        }
+        
+        .intro p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .chapter {
+            margin-bottom: 40px;
+        }
+        
+        .chapter-title {
+            font-size: 1.8em;
+            color: #5d4037;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #d1c4b0;
+            position: relative;
+        }
+        
+        .chapter-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: #8b4513;
+        }
+        
+        .lesson {
+            background-color: #faf7f2;
+            padding: 25px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #e8e0d5;
+        }
+        
+        .lesson-title {
+            font-size: 1.4em;
+            color: #5d4037;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .lesson-icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .lesson-content {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .lesson-content p {
+            margin-bottom: 10px;
+        }
+        
+        .lesson-content ul {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+        
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-comment {
+            color: #75715e;
+        }
+        
+        .code-keyword {
+            color: #66d9ef;
+        }
+        
+        .code-string {
+            color: #e6db74;
+        }
+        
+        .code-number {
+            color: #ae81ff;
+        }
+        
+        .code-function {
+            color: #a6e22e;
+        }
+        
+        .exercise {
+            background-color: #f5f0e6;
+            padding: 25px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border: 1px dashed #d1c4b0;
+        }
+        
+        .exercise-title {
+            color: #5d4037;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .progress-section {
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #faf7f2;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .progress-title {
+            color: #5d4037;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e8e0d5;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            width: 10%;
+            height: 100%;
+            background: linear-gradient(90deg, #8b4513, #d2b48c);
+            transition: width 0.3s ease;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #f5f0e6;
+            border-top: 1px solid #d1c4b0;
+            font-size: 0.9em;
+            color: #8d6e63;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="nav-back">← 返回首页</a>
+            <h1>Python 基础课程</h1>
+            <div class="subtitle">从零开始学习 Python 编程</div>
+        </div>
+        
+        <div class="content">
+            <div class="intro">
+                <h2>📚 课程简介</h2>
+                <p>欢迎来到 Python 基础课程！本课程将带领你从零基础开始学习 Python 编程，掌握编程的核心概念，为数据分析、Web 开发、自动化等领域打下坚实的基础。</p>
+                <p style="margin-top: 15px;"><strong>学习目标：</strong></p>
+                <ul style="margin-left: 30px; margin-top: 10px;">
+                    <li>理解编程的基本概念</li>
+                    <li>掌握 Python 的核心语法</li>
+                    <li>学会使用常用数据结构</li>
+                    <li>编写简单的 Python 程序</li>
+                    <li>培养编程思维和问题解决能力</li>
+                </ul>
+            </div>
+            
+            <div class="chapter">
+                <h2 class="chapter-title">第一章：Python 入门</h2>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">1.1</span> Python 简介与安装</h3>
+                    <div class="lesson-content">
+                        <p><strong>什么是 Python？</strong></p>
+                        <p>Python 是一种简单易学、功能强大的编程语言。它具有高效的高级数据结构和简单有效的面向对象编程方法。</p>
+                        <p><strong>Python 的特点：</strong></p>
+                        <ul>
+                            <li>语法简洁清晰</li>
+                            <li>跨平台兼容性</li>
+                            <li>丰富的标准库和第三方库</li>
+                            <li>广泛的应用领域</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">1.2</span> 第一个 Python 程序</h3>
+                    <div class="lesson-content">
+                        <p>让我们从经典的 "Hello, World!" 程序开始：</p>
+                        <div class="code-block">
+<span class="code-comment"># 这是一个注释</span>
+<span class="code-function">print</span>(<span class="code-string">"Hello, World!"</span>)
+                        </div>
+                        <div class="exercise">
+                            <div class="exercise-title">✏️ 练习</div>
+                            <p>尝试修改上面的代码，打印出你自己的名字！</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chapter">
+                <h2 class="chapter-title">第二章：变量与数据类型</h2>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">2.1</span> 变量</h3>
+                    <div class="lesson-content">
+                        <p>变量是存储数据的容器。在 Python 中，你可以这样定义变量：</p>
+                        <div class="code-block">
+<span class="code-comment"># 定义变量</span>
+name = <span class="code-string">"张三"</span>
+age = <span class="code-number">25</span>
+height = <span class="code-number">1.75</span>
+is_student = <span class="code-keyword">True</span>
+
+<span class="code-comment"># 打印变量</span>
+<span class="code-function">print</span>(name)
+<span class="code-function">print</span>(age)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">2.2</span> 基本数据类型</h3>
+                    <div class="lesson-content">
+                        <p><strong>Python 中的基本数据类型：</strong></p>
+                        <ul>
+                            <li><strong>整数 (int)</strong>：例如 1, 100, -5</li>
+                            <li><strong>浮点数 (float)</strong>：例如 3.14, 2.0, -0.5</li>
+                            <li><strong>字符串 (str)</strong>：例如 "Hello", 'Python'</li>
+                            <li><strong>布尔值 (bool)</strong>：True 或 False</li>
+                        </ul>
+                        <div class="code-block">
+<span class="code-comment"># 类型转换</span>
+num_str = <span class="code-string">"100"</span>
+num = <span class="code-function">int</span>(num_str)
+<span class="code-function">print</span>(num)  <span class="code-comment"># 输出: 100</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chapter">
+                <h2 class="chapter-title">第三章：运算符</h2>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">3.1</span> 算术运算符</h3>
+                    <div class="lesson-content">
+                        <div class="code-block">
+a = <span class="code-number">10</span>
+b = <span class="code-number">3</span>
+
+<span class="code-function">print</span>(a + b)  <span class="code-comment"># 加法: 13</span>
+<span class="code-function">print</span>(a - b)  <span class="code-comment"># 减法: 7</span>
+<span class="code-function">print</span>(a * b)  <span class="code-comment"># 乘法: 30</span>
+<span class="code-function">print</span>(a / b)  <span class="code-comment"># 除法: 3.333...</span>
+<span class="code-function">print</span>(a // b) <span class="code-comment"># 整除: 3</span>
+<span class="code-function">print</span>(a % b)  <span class="code-comment"># 取余: 1</span>
+<span class="code-function">print</span>(a ** b) <span class="code-comment"># 幂运算: 1000</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">3.2</span> 比较运算符</h3>
+                    <div class="lesson-content">
+                        <div class="code-block">
+x = <span class="code-number">5</span>
+y = <span class="code-number">10</span>
+
+<span class="code-function">print</span>(x == y)  <span class="code-comment"># 等于: False</span>
+<span class="code-function">print</span>(x != y)  <span class="code-comment"># 不等于: True</span>
+<span class="code-function">print</span>(x &lt; y)   <span class="code-comment"># 小于: True</span>
+<span class="code-function">print</span>(x &gt; y)   <span class="code-comment"># 大于: False</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chapter">
+                <h2 class="chapter-title">第四章：控制流程</h2>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">4.1</span> 条件语句</h3>
+                    <div class="lesson-content">
+                        <div class="code-block">
+age = <span class="code-number">18</span>
+
+<span class="code-keyword">if</span> age &gt;= <span class="code-number">18</span>:
+    <span class="code-function">print</span>(<span class="code-string">"成年人"</span>)
+<span class="code-keyword">elif</span> age == <span class="code-number">18</span>:
+    <span class="code-function">print</span>(<span class="code-string">"刚成年"</span>)
+<span class="code-keyword">else</span>:
+    <span class="code-function">print</span>(<span class="code-string">"未成年人"</span>)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">4.2</span> 循环</h3>
+                    <div class="lesson-content">
+                        <p><strong>for 循环：</strong></p>
+                        <div class="code-block">
+<span class="code-comment"># 遍历列表</span>
+fruits = [<span class="code-string">"苹果"</span>, <span class="code-string">"香蕉"</span>, <span class="code-string">"橙子"</span>]
+<span class="code-keyword">for</span> fruit <span class="code-keyword">in</span> fruits:
+    <span class="code-function">print</span>(fruit)
+
+<span class="code-comment"># 使用 range</span>
+<span class="code-keyword">for</span> i <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">1</span>, <span class="code-number">6</span>):
+    <span class="code-function">print</span>(i)
+                        </div>
+                        <p><strong>while 循环：</strong></p>
+                        <div class="code-block">
+count = <span class="code-number">1</span>
+<span class="code-keyword">while</span> count &lt;= <span class="code-number">5</span>:
+    <span class="code-function">print</span>(count)
+    count += <span class="code-number">1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chapter">
+                <h2 class="chapter-title">第五章：函数</h2>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">5.1</span> 定义函数</h3>
+                    <div class="lesson-content">
+                        <div class="code-block">
+<span class="code-keyword">def</span> <span class="code-function">greet</span>(name):
+    <span class="code-string">"""问候函数"""</span>
+    <span class="code-keyword">return</span> <span class="code-string">f"你好，{name}！"</span>
+
+<span class="code-function">print</span>(<span class="code-function">greet</span>(<span class="code-string">"小明"</span>))
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">5.2</span> 函数参数</h3>
+                    <div class="lesson-content">
+                        <div class="code-block">
+<span class="code-keyword">def</span> <span class="code-function">add</span>(a, b=<span class="code-number">0</span>):
+    <span class="code-keyword">return</span> a + b
+
+<span class="code-function">print</span>(<span class="code-function">add</span>(<span class="code-number">5</span>, <span class="code-number">3</span>))  <span class="code-comment"># 8</span>
+<span class="code-function">print</span>(<span class="code-function">add</span>(<span class="code-number">10</span>))   <span class="code-comment"># 10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chapter">
+                <h2 class="chapter-title">第六章：数据结构</h2>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">6.1</span> 列表</h3>
+                    <div class="lesson-content">
+                        <div class="code-block">
+<span class="code-comment"># 创建列表</span>
+numbers = [<span class="code-number">1</span>, <span class="code-number">2</span>, <span class="code-number">3</span>, <span class="code-number">4</span>, <span class="code-number">5</span>]
+
+<span class="code-comment"># 访问元素</span>
+<span class="code-function">print</span>(numbers[<span class="code-number">0</span>])  <span class="code-comment"># 1</span>
+
+<span class="code-comment"># 添加元素</span>
+numbers.append(<span class="code-number">6</span>)
+
+<span class="code-comment"># 切片</span>
+<span class="code-function">print</span>(numbers[<span class="code-number">1</span>:<span class="code-number">4</span>])  <span class="code-comment"># [2, 3, 4]</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">6.2</span> 字典</h3>
+                    <div class="lesson-content">
+                        <div class="code-block">
+<span class="code-comment"># 创建字典</span>
+student = {
+    <span class="code-string">"name"</span>: <span class="code-string">"小红"</span>,
+    <span class="code-string">"age"</span>: <span class="code-number">20</span>,
+    <span class="code-string">"major"</span>: <span class="code-string">"计算机"</span>
+}
+
+<span class="code-comment"># 访问值</span>
+<span class="code-function">print</span>(student[<span class="code-string">"name"</span>])
+
+<span class="code-comment"># 添加键值对</span>
+student[<span class="code-string">"grade"</span>] = <span class="code-string">"A"</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="progress-section">
+                <h3 class="progress-title">📊 学习进度</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <p>课程已完成 10% - 继续加油！</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2026 Python 基础课程 | 现代复古风格</p>
+        </div>
+    </div>
+</body>
+</html>
