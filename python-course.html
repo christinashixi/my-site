@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python 基础课程</title>
+    <title>Python 基础课程 - AI时代版</title>
     <style>
         * {
             margin: 0;
@@ -233,7 +233,7 @@
         }
         
         .progress-fill {
-            width: 10%;
+            width: 100%;
             height: 100%;
             background: linear-gradient(90deg, #8b4513, #d2b48c);
             transition: width 0.3s ease;
@@ -264,248 +264,319 @@
         <div class="header">
             <a href="index.html" class="nav-back">← 返回首页</a>
             <h1>Python 基础课程</h1>
-            <div class="subtitle">从零开始学习 Python 编程</div>
+            <div class="subtitle">AI时代的高效学习路径</div>
         </div>
         
         <div class="content">
             <div class="intro">
                 <h2>📚 课程简介</h2>
-                <p>欢迎来到 Python 基础课程！本课程将带领你从零基础开始学习 Python 编程，掌握编程的核心概念，为数据分析、Web 开发、自动化等领域打下坚实的基础。</p>
+                <p>在AI技术日益成熟的2026年，学习Python基础课程的目标已不再是单纯掌握一门编程语言，而是为了快速获得解决实际问题的能力，特别是与数据分析、AI应用开发等热门领域相结合。</p>
+                <p style="margin-top: 15px;"><strong>课程核心理念：</strong>效率优先，实践驱动</p>
+                <p style="margin-top: 10px;">在AI时代，学习编程的重心已从"背诵语法"转向"逻辑设计"和"解决问题"。因此，课程遵循 "案例优先，实践为王" 的理念，通过解决电商销售分析、客户行为分析等具体的商务场景问题来驱动学习。</p>
                 <p style="margin-top: 15px;"><strong>学习目标：</strong></p>
                 <ul style="margin-left: 30px; margin-top: 10px;">
-                    <li>理解编程的基本概念</li>
-                    <li>掌握 Python 的核心语法</li>
-                    <li>学会使用常用数据结构</li>
-                    <li>编写简单的 Python 程序</li>
-                    <li>培养编程思维和问题解决能力</li>
+                    <li>快速获得解决实际问题的能力</li>
+                    <li>掌握与数据分析、AI应用开发相关的核心技能</li>
+                    <li>具备使用Python处理数据和调用AI工具的基本能力</li>
+                    <li>通过项目驱动学习，直接对接前沿应用场景</li>
                 </ul>
             </div>
             
             <div class="chapter">
-                <h2 class="chapter-title">第一章：Python 入门</h2>
+                <h2 class="chapter-title">第一阶段：Python核心语法（1-2周）</h2>
+                <p style="color: #666; margin-bottom: 20px;"><strong>目标：</strong>建立与机器对话的能力，能阅读和编写基础代码，理解程序运行逻辑。</p>
                 
                 <div class="lesson">
-                    <h3 class="lesson-title"><span class="lesson-icon">1.1</span> Python 简介与安装</h3>
+                    <h3 class="lesson-title"><span class="lesson-icon">1.1</span> 环境搭建与第一行代码</h3>
                     <div class="lesson-content">
-                        <p><strong>什么是 Python？</strong></p>
-                        <p>Python 是一种简单易学、功能强大的编程语言。它具有高效的高级数据结构和简单有效的面向对象编程方法。</p>
-                        <p><strong>Python 的特点：</strong></p>
-                        <ul>
-                            <li>语法简洁清晰</li>
-                            <li>跨平台兼容性</li>
-                            <li>丰富的标准库和第三方库</li>
-                            <li>广泛的应用领域</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="lesson">
-                    <h3 class="lesson-title"><span class="lesson-icon">1.2</span> 第一个 Python 程序</h3>
-                    <div class="lesson-content">
-                        <p>让我们从经典的 "Hello, World!" 程序开始：</p>
+                        <p>学习安装Python 3.11+版本及VS Code或PyCharm等集成开发环境，并运行第一个Python程序，建立初步信心。</p>
                         <div class="code-block">
-<span class="code-comment"># 这是一个注释</span>
+<span class="code-comment"># 第一个Python程序</span>
 <span class="code-function">print</span>(<span class="code-string">"Hello, World!"</span>)
                         </div>
                         <div class="exercise">
-                            <div class="exercise-title">✏️ 练习</div>
-                            <p>尝试修改上面的代码，打印出你自己的名字！</p>
+                            <div class="exercise-title">✏️ 实践任务</div>
+                            <p>安装Python 3.11+和VS Code，运行第一个程序，并尝试打印出你自己的名字。</p>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="chapter">
-                <h2 class="chapter-title">第二章：变量与数据类型</h2>
                 
                 <div class="lesson">
-                    <h3 class="lesson-title"><span class="lesson-icon">2.1</span> 变量</h3>
+                    <h3 class="lesson-title"><span class="lesson-icon">1.2</span> 基础数据类型与变量</h3>
                     <div class="lesson-content">
-                        <p>变量是存储数据的容器。在 Python 中，你可以这样定义变量：</p>
+                        <p>掌握整数(int)、浮点数(float)、字符串(str)、布尔值(bool)这四种基本类型，理解变量作为"带标签的收纳盒"的概念。</p>
                         <div class="code-block">
 <span class="code-comment"># 定义变量</span>
-name = <span class="code-string">"张三"</span>
-age = <span class="code-number">25</span>
-height = <span class="code-number">1.75</span>
-is_student = <span class="code-keyword">True</span>
+product_id = <span class="code-number">1001</span>
+price = <span class="code-number">99.99</span>
+product_name = <span class="code-string">"智能手环"</span>
+is_in_stock = <span class="code-keyword">True</span>
 
 <span class="code-comment"># 打印变量</span>
-<span class="code-function">print</span>(name)
-<span class="code-function">print</span>(age)
+<span class="code-function">print</span>(product_name, <span class="code-string">"价格："</span>, price)
                         </div>
                     </div>
                 </div>
                 
                 <div class="lesson">
-                    <h3 class="lesson-title"><span class="lesson-icon">2.2</span> 基本数据类型</h3>
+                    <h3 class="lesson-title"><span class="lesson-icon">1.3</span> 核心数据结构</h3>
                     <div class="lesson-content">
-                        <p><strong>Python 中的基本数据类型：</strong></p>
-                        <ul>
-                            <li><strong>整数 (int)</strong>：例如 1, 100, -5</li>
-                            <li><strong>浮点数 (float)</strong>：例如 3.14, 2.0, -0.5</li>
-                            <li><strong>字符串 (str)</strong>：例如 "Hello", 'Python'</li>
-                            <li><strong>布尔值 (bool)</strong>：True 或 False</li>
-                        </ul>
+                        <p>重点掌握列表(List)和字典(Dict)。列表用于存储有序数据集合（如一组商品ID），字典用于通过键值对快速查找信息（如用户ID对应其购买记录）。</p>
                         <div class="code-block">
-<span class="code-comment"># 类型转换</span>
-num_str = <span class="code-string">"100"</span>
-num = <span class="code-function">int</span>(num_str)
-<span class="code-function">print</span>(num)  <span class="code-comment"># 输出: 100</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chapter">
-                <h2 class="chapter-title">第三章：运算符</h2>
-                
-                <div class="lesson">
-                    <h3 class="lesson-title"><span class="lesson-icon">3.1</span> 算术运算符</h3>
-                    <div class="lesson-content">
-                        <div class="code-block">
-a = <span class="code-number">10</span>
-b = <span class="code-number">3</span>
+<span class="code-comment"># 列表 - 存储商品ID</span>
+product_ids = [<span class="code-number">1001</span>, <span class="code-number">1002</span>, <span class="code-number">1003</span>, <span class="code-number">1004</span>]
 
-<span class="code-function">print</span>(a + b)  <span class="code-comment"># 加法: 13</span>
-<span class="code-function">print</span>(a - b)  <span class="code-comment"># 减法: 7</span>
-<span class="code-function">print</span>(a * b)  <span class="code-comment"># 乘法: 30</span>
-<span class="code-function">print</span>(a / b)  <span class="code-comment"># 除法: 3.333...</span>
-<span class="code-function">print</span>(a // b) <span class="code-comment"># 整除: 3</span>
-<span class="code-function">print</span>(a % b)  <span class="code-comment"># 取余: 1</span>
-<span class="code-function">print</span>(a ** b) <span class="code-comment"># 幂运算: 1000</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="lesson">
-                    <h3 class="lesson-title"><span class="lesson-icon">3.2</span> 比较运算符</h3>
-                    <div class="lesson-content">
-                        <div class="code-block">
-x = <span class="code-number">5</span>
-y = <span class="code-number">10</span>
-
-<span class="code-function">print</span>(x == y)  <span class="code-comment"># 等于: False</span>
-<span class="code-function">print</span>(x != y)  <span class="code-comment"># 不等于: True</span>
-<span class="code-function">print</span>(x &lt; y)   <span class="code-comment"># 小于: True</span>
-<span class="code-function">print</span>(x &gt; y)   <span class="code-comment"># 大于: False</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chapter">
-                <h2 class="chapter-title">第四章：控制流程</h2>
-                
-                <div class="lesson">
-                    <h3 class="lesson-title"><span class="lesson-icon">4.1</span> 条件语句</h3>
-                    <div class="lesson-content">
-                        <div class="code-block">
-age = <span class="code-number">18</span>
-
-<span class="code-keyword">if</span> age &gt;= <span class="code-number">18</span>:
-    <span class="code-function">print</span>(<span class="code-string">"成年人"</span>)
-<span class="code-keyword">elif</span> age == <span class="code-number">18</span>:
-    <span class="code-function">print</span>(<span class="code-string">"刚成年"</span>)
-<span class="code-keyword">else</span>:
-    <span class="code-function">print</span>(<span class="code-string">"未成年人"</span>)
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="lesson">
-                    <h3 class="lesson-title"><span class="lesson-icon">4.2</span> 循环</h3>
-                    <div class="lesson-content">
-                        <p><strong>for 循环：</strong></p>
-                        <div class="code-block">
-<span class="code-comment"># 遍历列表</span>
-fruits = [<span class="code-string">"苹果"</span>, <span class="code-string">"香蕉"</span>, <span class="code-string">"橙子"</span>]
-<span class="code-keyword">for</span> fruit <span class="code-keyword">in</span> fruits:
-    <span class="code-function">print</span>(fruit)
-
-<span class="code-comment"># 使用 range</span>
-<span class="code-keyword">for</span> i <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">1</span>, <span class="code-number">6</span>):
-    <span class="code-function">print</span>(i)
-                        </div>
-                        <p><strong>while 循环：</strong></p>
-                        <div class="code-block">
-count = <span class="code-number">1</span>
-<span class="code-keyword">while</span> count &lt;= <span class="code-number">5</span>:
-    <span class="code-function">print</span>(count)
-    count += <span class="code-number">1</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chapter">
-                <h2 class="chapter-title">第五章：函数</h2>
-                
-                <div class="lesson">
-                    <h3 class="lesson-title"><span class="lesson-icon">5.1</span> 定义函数</h3>
-                    <div class="lesson-content">
-                        <div class="code-block">
-<span class="code-keyword">def</span> <span class="code-function">greet</span>(name):
-    <span class="code-string">"""问候函数"""</span>
-    <span class="code-keyword">return</span> <span class="code-string">f"你好，{name}！"</span>
-
-<span class="code-function">print</span>(<span class="code-function">greet</span>(<span class="code-string">"小明"</span>))
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="lesson">
-                    <h3 class="lesson-title"><span class="lesson-icon">5.2</span> 函数参数</h3>
-                    <div class="lesson-content">
-                        <div class="code-block">
-<span class="code-keyword">def</span> <span class="code-function">add</span>(a, b=<span class="code-number">0</span>):
-    <span class="code-keyword">return</span> a + b
-
-<span class="code-function">print</span>(<span class="code-function">add</span>(<span class="code-number">5</span>, <span class="code-number">3</span>))  <span class="code-comment"># 8</span>
-<span class="code-function">print</span>(<span class="code-function">add</span>(<span class="code-number">10</span>))   <span class="code-comment"># 10</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chapter">
-                <h2 class="chapter-title">第六章：数据结构</h2>
-                
-                <div class="lesson">
-                    <h3 class="lesson-title"><span class="lesson-icon">6.1</span> 列表</h3>
-                    <div class="lesson-content">
-                        <div class="code-block">
-<span class="code-comment"># 创建列表</span>
-numbers = [<span class="code-number">1</span>, <span class="code-number">2</span>, <span class="code-number">3</span>, <span class="code-number">4</span>, <span class="code-number">5</span>]
-
-<span class="code-comment"># 访问元素</span>
-<span class="code-function">print</span>(numbers[<span class="code-number">0</span>])  <span class="code-comment"># 1</span>
-
-<span class="code-comment"># 添加元素</span>
-numbers.append(<span class="code-number">6</span>)
-
-<span class="code-comment"># 切片</span>
-<span class="code-function">print</span>(numbers[<span class="code-number">1</span>:<span class="code-number">4</span>])  <span class="code-comment"># [2, 3, 4]</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="lesson">
-                    <h3 class="lesson-title"><span class="lesson-icon">6.2</span> 字典</h3>
-                    <div class="lesson-content">
-                        <div class="code-block">
-<span class="code-comment"># 创建字典</span>
-student = {
-    <span class="code-string">"name"</span>: <span class="code-string">"小红"</span>,
-    <span class="code-string">"age"</span>: <span class="code-number">20</span>,
-    <span class="code-string">"major"</span>: <span class="code-string">"计算机"</span>
+<span class="code-comment"># 字典 - 存储用户购买记录</span>
+purchase_records = {
+    <span class="code-string">"user123"</span>: [<span class="code-number">1001</span>, <span class="code-number">1003</span>],
+    <span class="code-string">"user456"</span>: [<span class="code-number">1002</span>, <span class="code-number">1004</span>]
 }
 
-<span class="code-comment"># 访问值</span>
-<span class="code-function">print</span>(student[<span class="code-string">"name"</span>])
-
-<span class="code-comment"># 添加键值对</span>
-student[<span class="code-string">"grade"</span>] = <span class="code-string">"A"</span>
+<span class="code-function">print</span>(purchase_records[<span class="code-string">"user123"</span>])
                         </div>
+                    </div>
+                </div>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">1.4</span> 程序流程控制</h3>
+                    <div class="lesson-content">
+                        <p>掌握if-else条件判断（让程序具备决策能力）和for/while循环（自动化处理重复任务）。例如，用于判断客户消费等级或遍历所有订单数据。</p>
+                        <div class="code-block">
+<span class="code-comment"># 条件判断 - 判断客户消费等级</span>
+total_amount = <span class="code-number">2500</span>
+
+<span class="code-keyword">if</span> total_amount >= <span class="code-number">5000</span>:
+    <span class="code-function">print</span>(<span class="code-string">"VIP客户"</span>)
+<span class="code-keyword">elif</span> total_amount >= <span class="code-number">2000</span>:
+    <span class="code-function">print</span>(<span class="code-string">"高级客户"</span>)
+<span class="code-keyword">else</span>:
+    <span class="code-function">print</span>(<span class="code-string">"普通客户"</span>)
+
+<span class="code-comment"># 循环 - 计算总销售额</span>
+sales = [<span class="code-number">1200</span>, <span class="code-number">800</span>, <span class="code-number">1500</span>, <span class="code-number">2000</span>]
+total_sales = <span class="code-number">0</span>
+
+<span class="code-keyword">for</span> sale <span class="code-keyword">in</span> sales:
+    total_sales += sale
+
+<span class="code-function">print</span>(<span class="code-string">"总销售额："</span>, total_sales)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">1.5</span> 函数与模块化</h3>
+                    <div class="lesson-content">
+                        <p>学习使用def定义函数，将代码封装成可复用的"技能包"。理解模块(import)的概念，知道如何调用他人写好的工具库。</p>
+                        <div class="code-block">
+<span class="code-keyword">def</span> <span class="code-function">calculate_discount</span>(amount):
+    <span class="code-string">"""计算折扣金额"""
+    <span class="code-keyword">if</span> amount >= <span class="code-number">1000</span>:
+        <span class="code-keyword">return</span> amount * <span class="code-number">0.9</span>
+    <span class="code-keyword">else</span>:
+        <span class="code-keyword">return</span> amount
+
+<span class="code-comment"># 调用函数</span>
+original_price = <span class="code-number">1200</span>
+discounted_price = <span class="code-function">calculate_discount</span>(original_price)
+<span class="code-function">print</span>(<span class="code-string">"折扣后价格："</span>, discounted_price)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chapter">
+                <h2 class="chapter-title">第二阶段：数据处理与可视化核心库（1-2周）</h2>
+                <p style="color: #666; margin-bottom: 20px;"><strong>目标：</strong>掌握AI时代的"数据语言"，为数据分析和AI应用打下基础。</p>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">2.1</span> NumPy - 数值计算基础</h3>
+                    <div class="lesson-content">
+                        <p>用于高效的数值计算，是许多AI库的底层基础。学习创建数组、进行求和、求平均值等操作。</p>
+                        <div class="code-block">
+<span class="code-keyword">import</span> numpy <span class="code-keyword">as</span> np
+
+<span class="code-comment"># 创建销售数据数组</span>
+sales_data = np.array([<span class="code-number">1200</span>, <span class="code-number">800</span>, <span class="code-number">1500</span>, <span class="code-number">2000</span>, <span class="code-number">1800</span>])
+
+<span class="code-comment"># 计算基本统计量</span>
+<span class="code-function">print</span>(<span class="code-string">"总销售额："</span>, np.sum(sales_data))
+<span class="code-function">print</span>(<span class="code-string">"平均销售额："</span>, np.mean(sales_data))
+<span class="code-function">print</span>(<span class="code-string">"最大销售额："</span>, np.max(sales_data))
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">2.2</span> Pandas - 数据分析王牌工具</h3>
+                    <div class="lesson-content">
+                        <p>数据分析师和数据运营的"王牌工具"。核心学习内容包括：用DataFrame读取和创建表格型数据，数据清洗，数据筛选、分组与聚合。</p>
+                        <div class="code-block">
+<span class="code-keyword">import</span> pandas <span class="code-keyword">as</span> pd
+
+<span class="code-comment"># 创建销售数据DataFrame</span>
+data = {
+    <span class="code-string">'date'</span>: [<span class="code-string">'2026-01-01'</span>, <span class="code-string">'2026-01-02'</span>, <span class="code-string">'2026-01-03'</span>, <span class="code-string">'2026-01-04'</span>],
+    <span class="code-string">'product'</span>: [<span class="code-string">'A'</span>, <span class="code-string">'B'</span>, <span class="code-string">'A'</span>, <span class="code-string">'B'</span>],
+    <span class="code-string">'sales'</span>: [<span class="code-number">1200</span>, <span class="code-number">800</span>, <span class="code-number">1500</span>, <span class="code-number">2000</span>],
+    <span class="code-string">'region'</span>: [<span class="code-string">'北'</span>, <span class="code-string">'南'</span>, <span class="code-string">'北'</span>, <span class="code-string">'南'</span>]
+}
+
+df = pd.DataFrame(data)
+
+<span class="code-comment"># 按产品分组计算销售额</span> 
+product_sales = df.groupby(<span class="code-string">'product'</span>)[<span class="code-string">'sales'</span>].sum()
+<span class="code-function">print</span>(product_sales)
+
+<span class="code-comment"># 按地区筛选数据</span>
+north_sales = df[df[<span class="code-string">'region'</span>] == <span class="code-string">'北'</span>]
+<span class="code-function">print</span>(north_sales)
+                        </div>
+                        <div class="exercise">
+                            <div class="exercise-title">✏️ 实践任务</div>
+                            <p>创建一个包含10条销售记录的DataFrame，包含日期、产品、销售额、地区等字段，然后：</p>
+                            <ul>
+                                <li>计算每个产品的总销售额</li>
+                                <li>计算每个地区的平均销售额</li>
+                                <li>筛选出销售额大于1000的记录</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">2.3</span> Matplotlib - 数据可视化</h3>
+                    <div class="lesson-content">
+                        <p>用于数据可视化。学习绘制散点图、折线图、柱状图等，将数据分析结果直观呈现。</p>
+                        <div class="code-block">
+<span class="code-keyword">import</span> matplotlib.pyplot <span class="code-keyword">as</span> plt
+
+<span class="code-comment"># 销售数据</span>
+dates = [<span class="code-string">'1月'</span>, <span class="code-string">'2月'</span>, <span class="code-string">'3月'</span>, <span class="code-string">'4月'</span>, <span class="code-string">'5月'</span>]
+sales = [<span class="code-number">1200</span>, <span class="code-number">1800</span>, <span class="code-number">1500</span>, <span class="code-number">2200</span>, <span class="code-number">2500</span>]
+
+<span class="code-comment"># 绘制折线图</span>
+plt.figure(figsize=(<span class="code-number">10</span>, <span class="code-number">6</span>))
+plt.plot(dates, sales, marker=<span class="code-string">'o'</span>, linestyle=<span class="code-string">'-'</span>, color=<span class="code-string">'b'</span>)
+plt.title(<span class="code-string">'月度销售趋势'</span>)
+plt.xlabel(<span class="code-string">'月份'</span>)
+plt.ylabel(<span class="code-string">'销售额'</span>)
+plt.grid(<span class="code-keyword">True</span>)
+plt.show()
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chapter">
+                <h2 class="chapter-title">第三阶段：AI应用初步与项目整合（1周）</h2>
+                <p style="color: #666; margin-bottom: 20px;"><strong>目标：</strong>快速体验AI能力，学以致用，完成综合实战项目。</p>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">3.1</span> 大模型应用开发入门</h3>
+                    <div class="lesson-content">
+                        <p>学习使用LangChain等框架调用大模型API（如GPT-3.5），快速构建一个智能客服问答原型或文案生成助手。</p>
+                        <div class="code-block">
+<span class="code-keyword">from</span> langchain.llms <span class="code-keyword">import</span> OpenAI
+<span class="code-keyword">from</span> langchain.prompts <span class="code-keyword">import</span> PromptTemplate
+
+<span class="code-comment"># 初始化大模型</span>
+llm = OpenAI(api_key=<span class="code-string">"your-api-key"</span>)
+
+<span class="code-comment"># 创建产品描述生成模板</span>
+prompt_template = PromptTemplate(
+    input_variables=[<span class="code-string">"product_name"</span>, <span class="code-string">"features"</span>],
+    template=<span class="code-string">"为产品 '{product_name}' 生成一段吸引人的描述，突出以下特点：{features}"</span>
+)
+
+<span class="code-comment"># 生成产品描述</span>
+product_name = <span class="code-string">"智能手环"</span>
+features = <span class="code-string">"心率监测、睡眠分析、运动追踪、防水设计"</span>
+
+prompt = prompt_template.format(product_name=product_name, features=features)
+description = llm(prompt)
+<span class="code-function">print</span>(description)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">3.2</span> 机器学习基础体验</h3>
+                    <div class="lesson-content">
+                        <p>使用Scikit-learn库完成一个简单的预测模型，例如基于历史数据预测销售额或客户流失可能性。</p>
+                        <div class="code-block">
+<span class="code-keyword">from</span> sklearn.model_selection <span class="code-keyword">import</span> train_test_split
+<span class="code-keyword">from</span> sklearn.linear_model <span class="code-keyword">import</span> LinearRegression
+<span class="code-keyword">import</span> numpy <span class="code-keyword">as</span> np
+
+<span class="code-comment"># 历史销售数据</span>
+X = np.array([[<span class="code-number">1</span>], [<span class="code-number">2</span>], [<span class="code-number">3</span>], [<span class="code-number">4</span>], [<span class="code-number">5</span>]])  <span class="code-comment"># 月份</span>
+y = np.array([<span class="code-number">1200</span>, <span class="code-number">1800</span>, <span class="code-number">1500</span>, <span class="code-number">2200</span>, <span class="code-number">2500</span>])  <span class="code-comment"># 销售额</span>
+
+<span class="code-comment"># 拆分训练集和测试集</span>
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="code-number">0.2</span>, random_state=<span class="code-number">42</span>)
+
+<span class="code-comment"># 训练模型</span>
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+<span class="code-comment"># 预测第6个月销售额</span>
+next_month = np.array([[<span class="code-number">6</span>]])
+predicted_sales = model.predict(next_month)
+<span class="code-function">print</span>(<span class="code-string">"第6个月预测销售额："</span>, predicted_sales[<span class="code-number">0</span>])
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">3.3</span> 综合实战项目</h3>
+                    <div class="lesson-content">
+                        <p>将前两阶段所学串联起来，完成一个如"电商销售数据分析系统"的小项目。项目需涵盖：</p>
+                        <ul>
+                            <li>用Pandas清洗和分析销售数据</li>
+                            <li>用Matplotlib绘制销售趋势和客户分布图</li>
+                            <li>尝试用Scikit-learn对未来销售进行简单预测</li>
+                            <li>调用大模型API生成分析报告摘要</li>
+                        </ul>
+                        <div class="exercise">
+                            <div class="exercise-title">🎯 项目挑战</div>
+                            <p>基于以下销售数据，完成一个完整的数据分析项目：</p>
+                            <ul>
+                                <li>数据：包含100条销售记录，字段包括日期、产品类别、销售额、地区、客户类型</li>
+                                <li>分析：计算各产品类别的销售占比，各地区的销售趋势</li>
+                                <li>可视化：绘制销售趋势图、产品类别占比饼图</li>
+                                <li>预测：基于历史数据预测下一个月的销售额</li>
+                                <li>报告：生成一份数据分析报告摘要</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chapter">
+                <h2 class="chapter-title">高效学习法与避坑指南</h2>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">4.1</span> 高效学习法</h3>
+                    <div class="lesson-content">
+                        <ul>
+                            <li><strong>模仿与修改：</strong>不要死记硬背语法。找一段实现特定功能（如数据清洗）的代码，先模仿运行，再尝试修改以适应自己的数据。</li>
+                            <li><strong>1:3的看练比：</strong>避免"只看不练"。保持看1小时教程，至少动手练习3小时的比例。</li>
+                            <li><strong>项目驱动：</strong>从实际项目出发，遇到问题再学习相关知识，这样学习更有针对性。</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="lesson">
+                    <h3 class="lesson-title"><span class="lesson-icon">4.2</span> 避开五大"深坑"</h3>
+                    <div class="lesson-content">
+                        <ul>
+                            <li><strong>坑1：轻视基础：</strong>不要跳过Python语法直接学深度学习，否则连报错都看不懂。</li>
+                            <li><strong>坑2：学习散漫：</strong>不要同时涉猎过多方向。按照上述路径，聚焦"数据处理+大模型应用"这条主线。</li>
+                            <li><strong>坑3：完美主义：</strong>初学者的代码可以"丑"和"慢"，首要目标是让程序正确运行起来。</li>
+                            <li><strong>坑4：忽视数据：</strong>AI项目中，高质量的数据处理比复杂的模型更重要，务必夯实Pandas基础。</li>
+                            <li><strong>坑5：孤立学习：</strong>多利用AI编程助手（如Copilot）辅助理解代码，并加入技术社区交流解惑。</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -515,12 +586,12 @@ student[<span class="code-string">"grade"</span>] = <span class="code-string">"A
                 <div class="progress-bar">
                     <div class="progress-fill"></div>
                 </div>
-                <p>课程已完成 10% - 继续加油！</p>
+                <p>课程已完成 100% - 恭喜你掌握了AI时代的Python核心技能！</p>
             </div>
         </div>
         
         <div class="footer">
-            <p>© 2026 Python 基础课程 | 现代复古风格</p>
+            <p>© 2026 Python 基础课程 | AI时代版</p>
         </div>
     </div>
 </body>
