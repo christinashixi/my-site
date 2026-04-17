@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python基础课程 - 单元1：环境搭建与第一行代码</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/mode/python/python.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/theme/monokai.min.css">
     <style>
         * {
             margin: 0;
@@ -175,33 +179,93 @@
         }
         
         .code-block {
+            margin: 15px 0;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .code-header {
             background-color: #2d2d2d;
             color: #f8f8f2;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 15px 0;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        
+        .code-title {
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .code-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .code-button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: background-color 0.3s ease;
+        }
+        
+        .code-button:hover {
+            background-color: #45a049;
+        }
+        
+        .code-button.run {
+            background-color: #2196f3;
+        }
+        
+        .code-button.run:hover {
+            background-color: #0b7dda;
+        }
+        
+        .code-button.collapse {
+            background-color: #9e9e9e;
+        }
+        
+        .code-button.collapse:hover {
+            background-color: #757575;
+        }
+        
+        .code-editor {
+            height: 200px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .CodeMirror {
+            height: 100%;
             font-family: 'Courier New', monospace;
-            overflow-x: auto;
+            font-size: 14px;
         }
         
-        .code-comment {
-            color: #75715e;
+        .code-output {
+            background-color: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            max-height: 150px;
+            overflow-y: auto;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
         }
         
-        .code-keyword {
-            color: #66d9ef;
-        }
-        
-        .code-string {
-            color: #e6db74;
-        }
-        
-        .code-number {
-            color: #ae81ff;
-        }
-        
-        .code-function {
-            color: #a6e22e;
+        .code-output.error {
+            background-color: #ffebee;
+            color: #c62828;
         }
         
         .exercise {
@@ -278,6 +342,10 @@
             
             .header h1 {
                 font-size: 2em;
+            }
+            
+            .code-editor {
+                height: 150px;
             }
         }
     </style>
@@ -443,9 +511,17 @@
                     <div class="step-content">
                         <p>在hello.py文件中输入以下代码：</p>
                         <div class="code-block">
-<span class="code-comment"># 这是我的第一个Python程序</span>
-<span class="code-function">print</span>(<span class="code-string">"Hello, World!"</span>)
-<span class="code-function">print</span>(<span class="code-string">"欢迎来到Python世界！"</span>)
+                            <div class="code-header">
+                                <div class="code-title">hello.py</div>
+                                <div class="code-actions">
+                                    <button class="code-button run" onclick="runCode('code1')">运行代码</button>
+                                    <button class="code-button collapse" onclick="toggleCode('code1')">折叠</button>
+                                </div>
+                            </div>
+                            <div id="code1-editor" class="code-editor"># 这是我的第一个Python程序
+print("Hello, World!")
+print("欢迎来到Python世界！")</div>
+                            <div id="code1-output" class="code-output"></div>
                         </div>
                     </div>
                 </div>
@@ -467,8 +543,11 @@
                         </ol>
                         <p><strong>预期输出：</strong></p>
                         <div class="code-block">
-Hello, World!
-欢迎来到Python世界！
+                            <div class="code-header">
+                                <div class="code-title">预期输出</div>
+                            </div>
+                            <div class="code-output">Hello, World!
+欢迎来到Python世界！</div>
                         </div>
                     </div>
                 </div>
@@ -480,8 +559,16 @@ Hello, World!
                     <div class="exercise-title">✏️ 任务1：修改你的第一个程序</div>
                     <p>修改hello.py文件，让它打印出你的名字和一句你喜欢的话。例如：</p>
                     <div class="code-block">
-<span class="code-function">print</span>(<span class="code-string">"Hello, World!"</span>)
-<span class="code-function">print</span>(<span class="code-string">"我是小明，我喜欢Python编程！"</span>)
+                        <div class="code-header">
+                            <div class="code-title">hello.py（修改后）</div>
+                            <div class="code-actions">
+                                <button class="code-button run" onclick="runCode('code2')">运行代码</button>
+                                <button class="code-button collapse" onclick="toggleCode('code2')">折叠</button>
+                            </div>
+                        </div>
+                        <div id="code2-editor" class="code-editor">print("Hello, World!")
+print("我是小明，我喜欢Python编程！")</div>
+                        <div id="code2-output" class="code-output"></div>
                     </div>
                 </div>
                 
@@ -489,12 +576,20 @@ Hello, World!
                     <div class="exercise-title">✏️ 任务2：创建一个新程序</div>
                     <p>创建一个名为<code>greeting.py</code>的新文件，让它打印出以下内容：</p>
                     <div class="code-block">
-<span class="code-function">print</span>(<span class="code-string">"================================"</span>)
-<span class="code-function">print</span>(<span class="code-string">"        Python学习之旅"</span>)
-<span class="code-function">print</span>(<span class="code-string">"================================"</span>)
-<span class="code-function">print</span>(<span class="code-string">"今天是我开始学习Python的第一天"</span>)
-<span class="code-function">print</span>(<span class="code-string">"我会坚持学习，成为Python高手！"</span>)
-<span class="code-function">print</span>(<span class="code-string">"================================"</span>)
+                        <div class="code-header">
+                            <div class="code-title">greeting.py</div>
+                            <div class="code-actions">
+                                <button class="code-button run" onclick="runCode('code3')">运行代码</button>
+                                <button class="code-button collapse" onclick="toggleCode('code3')">折叠</button>
+                            </div>
+                        </div>
+                        <div id="code3-editor" class="code-editor">print("=============================")
+print("        Python学习之旅")
+print("=============================")
+print("今天是我开始学习Python的第一天")
+print("我会坚持学习，成为Python高手！")
+print("=============================")</div>
+                        <div id="code3-output" class="code-output"></div>
                     </div>
                 </div>
             </div>
@@ -567,5 +662,92 @@ Hello, World!
             <p>© 2026 Python 基础课程 | 单元1：环境搭建与第一行代码</p>
         </div>
     </div>
+    
+    <script>
+        // 初始化CodeMirror编辑器
+        const editors = {}
+        
+        function initEditor(id, code) {
+            editors[id] = CodeMirror(document.getElementById(`${id}-editor`), {
+                value: code,
+                mode: 'python',
+                theme: 'monokai',
+                lineNumbers: true,
+                indentUnit: 4,
+                indentWithTabs: true,
+                autofocus: false
+            })
+        }
+        
+        // 初始化所有编辑器
+        document.addEventListener('DOMContentLoaded', function() {
+            // 这里我们直接使用元素的innerHTML作为初始代码
+            for (let i = 1; i <= 3; i++) {
+                const editorElement = document.getElementById(`code${i}-editor`)
+                if (editorElement) {
+                    const code = editorElement.textContent
+                    initEditor(`code${i}`, code)
+                }
+            }
+        })
+        
+        // 运行代码函数
+        function runCode(id) {
+            const outputElement = document.getElementById(`${id}-output`)
+            outputElement.textContent = '运行中...'
+            outputElement.className = 'code-output'
+            
+            const code = editors[id].getValue()
+            
+            // 使用Python执行代码（通过Web Worker或服务器）
+            // 这里我们使用模拟执行，实际项目中可以使用后端API
+            setTimeout(() => {
+                try {
+                    // 模拟Python执行结果
+                    const result = executePythonCode(code)
+                    outputElement.textContent = result
+                    outputElement.className = 'code-output'
+                } catch (error) {
+                    outputElement.textContent = `错误: ${error.message}`
+                    outputElement.className = 'code-output error'
+                }
+            }, 500)
+        }
+        
+        // 模拟Python代码执行
+        function executePythonCode(code) {
+            // 简单的代码执行模拟
+            if (code.includes('print')) {
+                let output = ''
+                const printMatches = code.match(/print\((.*?)\)/g)
+                if (printMatches) {
+                    printMatches.forEach(match => {
+                        const content = match.replace('print(', '').replace(')', '')
+                        // 处理字符串
+                        if (content.startsWith('"') || content.startsWith("'")) {
+                            output += content.substring(1, content.length - 1) + '\n'
+                        }
+                    })
+                }
+                return output || '代码执行完成，但没有输出'
+            } else {
+                return '代码执行完成，但没有输出'
+            }
+        }
+        
+        // 折叠/展开代码
+        function toggleCode(id) {
+            const editorElement = document.getElementById(`${id}-editor`)
+            const outputElement = document.getElementById(`${id}-output`)
+            
+            if (editorElement.style.display === 'none') {
+                editorElement.style.display = 'block'
+                outputElement.style.display = 'block'
+            } else {
+                editorElement.style.display = 'none'
+                outputElement.style.display = 'none'
+            }
+        }
+    </script>
 </body>
 </html>
