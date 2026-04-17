@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python基础课程 - 单元1：环境搭建与第一行代码</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f8f5f0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #d1c4b0;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, #8b4513, #d2b48c, #8b4513);
+        }
+        
+        .container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, #8b4513, #d2b48c, #8b4513);
+        }
+        
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #f5f0e6;
+            border-bottom: 2px solid #d1c4b0;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            color: #5d4037;
+            margin-bottom: 10px;
+            font-weight: normal;
+            letter-spacing: 2px;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            color: #8d6e63;
+            font-style: italic;
+        }
+        
+        .nav-back {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #f5f0e6;
+            border: 1px solid #d1c4b0;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #5d4037;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-back:hover {
+            background-color: #e8e0d5;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .intro {
+            background-color: #faf7f2;
+            padding: 30px;
+            border-radius: 5px;
+            border-left: 4px solid #8b4513;
+            margin-bottom: 40px;
+        }
+        
+        .intro h2 {
+            color: #5d4037;
+            margin-bottom: 15px;
+        }
+        
+        .intro p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.6em;
+            color: #5d4037;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #d1c4b0;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: #8b4513;
+        }
+        
+        .step {
+            background-color: #faf7f2;
+            padding: 25px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #e8e0d5;
+        }
+        
+        .step-title {
+            font-size: 1.3em;
+            color: #5d4037;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .step-icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+            background-color: #8b4513;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .step-content {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .step-content p {
+            margin-bottom: 10px;
+        }
+        
+        .step-content ul {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+        
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-comment {
+            color: #75715e;
+        }
+        
+        .code-keyword {
+            color: #66d9ef;
+        }
+        
+        .code-string {
+            color: #e6db74;
+        }
+        
+        .code-number {
+            color: #ae81ff;
+        }
+        
+        .code-function {
+            color: #a6e22e;
+        }
+        
+        .exercise {
+            background-color: #f5f0e6;
+            padding: 25px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border: 1px dashed #d1c4b0;
+        }
+        
+        .exercise-title {
+            color: #5d4037;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .faq {
+            background-color: #faf7f2;
+            padding: 25px;
+            border-radius: 5px;
+            margin-top: 30px;
+            border: 1px solid #e8e0d5;
+        }
+        
+        .faq-title {
+            color: #5d4037;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .faq-item {
+            margin-bottom: 15px;
+        }
+        
+        .faq-question {
+            font-weight: bold;
+            color: #5d4037;
+            margin-bottom: 5px;
+        }
+        
+        .faq-answer {
+            color: #666;
+            margin-left: 20px;
+        }
+        
+        .tips {
+            background-color: #e8f5e8;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .tips-title {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #f5f0e6;
+            border-top: 1px solid #d1c4b0;
+            font-size: 0.9em;
+            color: #8d6e63;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="python-course.html" class="nav-back">← 返回课程主页</a>
+            <h1>单元1：环境搭建与第一行代码</h1>
+            <div class="subtitle">专为小白设计的入门指南</div>
+        </div>
+        
+        <div class="content">
+            <div class="intro">
+                <h2>🎯 学习目标</h2>
+                <p>本单元将帮助你：</p>
+                <ul>
+                    <li>了解什么是Python以及它的用途</li>
+                    <li>在你的电脑上安装Python 3.11+</li>
+                    <li>安装并配置VS Code编辑器</li>
+                    <li>运行你的第一个Python程序</li>
+                    <li>解决常见的安装和运行问题</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">什么是Python？</h2>
+                <div class="step">
+                    <div class="step-content">
+                        <p>Python是一种简单易学、功能强大的编程语言。它被广泛应用于：</p>
+                        <ul>
+                            <li>数据分析和数据科学</li>
+                            <li>人工智能和机器学习</li>
+                            <li>Web开发</li>
+                            <li>自动化脚本</li>
+                            <li>游戏开发</li>
+                        </ul>
+                        <p>Python的特点：</p>
+                        <ul>
+                            <li><strong>语法简洁</strong>：代码可读性高，容易理解</li>
+                            <li><strong>跨平台</strong>：可以在Windows、Mac、Linux上运行</li>
+                            <li><strong>丰富的库</strong>：有大量现成的工具可以使用</li>
+                            <li><strong>社区活跃</strong>：遇到问题容易找到帮助</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">步骤1：安装Python 3.11+</h2>
+                
+                <div class="step">
+                    <div class="step-title"><span class="step-icon">1</span> Windows系统</div>
+                    <div class="step-content">
+                        <p><strong>步骤：</strong></p>
+                        <ol>
+                            <li>访问 <a href="https://www.python.org/downloads/" target="_blank">Python官网</a></li>
+                            <li>点击"Download Python 3.11.x"按钮（x是具体版本号）</li>
+                            <li>运行下载的安装程序</li>
+                            <li><strong>重要：</strong>勾选"Add Python 3.11 to PATH"选项</li>
+                            <li>点击"Install Now"</li>
+                            <li>安装完成后，点击"Close"</li>
+                        </ol>
+                        <div class="tips">
+                            <div class="tips-title">💡 提示</div>
+                            <p>勾选"Add Python to PATH"非常重要，这样你就可以在命令提示符中直接运行Python。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="step-icon">2</span> Mac系统</div>
+                    <div class="step-content">
+                        <p><strong>步骤：</strong></p>
+                        <ol>
+                            <li>访问 <a href="https://www.python.org/downloads/" target="_blank">Python官网</a></li>
+                            <li>点击"Download Python 3.11.x"按钮</li>
+                            <li>运行下载的.pkg安装包</li>
+                            <li>按照安装向导的提示完成安装</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="step-icon">3</span> Linux系统</div>
+                    <div class="step-content">
+                        <p><strong>步骤：</strong></p>
+                        <ol>
+                            <li>打开终端</li>
+                            <li>运行命令：<code>sudo apt update</code>（Ubuntu/Debian）</li>
+                            <li>运行命令：<code>sudo apt install python3 python3-pip</code></li>
+                            <li>验证安装：<code>python3 --version</code></li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="step-icon">4</span> 验证安装</div>
+                    <div class="step-content">
+                        <p>安装完成后，我们需要验证Python是否正确安装：</p>
+                        <ul>
+                            <li><strong>Windows：</strong>打开命令提示符（Win+R → 输入cmd → 回车），输入 <code>python --version</code></li>
+                            <li><strong>Mac/Linux：</strong>打开终端，输入 <code>python3 --version</code></li>
+                        </ul>
+                        <p>如果看到类似 <code>Python 3.11.x</code> 的输出，说明安装成功！</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">步骤2：安装VS Code编辑器</h2>
+                <div class="step">
+                    <div class="step-content">
+                        <p>VS Code是一个免费、强大的代码编辑器，非常适合Python编程：</p>
+                        <ol>
+                            <li>访问 <a href="https://code.visualstudio.com/" target="_blank">VS Code官网</a></li>
+                            <li>下载适合你系统的版本</li>
+                            <li>运行安装程序并按照提示完成安装</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="step-icon">1</span> 安装Python扩展</div>
+                    <div class="step-content">
+                        <p>打开VS Code后，我们需要安装Python扩展：</p>
+                        <ol>
+                            <li>点击左侧的扩展图标（方块形状）</li>
+                            <li>在搜索框中输入"Python"</li>
+                            <li>点击第一个结果（由Microsoft提供）</li>
+                            <li>点击"Install"按钮</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">步骤3：编写并运行第一个Python程序</h2>
+                
+                <div class="step">
+                    <div class="step-title"><span class="step-icon">1</span> 创建项目文件夹</div>
+                    <div class="step-content">
+                        <ol>
+                            <li>在电脑上创建一个名为"python-learning"的文件夹</li>
+                            <li>在VS Code中，点击"File" → "Open Folder"，选择这个文件夹</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="step-icon">2</span> 创建Python文件</div>
+                    <div class="step-content">
+                        <ol>
+                            <li>在VS Code左侧的文件浏览器中，点击"New File"按钮</li>
+                            <li>输入文件名：<code>hello.py</code></li>
+                            <li>按Enter键确认</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="step-icon">3</span> 编写代码</div>
+                    <div class="step-content">
+                        <p>在hello.py文件中输入以下代码：</p>
+                        <div class="code-block">
+<span class="code-comment"># 这是我的第一个Python程序</span>
+<span class="code-function">print</span>(<span class="code-string">"Hello, World!"</span>)
+<span class="code-function">print</span>(<span class="code-string">"欢迎来到Python世界！"</span>)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="step-icon">4</span> 运行程序</div>
+                    <div class="step-content">
+                        <p>有两种方法运行Python程序：</p>
+                        <h4>方法1：使用VS Code的运行按钮</h4>
+                        <ol>
+                            <li>在VS Code右上角，点击绿色的运行按钮（播放图标）</li>
+                            <li>选择"Run Python File in Terminal"</li>
+                        </ol>
+                        <h4>方法2：使用终端</h4>
+                        <ol>
+                            <li>在VS Code中，点击"Terminal" → "New Terminal"</li>
+                            <li>在终端中输入：<code>python hello.py</code>（Windows）或 <code>python3 hello.py</code>（Mac/Linux）</li>
+                            <li>按Enter键</li>
+                        </ol>
+                        <p><strong>预期输出：</strong></p>
+                        <div class="code-block">
+Hello, World!
+欢迎来到Python世界！
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">实践任务</h2>
+                <div class="exercise">
+                    <div class="exercise-title">✏️ 任务1：修改你的第一个程序</div>
+                    <p>修改hello.py文件，让它打印出你的名字和一句你喜欢的话。例如：</p>
+                    <div class="code-block">
+<span class="code-function">print</span>(<span class="code-string">"Hello, World!"</span>)
+<span class="code-function">print</span>(<span class="code-string">"我是小明，我喜欢Python编程！"</span>)
+                    </div>
+                </div>
+                
+                <div class="exercise">
+                    <div class="exercise-title">✏️ 任务2：创建一个新程序</div>
+                    <p>创建一个名为<code>greeting.py</code>的新文件，让它打印出以下内容：</p>
+                    <div class="code-block">
+<span class="code-function">print</span>(<span class="code-string">"================================"</span>)
+<span class="code-function">print</span>(<span class="code-string">"        Python学习之旅"</span>)
+<span class="code-function">print</span>(<span class="code-string">"================================"</span>)
+<span class="code-function">print</span>(<span class="code-string">"今天是我开始学习Python的第一天"</span>)
+<span class="code-function">print</span>(<span class="code-string">"我会坚持学习，成为Python高手！"</span>)
+<span class="code-function">print</span>(<span class="code-string">"================================"</span>)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">常见问题与解答</h2>
+                <div class="faq">
+                    <div class="faq-title">❓ 常见问题</div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Q1: 运行Python时出现"python不是内部或外部命令"怎么办？</div>
+                        <div class="faq-answer">
+                            A: 这是因为Python没有添加到系统PATH中。重新运行Python安装程序，确保勾选了"Add Python to PATH"选项。
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Q2: VS Code找不到Python解释器怎么办？</div>
+                        <div class="faq-answer">
+                            A: 在VS Code右下角，点击Python版本号，然后选择正确的Python解释器路径。
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Q3: 代码运行时出现语法错误怎么办？</div>
+                        <div class="faq-answer">
+                            A: 仔细检查代码，确保：
+                            <ul>
+                                <li>括号、引号都是成对的</li>
+                                <li>缩进正确（Python对缩进很严格）</li>
+                                <li>没有拼写错误</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Q4: 我可以使用其他编辑器吗？</div>
+                        <div class="faq-answer">
+                            A: 当然可以！除了VS Code，你还可以使用：
+                            <ul>
+                                <li>PyCharm（专业的Python IDE）</li>
+                                <li>Sublime Text</li>
+                                <li>Atom</li>
+                                <li>甚至记事本（不推荐）</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">学习总结</h2>
+                <div class="step">
+                    <div class="step-content">
+                        <p>恭喜你完成了本单元的学习！现在你已经：</p>
+                        <ul>
+                            <li>了解了Python的基本概念和用途</li>
+                            <li>在你的电脑上成功安装了Python 3.11+</li>
+                            <li>安装并配置了VS Code编辑器</li>
+                            <li>编写并运行了你的第一个Python程序</li>
+                            <li>学会了如何解决常见的安装和运行问题</li>
+                        </ul>
+                        <p>这是你Python学习之旅的第一步，接下来我们将学习Python的基础数据类型和变量，为更复杂的编程打下基础。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2026 Python 基础课程 | 单元1：环境搭建与第一行代码</p>
+        </div>
+    </div>
+</body>
+</html>
