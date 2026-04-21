@@ -19,8 +19,45 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.8;
             color: #333;
-            background: linear-gradient(135deg, #1a237e 0%, #2196f3 100%);
+            background: linear-gradient(135deg, #0a0e2f 0%, #1976d2 50%, #03a9f4 100%);
             padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 科技背景网格 */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(33, 150, 243, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(33, 150, 243, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+        
+        /* 科技粒子效果 */
+        .particle {
+            position: absolute;
+            background: rgba(33, 150, 243, 0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.8;
+            }
         }
         
         .container {
@@ -786,6 +823,55 @@ print("=============================")</div>
                 outputElement.style.display = 'none'
             }
         }
+        
+        // 生成科技粒子效果
+        function createParticles() {
+            const particleCount = 50;
+            const body = document.body;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // 随机大小
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // 随机位置
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // 随机动画延迟
+                particle.style.animationDelay = `${Math.random() * 6}s`;
+                
+                // 随机透明度
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                body.appendChild(particle);
+            }
+        }
+        
+        // 页面加载完成后创建粒子
+        window.addEventListener('DOMContentLoaded', createParticles);
+        
+        // 为章节添加动画效果
+        const sections = document.querySelectorAll('.section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        sections.forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(section);
+        });
     </script>
 </body>
 </html>
