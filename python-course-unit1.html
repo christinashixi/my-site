@@ -237,6 +237,14 @@
             background-color: #757575;
         }
         
+        .code-button.reset {
+            background-color: #ff9800;
+        }
+        
+        .code-button.reset:hover {
+            background-color: #f57c00;
+        }
+        
         .code-editor {
             height: 200px;
             border: 1px solid #e0e0e0;
@@ -515,6 +523,7 @@
                                 <div class="code-title">hello.py</div>
                                 <div class="code-actions">
                                     <button class="code-button run" onclick="runCode('code1')">运行代码</button>
+                                    <button class="code-button reset" onclick="resetCode('code1')">重置</button>
                                     <button class="code-button collapse" onclick="toggleCode('code1')">折叠</button>
                                 </div>
                             </div>
@@ -562,9 +571,10 @@ print("欢迎来到Python世界！")</div>
                         <div class="code-header">
                             <div class="code-title">hello.py（修改后）</div>
                             <div class="code-actions">
-                                <button class="code-button run" onclick="runCode('code2')">运行代码</button>
-                                <button class="code-button collapse" onclick="toggleCode('code2')">折叠</button>
-                            </div>
+                                    <button class="code-button run" onclick="runCode('code2')">运行代码</button>
+                                    <button class="code-button reset" onclick="resetCode('code2')">重置</button>
+                                    <button class="code-button collapse" onclick="toggleCode('code2')">折叠</button>
+                                </div>
                         </div>
                         <div id="code2-editor" class="code-editor">print("Hello, World!")
 print("我是小明，我喜欢Python编程！")</div>
@@ -580,6 +590,7 @@ print("我是小明，我喜欢Python编程！")</div>
                             <div class="code-title">greeting.py</div>
                             <div class="code-actions">
                                 <button class="code-button run" onclick="runCode('code3')">运行代码</button>
+                                <button class="code-button reset" onclick="resetCode('code3')">重置</button>
                                 <button class="code-button collapse" onclick="toggleCode('code3')">折叠</button>
                             </div>
                         </div>
@@ -666,8 +677,10 @@ print("=============================")</div>
     <script>
         // 初始化CodeMirror编辑器
         const editors = {}
+        const originalCode = {}
         
         function initEditor(id, code) {
+            originalCode[id] = code
             editors[id] = CodeMirror(document.getElementById(`${id}-editor`), {
                 value: code,
                 mode: 'python',
@@ -732,6 +745,16 @@ print("=============================")</div>
                 return output || '代码执行完成，但没有输出'
             } else {
                 return '代码执行完成，但没有输出'
+            }
+        }
+        
+        // 重置代码函数
+        function resetCode(id) {
+            if (originalCode[id]) {
+                editors[id].setValue(originalCode[id])
+                const outputElement = document.getElementById(`${id}-output`)
+                outputElement.textContent = ''
+                outputElement.className = 'code-output'
             }
         }
         

@@ -221,6 +221,14 @@
             background-color: #0b7dda;
         }
         
+        .code-button.reset {
+            background-color: #ff9800;
+        }
+        
+        .code-button.reset:hover {
+            background-color: #f57c00;
+        }
+        
         .code-button.collapse {
             background-color: #9e9e9e;
         }
@@ -324,6 +332,15 @@
             .code-editor {
                 height: 200px;
             }
+            
+            .code-actions {
+                flex-wrap: wrap;
+            }
+            
+            .code-button {
+                font-size: 0.7em;
+                padding: 4px 8px;
+            }
         }
     </style>
 </head>
@@ -363,6 +380,7 @@
                                 <div class="code-title">hello.py</div>
                                 <div class="code-actions">
                                     <button class="code-button run" onclick="runCode('code1')">运行代码</button>
+                                    <button class="code-button reset" onclick="resetCode('code1')">重置</button>
                                     <button class="code-button collapse" onclick="toggleCode('code1')">折叠</button>
                                 </div>
                             </div>
@@ -391,6 +409,7 @@ print("欢迎来到Python世界！")</div>
                                 <div class="code-title">variables.py</div>
                                 <div class="code-actions">
                                     <button class="code-button run" onclick="runCode('code2')">运行代码</button>
+                                    <button class="code-button reset" onclick="resetCode('code2')">重置</button>
                                     <button class="code-button collapse" onclick="toggleCode('code2')">折叠</button>
                                 </div>
                             </div>
@@ -417,6 +436,7 @@ print("是否有库存：", is_in_stock)</div>
                                 <div class="code-title">data_structures.py</div>
                                 <div class="code-actions">
                                     <button class="code-button run" onclick="runCode('code3')">运行代码</button>
+                                    <button class="code-button reset" onclick="resetCode('code3')">重置</button>
                                     <button class="code-button collapse" onclick="toggleCode('code3')">折叠</button>
                                 </div>
                             </div>
@@ -445,6 +465,7 @@ print("user123的购买记录:", purchase_records["user123"])</div>
                                 <div class="code-title">control_flow.py</div>
                                 <div class="code-actions">
                                     <button class="code-button run" onclick="runCode('code4')">运行代码</button>
+                                    <button class="code-button reset" onclick="resetCode('code4')">重置</button>
                                     <button class="code-button collapse" onclick="toggleCode('code4')">折叠</button>
                                 </div>
                             </div>
@@ -480,6 +501,7 @@ print("总销售额：", total_sales)</div>
                                 <div class="code-title">functions.py</div>
                                 <div class="code-actions">
                                     <button class="code-button run" onclick="runCode('code5')">运行代码</button>
+                                    <button class="code-button reset" onclick="resetCode('code5')">重置</button>
                                     <button class="code-button collapse" onclick="toggleCode('code5')">折叠</button>
                                 </div>
                             </div>
@@ -519,6 +541,7 @@ for amount in test_amounts:
                                 <div class="code-title">numpy_basics.py</div>
                                 <div class="code-actions">
                                     <button class="code-button run" onclick="runCode('code6')">运行代码</button>
+                                    <button class="code-button reset" onclick="resetCode('code6')">重置</button>
                                     <button class="code-button collapse" onclick="toggleCode('code6')">折叠</button>
                                 </div>
                             </div>
@@ -547,6 +570,7 @@ print("销售额标准差：", np.std(sales_data))</div>
                                 <div class="code-title">pandas_basics.py</div>
                                 <div class="code-actions">
                                     <button class="code-button run" onclick="runCode('code7')">运行代码</button>
+                                    <button class="code-button reset" onclick="resetCode('code7')">重置</button>
                                     <button class="code-button collapse" onclick="toggleCode('code7')">折叠</button>
                                 </div>
                             </div>
@@ -596,6 +620,7 @@ print(north_sales)</div>
                                 <div class="code-title">matplotlib_basics.py</div>
                                 <div class="code-actions">
                                     <button class="code-button run" onclick="runCode('code8')">运行代码</button>
+                                    <button class="code-button reset" onclick="resetCode('code8')">重置</button>
                                     <button class="code-button collapse" onclick="toggleCode('code8')">折叠</button>
                                 </div>
                             </div>
@@ -638,6 +663,7 @@ for date, sale in zip(dates, sales):
                                 <div class="code-title">langchain_demo.py</div>
                                 <div class="code-actions">
                                     <button class="code-button run" onclick="runCode('code9')">运行代码</button>
+                                    <button class="code-button reset" onclick="resetCode('code9')">重置</button>
                                     <button class="code-button collapse" onclick="toggleCode('code9')">折叠</button>
                                 </div>
                             </div>
@@ -682,6 +708,7 @@ print(f"{product_name}是一款功能强大的智能穿戴设备，具备先进�
                                 <div class="code-title">machine_learning.py</div>
                                 <div class="code-actions">
                                     <button class="code-button run" onclick="runCode('code10')">运行代码</button>
+                                    <button class="code-button reset" onclick="resetCode('code10')">重置</button>
                                     <button class="code-button collapse" onclick="toggleCode('code10')">折叠</button>
                                 </div>
                             </div>
@@ -787,8 +814,10 @@ print("模型截距：", model.intercept_)</div>
     <script>
         // 初始化CodeMirror编辑器
         const editors = {}
+        const originalCode = {}
         
         function initEditor(id, code) {
+            originalCode[id] = code
             editors[id] = CodeMirror(document.getElementById(`${id}-editor`), {
                 value: code,
                 mode: 'python',
@@ -833,6 +862,16 @@ print("模型截距：", model.intercept_)</div>
                     outputElement.className = 'code-output error'
                 }
             }, 500)
+        }
+        
+        // 重置代码函数
+        function resetCode(id) {
+            if (originalCode[id]) {
+                editors[id].setValue(originalCode[id])
+                const outputElement = document.getElementById(`${id}-output`)
+                outputElement.textContent = ''
+                outputElement.className = 'code-output'
+            }
         }
         
         // 模拟Python代码执行
