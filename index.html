@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>钟心果 - Python数据分析师</title>
+    <title>钟心果 | Python数据分析课程</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/theme/monokai.min.css">
     <style>
         * {
             margin: 0;
@@ -14,140 +16,81 @@
 
         body {
             font-family: 'Rajdhani', sans-serif;
-            line-height: 1.6;
-            color: #333;
+            line-height: 1.8;
+            color: #fff;
             background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 50%, #24243e 100%);
             min-height: 100vh;
-            overflow-x: hidden;
             position: relative;
         }
 
-        /* 动态粒子背景 */
-        #particles-js {
+        #particles-canvas {
             position: fixed;
-            width: 100%;
-            height: 100%;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 0;
-            pointer-events: none;
         }
 
-        /* 动态网格背景 */
         .grid-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 210, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 210, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
+            background-image: linear-gradient(rgba(0, 210, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 210, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
             z-index: 1;
-            animation: gridMove 20s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
-            100% { transform: perspective(500px) rotateX(60deg) translateY(40px); }
-        }
-
-        /* 动态光效 */
-        .light-effect {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.15;
-            z-index: 2;
-            animation: floatLight 15s ease-in-out infinite;
             pointer-events: none;
         }
 
-        .light-1 {
-            background: #00d2ff;
-            top: -200px;
-            left: -200px;
+        .light-effect {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.12;
+            z-index: 2;
+            animation: floatLight 12s ease-in-out infinite;
+            pointer-events: none;
         }
 
-        .light-2 {
-            background: #7b2ff7;
-            bottom: -200px;
-            right: -200px;
-            animation-delay: -5s;
-        }
-
-        .light-3 {
-            background: #00ff88;
-            top: 50%;
-            left: 50%;
-            width: 400px;
-            height: 400px;
-            animation-delay: -10s;
-        }
+        .light-1 { background: #00d2ff; top: -100px; left: -100px; }
+        .light-2 { background: #7b2ff7; bottom: -100px; right: -100px; animation-delay: -4s; }
+        .light-3 { background: #00ff88; top: 50%; left: 50%; width: 350px; height: 350px; animation-delay: -8s; }
 
         @keyframes floatLight {
             0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(50px, -50px) scale(1.1); }
-            50% { transform: translate(0, -100px) scale(1); }
-            75% { transform: translate(-50px, -50px) scale(0.9); }
+            25% { transform: translate(40px, -40px) scale(1.08); }
+            50% { transform: translate(0, -80px) scale(1); }
+            75% { transform: translate(-40px, -40px) scale(0.92); }
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
+        .main-container {
             position: relative;
             z-index: 10;
-            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
 
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* Header */
+        .header {
             text-align: center;
-            padding: 80px 20px;
-            position: relative;
+            padding: 60px 20px 40px;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.15);
         }
 
-        .hero-content {
-            max-width: 900px;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            padding: 10px 30px;
-            background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(123, 47, 247, 0.1));
-            border: 1px solid rgba(0, 210, 255, 0.3);
-            border-radius: 50px;
-            color: #00d2ff;
-            font-size: 0.9em;
-            font-weight: 500;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-            animation: fadeInDown 1s ease;
-        }
-
-        .hero h1 {
+        .header h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 4.5em;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 20px;
-            letter-spacing: 3px;
-            animation: fadeInUp 1s ease;
-            text-shadow: 0 0 30px rgba(0, 210, 255, 0.5);
-        }
-
-        .hero h1 span {
-            background: linear-gradient(135deg, #00d2ff, #7b2ff7, #00ff88);
+            font-size: 3em;
+            background: linear-gradient(135deg, #00d2ff 0%, #7b2ff7 50%, #00ff88 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
             animation: gradientShift 3s ease infinite;
             background-size: 200% 200%;
         }
@@ -157,381 +100,277 @@
             50% { background-position: 100% 50%; }
         }
 
-        .hero-subtitle {
-            font-size: 1.8em;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 40px;
-            animation: fadeInUp 1s ease 0.2s both;
+        .header-subtitle {
+            font-size: 1.3em;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 20px;
         }
 
-        .hero-stats {
+        .header-info {
             display: flex;
             justify-content: center;
-            gap: 60px;
-            margin: 50px 0;
-            animation: fadeInUp 1s ease 0.4s both;
+            gap: 40px;
+            flex-wrap: wrap;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1em;
         }
 
-        .stat-item {
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-icon {
+            font-size: 1.3em;
+        }
+
+        /* Stats */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            padding: 25px 35px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            border-radius: 15px;
             text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 210, 255, 0.3);
+            background: rgba(255, 255, 255, 0.06);
         }
 
         .stat-number {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3em;
+            font-size: 2.5em;
             font-weight: 700;
-            color: #00d2ff;
-            text-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+            background: linear-gradient(135deg, #00d2ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .stat-label {
             color: rgba(255, 255, 255, 0.6);
-            font-size: 1em;
             margin-top: 5px;
         }
 
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            animation: fadeInUp 1s ease 0.6s both;
-        }
-
-        .btn {
-            padding: 18px 45px;
-            font-size: 1.1em;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Rajdhani', sans-serif;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #00d2ff, #7b2ff7);
-            color: #fff;
-            border: none;
-            box-shadow: 0 10px 40px rgba(0, 210, 255, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 50px rgba(0, 210, 255, 0.5);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #fff;
-            border: 2px solid rgba(0, 210, 255, 0.5);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(0, 210, 255, 0.1);
-            transform: translateY(-3px);
-        }
-
-        /* Navigation */
-        .nav-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 20px 50px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-container.scrolled {
-            background: rgba(15, 12, 41, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 15px 50px;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .nav-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5em;
-            font-weight: 700;
-            color: #00d2ff;
-            text-decoration: none;
-            letter-spacing: 2px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.1em;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #00d2ff, #7b2ff7);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #00d2ff;
-        }
-
-        /* Cards Grid */
-        .cards-section {
-            padding: 100px 20px;
+        /* Sections */
+        .section {
+            margin: 60px 0;
         }
 
         .section-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.8em;
-            color: #fff;
-            text-align: center;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1.2em;
-            margin-bottom: 60px;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 40px;
-        }
-
-        .card-3d {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-            border: 1px solid rgba(0, 210, 255, 0.1);
-            border-radius: 25px;
-            padding: 50px 40px;
-            backdrop-filter: blur(10px);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            transform-style: preserve-3d;
-        }
-
-        .card-3d::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #00d2ff, #7b2ff7, #00ff88);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .card-3d:hover::before {
-            opacity: 1;
-        }
-
-        .card-3d::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                rgba(0, 210, 255, 0) 0%,
-                rgba(0, 210, 255, 0.05) 50%,
-                rgba(0, 210, 255, 0) 100%
-            );
-            transform: rotate(45deg);
-            transition: all 0.5s ease;
-            pointer-events: none;
-        }
-
-        .card-3d:hover::after {
-            animation: cardShine 1.5s ease;
-        }
-
-        @keyframes cardShine {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
-        }
-
-        .card-3d:hover {
-            transform: translateY(-15px) rotateX(5deg);
-            box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.3),
-                0 0 40px rgba(0, 210, 255, 0.1);
-            border-color: rgba(0, 210, 255, 0.3);
-        }
-
-        .card-icon {
-            font-size: 4em;
-            margin-bottom: 25px;
-            display: inline-block;
-            animation: bounce 2s ease infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .card-3d h2 {
-            font-family: 'Orbitron', sans-serif;
             font-size: 1.8em;
             color: #fff;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 210, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .card-3d p {
+        .section-icon {
+            font-size: 1.5em;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 210, 255, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3em;
+            color: #00d2ff;
+            margin-bottom: 12px;
+        }
+
+        .card p {
             color: rgba(255, 255, 255, 0.7);
-            font-size: 1.1em;
-            line-height: 1.8;
-            margin-bottom: 25px;
+            line-height: 1.7;
         }
 
         .card-tags {
             display: flex;
+            gap: 8px;
             flex-wrap: wrap;
-            gap: 10px;
+            margin-top: 15px;
         }
 
-        .tag-modern {
-            padding: 8px 18px;
-            background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(123, 47, 247, 0.1));
+        .tag {
+            padding: 6px 14px;
+            background: rgba(0, 210, 255, 0.1);
             border: 1px solid rgba(0, 210, 255, 0.2);
-            border-radius: 25px;
-            color: #00d2ff;
-            font-size: 0.9em;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .tag-modern:hover {
-            background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(123, 47, 247, 0.2));
-            transform: scale(1.05);
-        }
-
-        /* Features Section */
-        .features-section {
-            padding: 100px 20px;
-            background: linear-gradient(180deg, transparent, rgba(0, 210, 255, 0.02), transparent);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 60px;
-        }
-
-        .feature-item {
-            text-align: center;
-            padding: 40px 30px;
-            background: rgba(255, 255, 255, 0.02);
             border-radius: 20px;
-            border: 1px solid rgba(0, 210, 255, 0.05);
-            transition: all 0.3s ease;
+            color: #00d2ff;
+            font-size: 0.85em;
         }
 
-        .feature-item:hover {
-            transform: translateY(-10px);
-            border-color: rgba(0, 210, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        /* Content Block */
+        .content-block {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 210, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px 0;
         }
 
-        .feature-icon {
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
-
-        .feature-item h3 {
+        .content-block h3 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.3em;
-            color: #fff;
+            font-size: 1.4em;
+            color: #00d2ff;
             margin-bottom: 15px;
         }
 
-        .feature-item p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1em;
+        .content-block p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.9;
+            margin-bottom: 15px;
+        }
+
+        .content-block ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .content-block li {
+            padding: 8px 0;
+            color: rgba(255, 255, 255, 0.75);
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .content-block li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #00d2ff;
+        }
+
+        /* Code Editor */
+        .code-block {
+            margin: 25px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            background: rgba(26, 26, 26, 0.9);
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(0, 210, 255, 0.1);
+        }
+
+        .code-title {
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .code-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .code-btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-family: 'Rajdhani', sans-serif;
+            color: #fff;
+        }
+
+        .code-btn-run {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.3), rgba(0, 210, 255, 0.5));
+            border: 1px solid rgba(0, 210, 255, 0.3);
+        }
+
+        .code-btn-run:hover {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.5), rgba(0, 210, 255, 0.7));
+            transform: translateY(-2px);
+        }
+
+        .code-btn-copy {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .code-btn-copy:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .code-editor {
+            min-height: 180px;
+            font-size: 14px;
+        }
+
+        .CodeMirror {
+            height: auto;
+            min-height: 180px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .code-output {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(0, 210, 255, 0.1);
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+            color: rgba(255, 255, 255, 0.8);
         }
 
         /* Footer */
         .footer {
             text-align: center;
             padding: 60px 20px;
+            margin-top: 80px;
             border-top: 1px solid rgba(0, 210, 255, 0.1);
-            position: relative;
-            z-index: 10;
-        }
-
-        .footer p {
             color: rgba(255, 255, 255, 0.5);
             font-size: 1.1em;
-        }
-
-        .footer a {
-            color: #00d2ff;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer a:hover {
-            color: #7b2ff7;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         /* Scrollbar */
@@ -540,205 +379,360 @@
         }
 
         ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(26, 26, 26, 0.5);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #00d2ff, #7b2ff7);
+            background: linear-gradient(135deg, #00d2ff, #7b2ff7);
             border-radius: 4px;
         }
 
         /* Responsive */
-        @media (max-width: 968px) {
-            .hero h1 {
-                font-size: 3em;
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
             }
 
-            .hero-stats {
-                flex-wrap: wrap;
-                gap: 40px;
+            .header-info {
+                gap: 20px;
             }
 
-            .nav-links {
-                display: none;
+            .stats-row {
+                gap: 20px;
             }
 
-            .cards-grid {
-                grid-template-columns: 1fr;
+            .stat-card {
+                padding: 20px 25px;
             }
 
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 2.2em;
+            .stat-number {
+                font-size: 2em;
             }
 
-            .hero-subtitle {
-                font-size: 1.3em;
+            .content-block {
+                padding: 25px;
             }
 
             .section-title {
-                font-size: 2em;
+                font-size: 1.4em;
             }
         }
     </style>
 </head>
 <body>
-    <div id="particles-js"></div>
+    <canvas id="particles-canvas"></canvas>
     <div class="grid-bg"></div>
     <div class="light-effect light-1"></div>
     <div class="light-effect light-2"></div>
     <div class="light-effect light-3"></div>
 
-    <nav class="nav-container" id="navbar">
-        <div class="nav-content">
-            <a href="index.html" class="nav-logo">钟心果</a>
-            <ul class="nav-links">
-                <li><a href="index.html">首页</a></li>
-                <li><a href="resume.html">简历</a></li>
-                <li><a href="python-course.html">Python课程</a></li>
-            </ul>
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>钟心果</h1>
+            <p class="header-subtitle">深圳 · 商务数据分析与应用专业 · 2025级</p>
+            <div class="header-info">
+                <span class="info-item"><span class="info-icon">📍</span>广东深圳</span>
+                <span class="info-item"><span class="info-icon">🏫</span>广东科学技术职业学院</span>
+                <span class="info-item"><span class="info-icon">📚</span>Python数据分析课程</span>
+            </div>
         </div>
-    </nav>
 
-    <div class="container">
-        <section class="hero">
-            <div class="hero-content">
-                <div class="hero-badge">🚀 欢迎来到我的数字世界</div>
-                <h1>我是 <span>钟心果</span></h1>
-                <p class="hero-subtitle">广东科学技术职业学院 · 商务数据分析与应用专业</p>
-
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">2025</div>
-                        <div class="stat-label">入学年份</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">∞</div>
-                        <div class="stat-label">学习热情</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">成长潜力</div>
-                    </div>
-                </div>
-
-                <div class="hero-buttons">
-                    <a href="python-course.html" class="btn btn-primary">
-                        🚀 开始学习Python
-                    </a>
-                    <a href="resume.html" class="btn btn-secondary">
-                        📄 查看我的简历
-                    </a>
-                </div>
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-label">课程阶段</div>
             </div>
-        </section>
+            <div class="stat-card">
+                <div class="stat-number">30+</div>
+                <div class="stat-label">课时内容</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">140+</div>
+                <div class="stat-label">代码示例</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">8-10</div>
+                <div class="stat-label">周学习周期</div>
+            </div>
+        </div>
 
-        <section class="cards-section">
-            <h2 class="section-title">✨ 探索我的世界</h2>
-            <p class="section-subtitle">发现更多精彩内容，开启你的学习之旅</p>
+        <!-- About Me -->
+        <div class="section">
+            <h2 class="section-title"><span class="section-icon">👩‍💻</span>关于我</h2>
+            <div class="content-block">
+                <h3>你好，我是钟心果！</h3>
+                <p>我是一名2025级商务数据分析与应用专业的学生，对数据科学和Python编程充满热情。在这个科技快速发展的时代，我相信数据是解读世界的重要工具。</p>
+                <ul>
+                    <li>专业方向：商务数据分析与应用</li>
+                    <li>技能方向：Python编程、数据处理、可视化分析</li>
+                    <li>个人目标：成为一名优秀的数据分析师，用数据讲述故事</li>
+                </ul>
+            </div>
+        </div>
 
-            <div class="cards-grid">
-                <a href="resume.html" class="card-3d">
-                    <div class="card-icon">📄</div>
-                    <h2>个人简历</h2>
-                    <p>深入了解我的教育背景、专业技能和成长历程。展示一个数据分析师的培养之路。</p>
+        <!-- Course Overview -->
+        <div class="section">
+            <h2 class="section-title"><span class="section-icon">🚀</span>Python课程总览</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>第一阶段：Python核心基础</h3>
+                    <p>环境配置、变量与数据类型、控制流程、函数与模块、数据结构</p>
                     <div class="card-tags">
-                        <span class="tag-modern">教育背景</span>
-                        <span class="tag-modern">专业技能</span>
-                        <span class="tag-modern">成长轨迹</span>
+                        <span class="tag">基础语法</span>
+                        <span class="tag">数据类型</span>
+                        <span class="tag">控制流程</span>
+                        <span class="tag">函数</span>
                     </div>
-                </a>
-
-                <a href="python-course.html" class="card-3d">
-                    <div class="card-icon">🐍</div>
-                    <h2>Python基础课程</h2>
-                    <p>专为初学者设计的AI时代Python学习路径。从零基础到数据分析师的蜕变之旅。</p>
+                </div>
+                <div class="card">
+                    <h3>第二阶段：面向对象编程</h3>
+                    <p>类与对象、继承多态、魔术方法、设计模式、装饰器与元类</p>
                     <div class="card-tags">
-                        <span class="tag-modern">编程入门</span>
-                        <span class="tag-modern">数据分析</span>
-                        <span class="tag-modern">AI应用</span>
+                        <span class="tag">面向对象</span>
+                        <span class="tag">设计模式</span>
+                        <span class="tag">装饰器</span>
                     </div>
-                </a>
-            </div>
-        </section>
-
-        <section class="features-section">
-            <h2 class="section-title">💡 我的核心竞争力</h2>
-            <p class="section-subtitle">融合技术能力与创新思维的独特优势</p>
-
-            <div class="features-grid">
-                <div class="feature-item">
-                    <div class="feature-icon">📊</div>
-                    <h3>数据分析</h3>
-                    <p>掌握数据清洗、可视化和洞察提取，为决策提供数据支持</p>
                 </div>
-
-                <div class="feature-item">
-                    <div class="feature-icon">🐍</div>
-                    <h3>Python编程</h3>
-                    <p>熟练运用Python进行数据处理、自动化和AI应用开发</p>
+                <div class="card">
+                    <h3>第三阶段：文件与异常处理</h3>
+                    <p>文件读写操作、异常捕获处理、上下文管理器、日志系统</p>
+                    <div class="card-tags">
+                        <span class="tag">文件操作</span>
+                        <span class="tag">异常处理</span>
+                        <span class="tag">日志系统</span>
+                    </div>
                 </div>
-
-                <div class="feature-item">
-                    <div class="feature-icon">📚</div>
-                    <h3>持续学习</h3>
-                    <p>保持对新技术的热情，不断提升专业能力和创新思维</p>
+                <div class="card">
+                    <h3>第四阶段：数据分析核心库</h3>
+                    <p>NumPy数值计算、Pandas数据处理、Matplotlib可视化</p>
+                    <div class="card-tags">
+                        <span class="tag">NumPy</span>
+                        <span class="tag">Pandas</span>
+                        <span class="tag">Matplotlib</span>
+                    </div>
                 </div>
-
-                <div class="feature-item">
-                    <div class="feature-icon">🎯</div>
-                    <h3>问题解决</h3>
-                    <p>善于分析问题本质，运用逻辑思维和创新方法解决挑战</p>
+                <div class="card">
+                    <h3>第五阶段：AI与机器学习</h3>
+                    <p>机器学习基础、Scikit-learn、模型训练、大模型API调用</p>
+                    <div class="card-tags">
+                        <span class="tag">机器学习</span>
+                        <span class="tag">Scikit-learn</span>
+                        <span class="tag">大模型</span>
+                    </div>
                 </div>
-
-                <div class="feature-item">
-                    <div class="feature-icon">🤝</div>
-                    <h3>团队协作</h3>
-                    <p>具备良好的沟通能力和团队精神，能够高效完成项目任务</p>
-                </div>
-
-                <div class="feature-item">
-                    <div class="feature-icon">💡</div>
-                    <h3>创新思维</h3>
-                    <p>将人文素养与科技能力结合，培养独特的创新能力</p>
+                <div class="card">
+                    <h3>第六阶段：高级主题与最佳实践</h3>
+                    <p>代码规范、单元测试、Git版本控制、性能优化、职业发展</p>
+                    <div class="card-tags">
+                        <span class="tag">PEP8</span>
+                        <span class="tag">Git</span>
+                        <span class="tag">测试</span>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+
+        <!-- First Lesson - Direct Content -->
+        <div class="section">
+            <h2 class="section-title"><span class="section-icon">📘</span>第一阶段：Python核心基础</h2>
+            <div class="content-block">
+                <h3>1.1 环境搭建与第一个Python程序</h3>
+                <p>让我们从最简单的Hello World开始！这段代码演示了Python的基本输出、注释语法和变量使用。</p>
+                <ul>
+                    <li>使用print()函数输出文本</li>
+                    <li>单行注释以#开头</li>
+                    <li>变量直接赋值，无需声明类型</li>
+                    <li>f-string用于字符串格式化</li>
+                </ul>
+            </div>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">hello_world.py - 第一个Python程序</span>
+                    <div class="code-actions">
+                        <button class="code-btn code-btn-run" onclick="runCode('code1')">▶ 运行</button>
+                        <button class="code-btn code-btn-copy" onclick="copyCode('code1')">📋 复制</button>
+                    </div>
+                </div>
+                <textarea id="code1-editor" class="code-editor"># ============================================
+# Python基础课程 - 第一个程序
+# 文件名: hello_world.py
+# ============================================
+
+# 单行注释：以井号(#)开头，解释单行代码的作用
+print("Hello, World!")  # 输出问候语
+
+# 多行字符串用于注释
+"""
+这是多行注释/文档字符串
+通常用于模块、函数或类的文档说明
+"""
+
+# 输出中文问候
+print("欢迎来到Python编程世界！🚀")
+
+# 使用变量存储数据
+username = "钟心果"  # str类型：字符串
+welcome_message = f"你好，{username}！欢迎开始学习之旅！"
+print(welcome_message)
+
+# f-string格式化输出
+print(f"当前学习者：{username}")
+print(f"学习地点：深圳")
+
+# 简单的计算示例
+year = 2026
+start_year = 2025
+study_years = year - start_year
+print(f"学习Python已有：{study_years}年")
+
+# 尝试修改上面的username变量为你的名字，或者添加更多输出！</textarea>
+                <div id="code1-output" class="code-output"></div>
+            </div>
+        </div>
+
+        <!-- More Lessons -->
+        <div class="section">
+            <h2 class="section-title"><span class="section-icon">📊</span>更多精彩内容</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Python数据类型与运算符</h3>
+                    <p>学习整数、浮点数、字符串、布尔值等基本数据类型，以及算术、比较、逻辑运算符的使用。</p>
+                    <div class="card-tags">
+                        <span class="tag">变量</span>
+                        <span class="tag">类型</span>
+                        <span class="tag">运算符</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>控制流程与循环</h3>
+                    <p>掌握if-elif-else条件判断，for循环和while循环，让程序具有判断和重复执行能力。</p>
+                    <div class="card-tags">
+                        <span class="tag">条件判断</span>
+                        <span class="tag">循环</span>
+                        <span class="tag">列表推导</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>函数与模块</h3>
+                    <p>学习定义和调用函数，理解参数传递、作用域，以及如何导入和使用Python模块。</p>
+                    <div class="card-tags">
+                        <span class="tag">函数</span>
+                        <span class="tag">模块</span>
+                        <span class="tag">作用域</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2026 钟心果 | 用代码改变世界 | 深圳</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">持续学习，持续成长 ✨</p>
+        </div>
     </div>
 
-    <footer class="footer">
-        <p>© 2026 钟心果 | 用热爱点燃学习的火焰 | <a href="https://github.com/christinashixi/my-site" target="_blank">GitHub</a></p>
-    </footer>
-
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/mode/python/python.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
     <script>
-        // 粒子系统配置
-        particlesJS('particles-js', {
+        // Initialize CodeMirror editors
+        const codeEditors = {};
+        const editorConfigs = {
+            mode: 'python',
+            theme: 'monokai',
+            lineNumbers: true,
+            lineWrapping: true,
+            indentUnit: 4,
+            tabSize: 4,
+            indentWithTabs: false,
+            autoCloseBrackets: true,
+            matchBrackets: true
+        };
+
+        // Initialize all code editors
+        function initEditors() {
+            const textareas = document.querySelectorAll('[id$="-editor"]');
+            textareas.forEach(textarea => {
+                const id = textarea.id.replace('-editor', '');
+                codeEditors[id] = CodeMirror.fromTextArea(textarea, editorConfigs);
+            });
+        }
+
+        // Run Python code
+        function runCode(codeId) {
+            const editor = codeEditors[codeId];
+            const code = editor.getValue();
+            const outputDiv = document.getElementById(codeId + '-output');
+            
+            // Simple Python interpreter simulation
+            let output = '';
+            try {
+                // Capture print statements
+                const printMatches = code.match(/print\(([^)]+)\)/g);
+                if (printMatches) {
+                    printMatches.forEach(match => {
+                        let content = match.replace(/^print\(|\)$/g, '');
+                        
+                        // Simple f-string parsing
+                        content = content.replace(/f"([^"]+)"/g, (m, str) => {
+                            return str.replace(/\{([^}]+)\}/g, (m, expr) => {
+                                // Very simple evaluation for demo
+                                if (expr === 'username') return '钟心果';
+                                if (expr === 'year') return '2026';
+                                if (expr === 'start_year') return '2025';
+                                if (expr === 'study_years') return '1';
+                                return expr;
+                            });
+                        });
+                        
+                        // Remove quotes
+                        content = content.replace(/^["']|["']$/g, '');
+                        
+                        output += content + '\n';
+                    });
+                }
+                
+                if (!output) {
+                    output = '程序执行完成！\n\n提示：为了安全，这里只模拟了print()函数的执行。\n实际运行请使用本地Python环境。';
+                }
+                
+                outputDiv.textContent = output;
+                outputDiv.style.color = 'rgba(255, 255, 255, 0.8)';
+                
+            } catch (error) {
+                outputDiv.textContent = '错误：' + error.message;
+                outputDiv.style.color = '#ef4444';
+            }
+        }
+
+        // Copy code to clipboard
+        function copyCode(codeId) {
+            const editor = codeEditors[codeId];
+            const code = editor.getValue();
+            navigator.clipboard.writeText(code).then(() => {
+                alert('代码已复制到剪贴板！');
+            }).catch(err => {
+                console.error('复制失败：', err);
+            });
+        }
+
+        // Initialize particles
+        particlesJS('particles-canvas', {
             particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
+                number: { value: 60, density: { enable: true, value_area: 800 } },
                 color: { value: '#00d2ff' },
-                shape: { type: 'circle', stroke: { width: 0, color: '#000000' } },
-                opacity: { 
-                    value: 0.5, 
-                    random: true,
-                    anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
-                },
-                size: { 
-                    value: 3, 
-                    random: true,
-                    anim: { enable: true, speed: 2, size_min: 0.1, sync: false }
-                },
+                shape: { type: 'circle' },
+                opacity: { value: 0.4, random: true },
+                size: { value: 3, random: true },
                 line_linked: {
                     enable: true,
-                    distance: 150,
+                    distance: 130,
                     color: '#00d2ff',
-                    opacity: 0.2,
+                    opacity: 0.15,
                     width: 1
                 },
                 move: {
@@ -748,7 +742,7 @@
                     random: true,
                     straight: false,
                     out_mode: 'out',
-                    attract: { enable: true, rotateX: 600, rotateY: 1200 }
+                    bounce: false
                 }
             },
             interactivity: {
@@ -756,67 +750,14 @@
                 events: {
                     onhover: { enable: true, mode: 'repulse' },
                     onclick: { enable: true, mode: 'push' }
-                },
-                modes: {
-                    repulse: { distance: 100, duration: 0.4 },
-                    push: { particles_nb: 4 }
                 }
             },
             retina_detect: true
         });
 
-        // 导航栏滚动效果
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // 卡片3D效果
-        const cards = document.querySelectorAll('.card-3d');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', function(e) {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px)`;
-            });
-
-            card.addEventListener('mouseleave', function() {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-            });
-        });
-
-        // 滚动动画
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.card-3d, .feature-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            initEditors();
         });
     </script>
 </body>
