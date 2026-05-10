@@ -337,6 +337,29 @@
             padding: 12px 20px;
             background: rgba(0, 0, 0, 0.3);
             border-bottom: 1px solid rgba(0, 210, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .code-header:hover {
+            background: rgba(0, 210, 255, 0.1);
+        }
+
+        .code-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .code-toggle-icon {
+            font-size: 1.2em;
+            color: #00d2ff;
+            transition: transform 0.3s ease;
+        }
+
+        .code-block.collapsed .code-toggle-icon {
+            transform: rotate(-90deg);
         }
 
         .code-title {
@@ -404,7 +427,19 @@
             white-space: pre-wrap;
             max-height: 200px;
             overflow-y: auto;
-            color: #00ff88;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .code-content {
+            max-height: 2000px;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.3s ease;
+            opacity: 1;
+        }
+
+        .code-block.collapsed .code-content {
+            max-height: 0;
+            opacity: 0;
         }
 
         .exercise-block {
@@ -617,13 +652,17 @@
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">hello_world.py - 第一个Python程序</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">hello_world.py - 第一个Python程序</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s1e1')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s1e1')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s1e1-editor" class="code-editor"># ============================================
 # Python基础课程 - 第一个程序
 # 作者：钟心果
@@ -661,6 +700,8 @@ print(message)
 next_year = year + 1
 print(f"明年是：{next_year}年")</textarea>
                         <div id="s1e1-output" class="code-output"></div>
+                        </div>
+                    </div>
                     </div>
 
                     <div class="content-block">
@@ -676,13 +717,17 @@ print(f"明年是：{next_year}年")</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">data_types.py - 数据类型详解</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">data_types.py - 数据类型详解</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s1e2')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s1e2')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s1e2-editor" class="code-editor"># ============================================
 # Python数据类型与运算符
 # ============================================
@@ -721,16 +766,21 @@ print(f"AND运算: {is_python_fun} AND {is_syntax_easy} = {is_python_fun and is_
 print(f"OR运算: {is_python_fun} OR {is_syntax_easy} = {is_python_fun or is_syntax_easy}")
 print(f"NOT运算: NOT {is_python_fun} = {not is_python_fun}")</textarea>
                         <div id="s1e2-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">operators.py - 运算符练习</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">operators.py - 运算符练习</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s1e3')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s1e3')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s1e3-editor" class="code-editor"># ============================================
 # 运算符综合练习
 # ============================================
@@ -773,6 +823,7 @@ print(f"x is y: {x is y}")  # False - 不同对象
 print(f"x is z: {x is z}")  # True - 同一对象
 print(f"x == y: {x == y}")  # True - 值相等</textarea>
                         <div id="s1e3-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="content-block">
@@ -787,13 +838,17 @@ print(f"x == y: {x == y}")  # True - 值相等</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">conditionals.py - 条件判断</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">conditionals.py - 条件判断</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s1e4')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s1e4')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s1e4-editor" class="code-editor"># ============================================
 # 条件判断 - if-elif-else
 # ============================================
@@ -844,6 +899,7 @@ age = 20
 status = "成年" if age >= 18 else "未成年"
 print(f"\n三元表达式: age={age} -> {status}")</textarea>
                         <div id="s1e4-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="content-block">
@@ -859,13 +915,17 @@ print(f"\n三元表达式: age={age} -> {status}")</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">loops.py - 循环结构</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">loops.py - 循环结构</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s1e5')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s1e5')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s1e5-editor" class="code-editor"># ============================================
 # 循环结构 - for与while
 # ============================================
@@ -920,6 +980,7 @@ print(f"[1,2,3,4,5]的平方: {squares}")
 even_squares = [x**2 for x in range(1, 11) if x % 2 == 0]
 print(f"1-10偶数的平方: {even_squares}")</textarea>
                         <div id="s1e5-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="content-block">
@@ -934,13 +995,17 @@ print(f"1-10偶数的平方: {even_squares}")</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">data_structures.py - 数据结构</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">data_structures.py - 数据结构</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s1e6')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s1e6')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s1e6-editor" class="code-editor"># ============================================
 # Python数据结构
 # ============================================
@@ -991,6 +1056,7 @@ print(f"并集: {set1 | set2}")  # {1, 2, 3, 4, 5, 6, 7, 8}
 print(f"差集: {set1 - set2}")  # {1, 2, 3}
 print(f"对称差: {set1 ^ set2}")  # {1, 2, 3, 6, 7, 8}</textarea>
                         <div id="s1e6-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="content-block">
@@ -1006,13 +1072,17 @@ print(f"对称差: {set1 ^ set2}")  # {1, 2, 3, 6, 7, 8}</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">functions.py - 函数基础</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">functions.py - 函数基础</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s1e7')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s1e7')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s1e7-editor" class="code-editor"># ============================================
 # 函数定义与使用
 # ============================================
@@ -1073,6 +1143,7 @@ numbers = [5, 2, 8, 1, 9]
 sorted_nums = sorted(numbers, reverse=True)
 print(f"排序后: {sorted_nums}")</textarea>
                         <div id="s1e7-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="tip-block">
@@ -1124,13 +1195,17 @@ print(f"排序后: {sorted_nums}")</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">class_basics.py - 类与对象基础</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">class_basics.py - 类与对象基础</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s2e1')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s2e1')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s2e1-editor" class="code-editor"># ============================================
 # 类与对象基础
 # ============================================
@@ -1185,6 +1260,7 @@ student2.display_info()
 print(f"\n学校名称(类属性): {Student.school_name}")
 print(f"学生1的学校: {student1.school_name}")</textarea>
                         <div id="s2e1-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="content-block">
@@ -1199,13 +1275,17 @@ print(f"学生1的学校: {student1.school_name}")</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">inheritance.py - 继承与多态</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">inheritance.py - 继承与多态</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s2e2')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s2e2')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s2e2-editor" class="code-editor"># ============================================
 # 继承与多态
 # ============================================
@@ -1262,6 +1342,7 @@ print(f"Dog是Animal的子类: {issubclass(Dog, Animal)}")
 print(f"dog是Dog的实例: {isinstance(dog, Dog)}")
 print(f"dog是Animal的实例: {isinstance(dog, Animal)}")</textarea>
                         <div id="s2e2-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="content-block">
@@ -1277,13 +1358,17 @@ print(f"dog是Animal的实例: {isinstance(dog, Animal)}")</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">magic_methods.py - 魔术方法</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">magic_methods.py - 魔术方法</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s2e3')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s2e3')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s2e3-editor" class="code-editor"># ============================================
 # 魔术方法（双下划线方法）
 # ============================================
@@ -1343,16 +1428,21 @@ print(f"v1 · v2 = {v1.dot(v2)}")
 print(f"len(v1) = {len(v1)}")
 print(f"repr(v1) = {repr(v1)}")</textarea>
                         <div id="s2e3-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">data_class.py - 数据类</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">data_class.py - 数据类</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s2e4')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s2e4')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s2e4-editor" class="code-editor"># ============================================
 # dataclass - 简化数据类创建
 # Python 3.7+
@@ -1415,6 +1505,7 @@ cart.add_item(Product("鼠标", 79.0), 1)
 
 print(cart)</textarea>
                         <div id="s2e4-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="tip-block">
@@ -1466,13 +1557,17 @@ print(cart)</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">file_operations.py - 文件读写</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">file_operations.py - 文件读写</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s3e1')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s3e1')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s3e1-editor" class="code-editor"># ============================================
 # 文件读写操作
 # ============================================
@@ -1526,6 +1621,7 @@ if os.path.exists(file_path):
     os.remove(file_path)
     print("已清理测试文件")</textarea>
                         <div id="s3e1-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="content-block">
@@ -1541,13 +1637,17 @@ if os.path.exists(file_path):
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">exception_handling.py - 异常处理</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">exception_handling.py - 异常处理</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s3e2')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s3e2')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s3e2-editor" class="code-editor"># ============================================
 # 异常处理
 # ============================================
@@ -1622,16 +1722,21 @@ try:
 except GradeError as e:
     print(f"错误: {e}")</textarea>
                         <div id="s3e2-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">context_manager.py - 上下文管理器</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">context_manager.py - 上下文管理器</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s3e3')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s3e3')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s3e3-editor" class="code-editor"># ============================================
 # 上下文管理器 - with语句
 # ============================================
@@ -1695,6 +1800,7 @@ with timer("模拟计算"):
     total = sum(range(1000000))
     print(f"计算结果: {total}")</textarea>
                         <div id="s3e3-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="tip-block">
@@ -1745,13 +1851,17 @@ with timer("模拟计算"):
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">numpy_basics.py - NumPy基础</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">numpy_basics.py - NumPy基础</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s4e1')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s4e1')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s4e1-editor" class="code-editor"># ============================================
 # NumPy数值计算基础
 # ============================================
@@ -1809,6 +1919,7 @@ print(f"a + b = {a + b}")
 print(f"a * b = {a * b}")  # 逐元素相乘
 print(f"点积: {np.dot(a, b)}")</textarea>
                         <div id="s4e1-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="content-block">
@@ -1824,13 +1935,17 @@ print(f"点积: {np.dot(a, b)}")</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">pandas_basics.py - Pandas基础</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">pandas_basics.py - Pandas基础</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s4e2')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s4e2')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s4e2-editor" class="code-editor"># ============================================
 # Pandas数据处理基础
 # ============================================
@@ -1888,6 +2003,7 @@ df['备注'] = ['好', '优秀', '一般', '优秀', '好']
 df = df.drop('备注', axis=1)
 print(f"\n删除备注列后:\n{df}")</textarea>
                         <div id="s4e2-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="content-block">
@@ -1903,13 +2019,17 @@ print(f"\n删除备注列后:\n{df}")</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">matplotlib_basics.py - Matplotlib基础</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">matplotlib_basics.py - Matplotlib基础</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s4e3')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s4e3')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s4e3-editor" class="code-editor"># ============================================
 # Matplotlib数据可视化
 # ============================================
@@ -1984,16 +2104,21 @@ plt.savefig('chart_demo.png', dpi=150, bbox_inches='tight')
 print("图表已保存为 chart_demo.png")
 print("图表配置完成！")</textarea>
                         <div id="s4e3-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">data_analysis_project.py - 数据分析项目</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">data_analysis_project.py - 数据分析项目</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s4e4')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s4e4')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s4e4-editor" class="code-editor"># ============================================
 # 数据分析综合项目
 # ============================================
@@ -2056,6 +2181,7 @@ print(f"最高平均分: {df['平均成绩'].max():.1f}")
 print(f"最低平均分: {df['平均成绩'].min():.1f}")
 print(f"平均出勤率: {df['出勤率'].mean()*100:.1f}%")</textarea>
                         <div id="s4e4-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="tip-block">
@@ -2106,13 +2232,17 @@ print(f"平均出勤率: {df['出勤率'].mean()*100:.1f}%")</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">ml_concepts.py - 机器学习概念</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">ml_concepts.py - 机器学习概念</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s5e1')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s5e1')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s5e1-editor" class="code-editor"># ============================================
 # 机器学习基础概念
 # ============================================
@@ -2192,6 +2322,7 @@ minmax = MinMaxScaler()
 normalized = minmax.fit_transform(data)
 print(f"归一化后:\n{normalized.round(2)}")</textarea>
                         <div id="s5e1-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="content-block">
@@ -2206,13 +2337,17 @@ print(f"归一化后:\n{normalized.round(2)}")</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">sklearn_practice.py - Scikit-learn实战</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">sklearn_practice.py - Scikit-learn实战</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s5e2')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s5e2')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s5e2-editor" class="code-editor"># ============================================
 # Scikit-learn机器学习实战
 # ============================================
@@ -2291,16 +2426,21 @@ importances = rf.feature_importances_
 for name, imp in sorted(zip(feature_names, importances), key=lambda x: -x[1]):
     print(f"{name}: {imp:.3f}")</textarea>
                         <div id="s5e2-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">llm_api_example.py - 大模型API调用</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">llm_api_example.py - 大模型API调用</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s5e3')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s5e3')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s5e3-editor" class="code-editor"># ============================================
 # 大模型API调用示例
 # ============================================
@@ -2378,6 +2518,7 @@ print("3. 使用流式输出提升用户体验")
 print("4. 注意API调用成本和速率限制")
 print("5. 敏感信息不要发送到外部API")</textarea>
                         <div id="s5e3-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="tip-block">
@@ -2429,13 +2570,17 @@ print("5. 敏感信息不要发送到外部API")</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">code_style.py - 代码规范示例</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">code_style.py - 代码规范示例</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s6e1')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s6e1')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s6e1-editor" class="code-editor"># ============================================
 # Python代码规范示例 - PEP8
 # ============================================
@@ -2543,6 +2688,7 @@ manager.add_student("2025002", "张三")
 print(f"\n学生列表: {manager.students_dict}")
 print(f"学号2025001: {manager.get_student('2025001')}")</textarea>
                         <div id="s6e1-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="content-block">
@@ -2557,13 +2703,17 @@ print(f"学号2025001: {manager.get_student('2025001')}")</textarea>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">unit_test.py - 单元测试示例</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">unit_test.py - 单元测试示例</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s6e2')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s6e2')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s6e2-editor" class="code-editor"># ============================================
 # 单元测试示例 - 使用unittest
 # ============================================
@@ -2672,16 +2822,21 @@ if __name__ == '__main__':
     print(f"错误: {len(result.errors)}")
     print("=" * 60)</textarea>
                         <div id="s6e2-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-title">git_guide.py - Git版本控制概念</span>
-                            <div class="code-actions">
+                        <div class="code-header" onclick="toggleCode(this)">
+                            <div class="code-title-wrapper">
+                                <span class="code-toggle-icon">▼</span>
+                                <span class="code-title">git_guide.py - Git版本控制概念</span>
+                            </div>
+                            <div class="code-actions" onclick="event.stopPropagation()">
                                 <button class="code-btn code-btn-run" onclick="runCode('s6e3')">▶ 运行</button>
                                 <button class="code-btn code-btn-copy" onclick="copyCode('s6e3')">📋 复制</button>
                             </div>
                         </div>
+                        <div class="code-content">
                         <textarea id="s6e3-editor" class="code-editor"># ============================================
 # Git版本控制指南
 # ============================================
@@ -2788,6 +2943,7 @@ print(branching)
 
 print("\n✓ Git版本控制学习完成！")</textarea>
                         <div id="s6e3-output" class="code-output"></div>
+                        </div>
                     </div>
 
                     <div class="tip-block">
@@ -2920,6 +3076,12 @@ print("\n✓ Git版本控制学习完成！")</textarea>
         }
 
         // Toggle section expand/collapse
+        // Toggle code block collapse
+        function toggleCode(header) {
+            const codeBlock = header.closest('.code-block');
+            codeBlock.classList.toggle('collapsed');
+        }
+
         function toggleSection(sectionId) {
             const section = document.getElementById(sectionId);
             section.classList.toggle('active');
