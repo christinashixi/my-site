@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>钟心果 | Python数据分析课程</title>
+    <title>钟心果 - Python数据分析课程</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/theme/monokai.min.css">
@@ -75,7 +75,6 @@
             padding: 40px 20px;
         }
 
-        /* Header */
         .header {
             text-align: center;
             padding: 60px 20px 40px;
@@ -106,26 +105,6 @@
             margin-bottom: 20px;
         }
 
-        .header-info {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1.1em;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .info-icon {
-            font-size: 1.3em;
-        }
-
-        /* Stats */
         .stats-row {
             display: flex;
             justify-content: center;
@@ -163,93 +142,147 @@
             margin-top: 5px;
         }
 
-        /* Sections */
-        .section {
-            margin: 60px 0;
+        .collapsible-section {
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
         }
 
-        .section-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8em;
-            color: #fff;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(0, 210, 255, 0.2);
+        .collapsible-section:hover {
+            border-color: rgba(0, 210, 255, 0.25);
+        }
+
+        .collapsible-section.active {
+            border-color: rgba(0, 210, 255, 0.4);
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.1);
+        }
+
+        .section-header {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: rgba(0, 210, 255, 0.05);
+        }
+
+        .section-header-content {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
         }
 
         .section-icon {
-            font-size: 1.5em;
-        }
-
-        /* Card Grid */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin: 30px 0;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(0, 210, 255, 0.15);
-            border-radius: 15px;
-            padding: 30px;
+            font-size: 2em;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 210, 255, 0.1);
+            border-radius: 12px;
             transition: all 0.3s ease;
-            cursor: pointer;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0, 210, 255, 0.3);
-            background: rgba(255, 255, 255, 0.06);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        .collapsible-section.active .section-icon {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.3), rgba(123, 47, 247, 0.3));
+            transform: scale(1.1);
         }
 
-        .card h3 {
+        .section-title-group h2 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.3em;
+            font-size: 1.4em;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        .collapsible-section.active .section-title-group h2 {
             color: #00d2ff;
-            margin-bottom: 12px;
         }
 
-        .card p {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.7;
+        .section-title-group .section-subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95em;
         }
 
-        .card-tags {
+        .section-tags {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            margin-top: 15px;
+            margin-top: 8px;
         }
 
         .tag {
-            padding: 6px 14px;
-            background: rgba(0, 210, 255, 0.1);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            border-radius: 20px;
+            padding: 4px 12px;
+            background: rgba(0, 210, 255, 0.08);
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            border-radius: 15px;
             color: #00d2ff;
-            font-size: 0.85em;
+            font-size: 0.8em;
         }
 
-        /* Content Block */
+        .toggle-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            transition: all 0.4s ease;
+            font-size: 1.2em;
+        }
+
+        .collapsible-section.active .toggle-icon {
+            transform: rotate(180deg);
+            background: rgba(0, 210, 255, 0.2);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .collapsible-section.active .section-content {
+            max-height: 10000px;
+        }
+
+        .content-inner {
+            padding: 0 30px 30px;
+        }
+
         .content-block {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(0, 210, 255, 0.1);
-            border-radius: 15px;
-            padding: 40px;
-            margin: 30px 0;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
         }
 
         .content-block h3 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.4em;
+            font-size: 1.2em;
             color: #00d2ff;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-block h3::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(180deg, #00d2ff, #7b2ff7);
+            border-radius: 2px;
         }
 
         .content-block p {
@@ -260,7 +293,7 @@
 
         .content-block ul {
             list-style: none;
-            padding-left: 20px;
+            padding-left: 0;
         }
 
         .content-block li {
@@ -277,7 +310,18 @@
             color: #00d2ff;
         }
 
-        /* Code Editor */
+        .difficulty-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-left: 10px;
+        }
+
+        .difficulty-easy { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+        .difficulty-medium { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+        .difficulty-hard { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
         .code-block {
             margin: 25px 0;
             border-radius: 12px;
@@ -338,13 +382,13 @@
         }
 
         .code-editor {
-            min-height: 180px;
+            min-height: 150px;
             font-size: 14px;
         }
 
         .CodeMirror {
             height: auto;
-            min-height: 180px;
+            min-height: 150px;
             font-family: 'Courier New', monospace;
             font-size: 14px;
             line-height: 1.6;
@@ -360,10 +404,57 @@
             white-space: pre-wrap;
             max-height: 200px;
             overflow-y: auto;
-            color: rgba(255, 255, 255, 0.8);
+            color: #00ff88;
         }
 
-        /* Footer */
+        .exercise-block {
+            background: linear-gradient(135deg, rgba(123, 47, 247, 0.1), rgba(0, 210, 255, 0.1));
+            border: 1px solid rgba(123, 47, 247, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .exercise-block h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #7b2ff7;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .exercise-block ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .exercise-block li {
+            padding: 10px 0;
+            color: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .exercise-block li:last-child {
+            border-bottom: none;
+        }
+
+        .exercise-block li::before {
+            content: '✎';
+            margin-right: 10px;
+            color: #7b2ff7;
+        }
+
+        .tip-block {
+            background: rgba(255, 193, 7, 0.08);
+            border-left: 4px solid #ffc107;
+            border-radius: 0 12px 12px 0;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tip-block strong {
+            color: #ffc107;
+        }
+
         .footer {
             text-align: center;
             padding: 60px 20px;
@@ -373,7 +464,6 @@
             font-size: 1.1em;
         }
 
-        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -387,14 +477,9 @@
             border-radius: 4px;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2em;
-            }
-
-            .header-info {
-                gap: 20px;
             }
 
             .stats-row {
@@ -409,12 +494,26 @@
                 font-size: 2em;
             }
 
-            .content-block {
-                padding: 25px;
+            .section-header {
+                padding: 20px;
             }
 
-            .section-title {
-                font-size: 1.4em;
+            .section-icon {
+                font-size: 1.5em;
+                width: 40px;
+                height: 40px;
+            }
+
+            .section-title-group h2 {
+                font-size: 1.1em;
+            }
+
+            .content-inner {
+                padding: 0 20px 20px;
+            }
+
+            .section-tags {
+                display: none;
             }
         }
     </style>
@@ -427,216 +526,2299 @@
     <div class="light-effect light-3"></div>
 
     <div class="main-container">
-        <!-- Header -->
         <div class="header">
             <h1>钟心果</h1>
             <p class="header-subtitle">深圳 · 商务数据分析与应用专业 · 2025级</p>
-            <div class="header-info">
-                <span class="info-item"><span class="info-icon">📍</span>广东深圳</span>
-                <span class="info-item"><span class="info-icon">🏫</span>广东科学技术职业学院</span>
-                <span class="info-item"><span class="info-icon">📚</span>Python数据分析课程</span>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">课程阶段</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label">课时内容</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">140+</div>
+                    <div class="stat-label">代码示例</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8-10</div>
+                    <div class="stat-label">周学习周期</div>
+                </div>
             </div>
         </div>
 
-        <!-- Stats -->
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="stat-number">6</div>
-                <div class="stat-label">课程阶段</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">30+</div>
-                <div class="stat-label">课时内容</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">140+</div>
-                <div class="stat-label">代码示例</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">8-10</div>
-                <div class="stat-label">周学习周期</div>
-            </div>
-        </div>
-
-        <!-- About Me -->
-        <div class="section">
-            <h2 class="section-title"><span class="section-icon">👩‍💻</span>关于我</h2>
-            <div class="content-block">
-                <h3>你好，我是钟心果！</h3>
-                <p>我是一名2025级商务数据分析与应用专业的学生，对数据科学和Python编程充满热情。在这个科技快速发展的时代，我相信数据是解读世界的重要工具。</p>
-                <ul>
-                    <li>专业方向：商务数据分析与应用</li>
-                    <li>技能方向：Python编程、数据处理、可视化分析</li>
-                    <li>个人目标：成为一名优秀的数据分析师，用数据讲述故事</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Course Overview -->
-        <div class="section">
-            <h2 class="section-title"><span class="section-icon">🚀</span>Python课程总览</h2>
-            <div class="card-grid">
-                <div class="card">
-                    <h3>第一阶段：Python核心基础</h3>
-                    <p>环境配置、变量与数据类型、控制流程、函数与模块、数据结构</p>
-                    <div class="card-tags">
-                        <span class="tag">基础语法</span>
-                        <span class="tag">数据类型</span>
-                        <span class="tag">控制流程</span>
-                        <span class="tag">函数</span>
+        <div class="collapsible-section" id="about-section">
+            <div class="section-header" onclick="toggleSection('about-section')">
+                <div class="section-header-content">
+                    <div class="section-icon">👩‍💻</div>
+                    <div class="section-title-group">
+                        <h2>个人简介</h2>
+                        <p class="section-subtitle">关于我与我的学习之旅</p>
                     </div>
                 </div>
-                <div class="card">
-                    <h3>第二阶段：面向对象编程</h3>
-                    <p>类与对象、继承多态、魔术方法、设计模式、装饰器与元类</p>
-                    <div class="card-tags">
-                        <span class="tag">面向对象</span>
-                        <span class="tag">设计模式</span>
-                        <span class="tag">装饰器</span>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="section-content">
+                <div class="content-inner">
+                    <div class="content-block">
+                        <h3>👋 你好，我是钟心果！</h3>
+                        <p>我是一名2025级商务数据分析与应用专业的学生，对数据科学和Python编程充满热情。在这个数据驱动的时代，我相信数据是解读世界的重要工具。</p>
+                        <ul>
+                            <li><strong>专业方向：</strong>商务数据分析与应用</li>
+                            <li><strong>技能方向：</strong>Python编程、数据处理、可视化分析</li>
+                            <li><strong>学习目标：</strong>掌握Python核心技能，为数据分析奠定坚实基础</li>
+                            <li><strong>未来规划：</strong>成为一名优秀的数据分析师，用数据讲述商业故事</li>
+                        </ul>
                     </div>
-                </div>
-                <div class="card">
-                    <h3>第三阶段：文件与异常处理</h3>
-                    <p>文件读写操作、异常捕获处理、上下文管理器、日志系统</p>
-                    <div class="card-tags">
-                        <span class="tag">文件操作</span>
-                        <span class="tag">异常处理</span>
-                        <span class="tag">日志系统</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3>第四阶段：数据分析核心库</h3>
-                    <p>NumPy数值计算、Pandas数据处理、Matplotlib可视化</p>
-                    <div class="card-tags">
-                        <span class="tag">NumPy</span>
-                        <span class="tag">Pandas</span>
-                        <span class="tag">Matplotlib</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3>第五阶段：AI与机器学习</h3>
-                    <p>机器学习基础、Scikit-learn、模型训练、大模型API调用</p>
-                    <div class="card-tags">
-                        <span class="tag">机器学习</span>
-                        <span class="tag">Scikit-learn</span>
-                        <span class="tag">大模型</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3>第六阶段：高级主题与最佳实践</h3>
-                    <p>代码规范、单元测试、Git版本控制、性能优化、职业发展</p>
-                    <div class="card-tags">
-                        <span class="tag">PEP8</span>
-                        <span class="tag">Git</span>
-                        <span class="tag">测试</span>
+                    <div class="content-block">
+                        <h3>💪 我的优势</h3>
+                        <ul>
+                            <li><strong>系统性思维：</strong>善于将复杂问题分解为简单的步骤</li>
+                            <li><strong>持续学习：</strong>保持对新技术的好奇心和求知欲</li>
+                            <li><strong>实践导向：</strong>注重理论与实践相结合的学习方式</li>
+                            <li><strong>细致认真：</strong>追求代码的规范性和可读性</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- First Lesson - Direct Content -->
-        <div class="section">
-            <h2 class="section-title"><span class="section-icon">📘</span>第一阶段：Python核心基础</h2>
-            <div class="content-block">
-                <h3>1.1 环境搭建与第一个Python程序</h3>
-                <p>让我们从最简单的Hello World开始！这段代码演示了Python的基本输出、注释语法和变量使用。</p>
-                <ul>
-                    <li>使用print()函数输出文本</li>
-                    <li>单行注释以#开头</li>
-                    <li>变量直接赋值，无需声明类型</li>
-                    <li>f-string用于字符串格式化</li>
-                </ul>
-            </div>
-            <div class="code-block">
-                <div class="code-header">
-                    <span class="code-title">hello_world.py - 第一个Python程序</span>
-                    <div class="code-actions">
-                        <button class="code-btn code-btn-run" onclick="runCode('code1')">▶ 运行</button>
-                        <button class="code-btn code-btn-copy" onclick="copyCode('code1')">📋 复制</button>
+        <div class="collapsible-section" id="stage1-section">
+            <div class="section-header" onclick="toggleSection('stage1-section')">
+                <div class="section-header-content">
+                    <div class="section-icon">📘</div>
+                    <div class="section-title-group">
+                        <h2>第一阶段：Python核心基础</h2>
+                        <p class="section-subtitle">变量、数据类型、运算符、控制流程、函数</p>
+                        <div class="section-tags">
+                            <span class="tag">基础语法</span>
+                            <span class="tag">数据类型</span>
+                            <span class="tag">控制流程</span>
+                            <span class="tag">函数</span>
+                        </div>
                     </div>
                 </div>
-                <textarea id="code1-editor" class="code-editor"># ============================================
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="section-content">
+                <div class="content-inner">
+                    <div class="content-block">
+                        <h3>1.1 环境搭建与Hello World <span class="difficulty-badge difficulty-easy">入门</span></h3>
+                        <p>让我们从最简单的Hello World开始！这将帮助你熟悉Python编程环境、基本语法和变量使用。</p>
+                        <ul>
+                            <li>安装Python解释器（Python 3.8+推荐）</li>
+                            <li>使用IDE：VS Code + Python扩展 或 PyCharm</li>
+                            <li>print()函数用于输出信息</li>
+                            <li>单行注释以#开头，多行注释用三引号</li>
+                            <li>f-string是现代Python的字符串格式化方式</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">hello_world.py - 第一个Python程序</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s1e1')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s1e1')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s1e1-editor" class="code-editor"># ============================================
 # Python基础课程 - 第一个程序
-# 文件名: hello_world.py
+# 作者：钟心果
 # ============================================
 
-# 单行注释：以井号(#)开头，解释单行代码的作用
-print("Hello, World!")  # 输出问候语
-
-# 多行字符串用于注释
-"""
-这是多行注释/文档字符串
-通常用于模块、函数或类的文档说明
-"""
+# 使用print()函数输出文本
+print("Hello, World!")
 
 # 输出中文问候
-print("欢迎来到Python编程世界！🚀")
+print("欢迎来到Python编程世界！")
 
-# 使用变量存储数据
-username = "钟心果"  # str类型：字符串
-welcome_message = f"你好，{username}！欢迎开始学习之旅！"
-print(welcome_message)
+# 变量赋值 - Python是动态类型语言
+username = "钟心果"  # 字符串类型
+year = 2026  # 整数类型
+gpa = 3.85  # 浮点数类型
+is_student = True  # 布尔类型
 
-# f-string格式化输出
-print(f"当前学习者：{username}")
-print(f"学习地点：深圳")
+# f-string格式化输出（Python 3.6+）
+print(f"学生姓名：{username}")
+print(f"当前年份：{year}")
+print(f"平均绩点：{gpa}")
+print(f"是否在校：{is_student}")
 
-# 简单的计算示例
-year = 2026
-start_year = 2025
-study_years = year - start_year
-print(f"学习Python已有：{study_years}年")
+# 多行字符串
+message = """
+==============================
+欢迎词
+==============================
+你好，{}同学！
+欢迎开始你的Python学习之旅。
+""".format(username)
+print(message)
 
-# 尝试修改上面的username变量为你的名字，或者添加更多输出！</textarea>
-                <div id="code1-output" class="code-output"></div>
+# 变量运算示例
+next_year = year + 1
+print(f"明年是：{next_year}年")</textarea>
+                        <div id="s1e1-output" class="code-output"></div>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>1.2 数据类型与运算符 <span class="difficulty-badge difficulty-easy">入门</span></h3>
+                        <p>Python内置多种数据类型：整数(int)、浮点数(float)、字符串(str)、布尔值(bool)。掌握这些基本类型是编程的基石。</p>
+                        <ul>
+                            <li><strong>整数(int)：</strong>如1, 100, -5，支持加减乘除取模运算</li>
+                            <li><strong>浮点数(float)：</strong>如3.14, -0.5，注意精度问题</li>
+                            <li><strong>字符串(str)：</strong>用引号包裹，支持拼接、切片、格式化</li>
+                            <li><strong>布尔值(bool)：</strong>True/False，用于条件判断</li>
+                            <li><strong>类型转换：</strong>int(), float(), str(), bool()</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">data_types.py - 数据类型详解</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s1e2')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s1e2')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s1e2-editor" class="code-editor"># ============================================
+# Python数据类型与运算符
+# ============================================
+
+# 整数运算
+a = 17
+b = 5
+print(f"加法: {a} + {b} = {a + b}")      # 22
+print(f"减法: {a} - {b} = {a - b}")      # 12
+print(f"乘法: {a} × {b} = {a * b}")      # 85
+print(f"除法: {a} / {b} = {a / b}")      # 3.4
+print(f"整除: {a} // {b} = {a // b}")    # 3
+print(f"取余: {a} % {b} = {a % b}")      # 2
+print(f"幂运算: {a} ** {b} = {a ** b}")  # 1419857
+
+# 字符串操作
+name = "Python"
+language = "编程"
+print(f"字符串长度: len('{name}') = {len(name)}")
+print(f"大小写: '{name.upper()}' -> '{name.lower()}'")
+print(f"字符串拼接: '{name}' + '{language}' = '{name + language}'")
+print(f"重复输出: '{name}' * 3 = '{name * 3}'")
+print(f"切片[0:3]: '{name[0:3]}'")       # Pyt
+print(f"替换: '{name.replace('P', 'J')}'")
+
+# 类型转换
+num_str = "100"
+num_int = int(num_str)  # 字符串转整数
+num_float = float(num_str)  # 字符串转浮点数
+print(f"类型转换: '{num_str}' -> int={num_int}, float={num_float}")
+
+# 布尔运算
+is_python_fun = True
+is_syntax_easy = False
+print(f"AND运算: {is_python_fun} AND {is_syntax_easy} = {is_python_fun and is_syntax_easy}")
+print(f"OR运算: {is_python_fun} OR {is_syntax_easy} = {is_python_fun or is_syntax_easy}")
+print(f"NOT运算: NOT {is_python_fun} = {not is_python_fun}")</textarea>
+                        <div id="s1e2-output" class="code-output"></div>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">operators.py - 运算符练习</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s1e3')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s1e3')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s1e3-editor" class="code-editor"># ============================================
+# 运算符综合练习
+# ============================================
+
+# 比较运算符 - 返回布尔值
+age = 20
+score = 95
+
+print("=== 比较运算符 ===")
+print(f"年龄 {age} > 18: {age > 18}")
+print(f"成绩 {score} >= 90: {score >= 90}")
+print(f"{age} == 20: {age == 20}")
+print(f"{age} != 21: {age != 21}")
+
+# 逻辑运算符
+has_id = True
+has_ticket = True
+print("\n=== 逻辑运算符 ===")
+can_enter = has_id and has_ticket
+print(f"有身份证:{has_id} AND 有票:{has_ticket} -> 可以入场:{can_enter}")
+
+# 赋值运算符
+count = 10
+print(f"\n=== 赋值运算符 ===")
+print(f"初始值: count = {count}")
+count += 5
+print(f"count += 5 -> {count}")
+count *= 2
+print(f"count *= 2 -> {count}")
+
+# 身份运算符 is
+print("\n=== 身份运算符 ===")
+x = [1, 2, 3]
+y = [1, 2, 3]
+z = x
+print(f"x = {x}")
+print(f"y = {y}")
+print(f"z = x")
+print(f"x is y: {x is y}")  # False - 不同对象
+print(f"x is z: {x is z}")  # True - 同一对象
+print(f"x == y: {x == y}")  # True - 值相等</textarea>
+                        <div id="s1e3-output" class="code-output"></div>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>1.3 控制流程：条件判断 <span class="difficulty-badge difficulty-easy">入门</span></h3>
+                        <p>程序需要根据不同条件做出决策。if-elif-else语句让我们能够实现复杂的条件分支逻辑。</p>
+                        <ul>
+                            <li>if语句：最基本的条件判断</li>
+                            <li>elif语句：处理多个条件</li>
+                            <li>else语句：处理不满足所有条件的情况</li>
+                            <li>三元表达式：简洁的条件赋值</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">conditionals.py - 条件判断</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s1e4')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s1e4')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s1e4-editor" class="code-editor"># ============================================
+# 条件判断 - if-elif-else
+# ============================================
+
+# 成绩评级系统
+def grade_student(score):
+    """根据分数返回等级"""
+    if score >= 90:
+        return "A（优秀）"
+    elif score >= 80:
+        return "B（良好）"
+    elif score >= 70:
+        return "C（中等）"
+    elif score >= 60:
+        return "D（及格）"
+    else:
+        return "F（不及格）"
+
+# 测试成绩评级
+scores = [95, 87, 73, 65, 52]
+print("=== 成绩评级系统 ===")
+for score in scores:
+    grade = grade_student(score)
+    print(f"成绩 {score} 分 -> 等级: {grade}")
+
+# 嵌套条件判断
+def check_age_category(age):
+    """判断年龄段"""
+    if age < 0:
+        return "无效年龄"
+    elif age < 13:
+        return "儿童"
+    elif age < 20:
+        return "青少年"
+    elif age < 65:
+        return "成年人"
+    else:
+        return "老年人"
+
+print("\n=== 年龄段判断 ===")
+ages = [-1, 8, 15, 25, 70]
+for age in ages:
+    category = check_age_category(age)
+    print(f"年龄 {age} 岁 -> {category}")
+
+# 三元表达式（简洁写法）
+age = 20
+status = "成年" if age >= 18 else "未成年"
+print(f"\n三元表达式: age={age} -> {status}")</textarea>
+                        <div id="s1e4-output" class="code-output"></div>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>1.4 循环结构：for与while <span class="difficulty-badge difficulty-medium">基础</span></h3>
+                        <p>循环让我们能够重复执行代码块。for循环适合遍历序列，while循环适合基于条件的重复。</p>
+                        <ul>
+                            <li>for循环：遍历列表、字符串、字典、range对象</li>
+                            <li>while循环：在条件为True时重复执行</li>
+                            <li>break：跳出循环</li>
+                            <li>continue：跳过当前迭代</li>
+                            <li>列表推导式：简洁创建列表的方式</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">loops.py - 循环结构</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s1e5')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s1e5')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s1e5-editor" class="code-editor"># ============================================
+# 循环结构 - for与while
+# ============================================
+
+# for循环遍历列表
+fruits = ["苹果", "香蕉", "橙子", "葡萄"]
+print("=== 遍历水果列表 ===")
+for fruit in fruits:
+    print(f"我喜欢吃: {fruit}")
+
+# 使用range()生成数字序列
+print("\n=== range()生成数字 ===")
+print("range(5):", end=" ")
+for i in range(5):
+    print(i, end=" ")
+print()
+
+print("range(1, 10, 2):", end=" ")  # 开始, 结束, 步长
+for i in range(1, 10, 2):
+    print(i, end=" ")
+print()
+
+# while循环
+print("\n=== while循环 ===")
+countdown = 5
+while countdown > 0:
+    print(f"倒计时: {countdown}")
+    countdown -= 1
+print("发射！🚀")
+
+# break和continue
+print("\n=== break和continue ===")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print("找到第一个大于5的数:")
+for num in numbers:
+    if num > 5:
+        print(f"找到: {num}")
+        break
+
+print("跳过所有偶数:")
+for num in numbers:
+    if num % 2 == 0:
+        continue
+    print(num, end=" ")
+print()
+
+# 列表推导式 - 简洁创建列表
+print("\n=== 列表推导式 ===")
+squares = [x**2 for x in range(1, 6)]
+print(f"[1,2,3,4,5]的平方: {squares}")
+
+even_squares = [x**2 for x in range(1, 11) if x % 2 == 0]
+print(f"1-10偶数的平方: {even_squares}")</textarea>
+                        <div id="s1e5-output" class="code-output"></div>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>1.5 数据结构：列表、元组、字典、集合 <span class="difficulty-badge difficulty-medium">基础</span></h3>
+                        <p>Python内置四种核心数据结构，每种都有其独特用途和特性。掌握它们是数据处理的基础。</p>
+                        <ul>
+                            <li><strong>列表(list)：</strong>有序可变序列，支持增删改查</li>
+                            <li><strong>元组(tuple)：</strong>有序不可变序列，更省内存</li>
+                            <li><strong>字典(dict)：</strong>键值对存储，查找效率高</li>
+                            <li><strong>集合(set)：</strong>无序不重复元素，支持集合运算</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">data_structures.py - 数据结构</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s1e6')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s1e6')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s1e6-editor" class="code-editor"># ============================================
+# Python数据结构
+# ============================================
+
+# ========== 列表 (List) ==========
+print("=== 列表操作 ===")
+numbers = [1, 2, 3, 4, 5]
+numbers.append(6)  # 添加元素
+print(f"添加6后: {numbers}")
+numbers.insert(0, 0)  # 在索引0插入
+print(f"插入0后: {numbers}")
+numbers.remove(3)  # 移除第一个3
+print(f"移除3后: {numbers}")
+print(f"最大值: {max(numbers)}, 最小值: {min(numbers)}")
+print(f"求和: {sum(numbers)}")
+print(f"排序: {sorted(numbers)}")
+
+# ========== 元组 (Tuple) ==========
+print("\n=== 元组操作 ===")
+person = ("钟心果", 20, "深圳")
+name, age, city = person  # 解包赋值
+print(f"姓名: {name}, 年龄: {age}, 城市: {city}")
+print(f"元组长度: {len(person)}")
+
+# ========== 字典 (Dictionary) ==========
+print("\n=== 字典操作 ===")
+student = {
+    "name": "钟心果",
+    "age": 20,
+    "major": "数据分析",
+    "gpa": 3.85
+}
+print(f"学生信息: {student}")
+print(f"姓名: {student['name']}")
+student["year"] = 2025  # 添加新键值对
+print(f"更新后: {student}")
+print(f"所有键: {list(student.keys())}")
+print(f"所有值: {list(student.values())}")
+
+# ========== 集合 (Set) ==========
+print("\n=== 集合操作 ===")
+set1 = {1, 2, 3, 4, 5}
+set2 = {4, 5, 6, 7, 8}
+print(f"集合1: {set1}")
+print(f"集合2: {set2}")
+print(f"交集: {set1 & set2}")  # {4, 5}
+print(f"并集: {set1 | set2}")  # {1, 2, 3, 4, 5, 6, 7, 8}
+print(f"差集: {set1 - set2}")  # {1, 2, 3}
+print(f"对称差: {set1 ^ set2}")  # {1, 2, 3, 6, 7, 8}</textarea>
+                        <div id="s1e6-output" class="code-output"></div>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>1.6 函数定义与使用 <span class="difficulty-badge difficulty-medium">基础</span></h3>
+                        <p>函数是组织代码的基本单元。良好的函数设计让代码更加模块化、可重用和易维护。</p>
+                        <ul>
+                            <li>使用def关键字定义函数</li>
+                            <li>参数可以有默认值</li>
+                            <li>使用*args和**kwargs处理不定参数</li>
+                            <li>返回值使用return语句</li>
+                            <li>注意参数作用域（全局vs局部）</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">functions.py - 函数基础</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s1e7')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s1e7')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s1e7-editor" class="code-editor"># ============================================
+# 函数定义与使用
+# ============================================
+
+# 基本函数定义
+def greet(name):
+    """问候函数"""
+    return f"你好，{name}！欢迎学习Python！"
+
+print(greet("钟心果"))
+
+# 默认参数
+def power(base, exponent=2):
+    """计算幂，默认是平方"""
+    return base ** exponent
+
+print(f"3的平方: {power(3)}")
+print(f"2的立方: {power(2, 3)}")
+
+# 不定参数 *args 和 **kwargs
+def print_info(*args, **kwargs):
+    """打印所有参数"""
+    print("位置参数:", args)
+    print("关键字参数:", kwargs)
+
+print("\n=== 不定参数 ===")
+print_info("Python", "数据分析", name="钟心果", age=20)
+
+# 函数作为参数和返回值
+def apply_operation(func, x, y):
+    """应用操作函数"""
+    return func(x, y)
+
+def add(a, b):
+    return a + b
+
+def multiply(a, b):
+    return a * b
+
+print(f"\napply_operation(add, 5, 3) = {apply_operation(add, 5, 3)}")
+print(f"apply_operation(multiply, 5, 3) = {apply_operation(multiply, 5, 3)}")
+
+# 递归函数 - 计算阶乘
+def factorial(n):
+    """递归计算阶乘"""
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+
+print(f"\n5的阶乘: {factorial(5)}")
+print(f"10的阶乘: {factorial(10)}")
+
+# lambda表达式（匿名函数）
+square = lambda x: x ** 2
+print(f"\nlambda表达式: square(7) = {square(7)}")
+
+numbers = [5, 2, 8, 1, 9]
+sorted_nums = sorted(numbers, reverse=True)
+print(f"排序后: {sorted_nums}")</textarea>
+                        <div id="s1e7-output" class="code-output"></div>
+                    </div>
+
+                    <div class="tip-block">
+                        <strong>💡 学习要点：</strong>第一阶段的核心是理解Python的基本语法规则和数据结构。建议多动手实践，尝试修改代码中的变量和逻辑，观察输出变化。
+                    </div>
+
+                    <div class="exercise-block">
+                        <h4>📝 阶段一练习题</h4>
+                        <ul>
+                            <li>编写一个计算器函数，可以进行加减乘除运算</li>
+                            <li>实现一个猜数字游戏，让用户猜测1-100之间的随机数</li>
+                            <li>使用列表推导式生成一个包含1-20之间所有偶数的列表</li>
+                            <li>编写一个函数，接受任意多个数字并返回它们的平均值</li>
+                            <li>实现一个简单的学生信息管理系统（使用字典存储学生信息）</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- More Lessons -->
-        <div class="section">
-            <h2 class="section-title"><span class="section-icon">📊</span>更多精彩内容</h2>
-            <div class="card-grid">
-                <div class="card">
-                    <h3>Python数据类型与运算符</h3>
-                    <p>学习整数、浮点数、字符串、布尔值等基本数据类型，以及算术、比较、逻辑运算符的使用。</p>
-                    <div class="card-tags">
-                        <span class="tag">变量</span>
-                        <span class="tag">类型</span>
-                        <span class="tag">运算符</span>
+        <div class="collapsible-section" id="stage2-section">
+            <div class="section-header" onclick="toggleSection('stage2-section')">
+                <div class="section-header-content">
+                    <div class="section-icon">🧩</div>
+                    <div class="section-title-group">
+                        <h2>第二阶段：面向对象编程</h2>
+                        <p class="section-subtitle">类与对象、继承多态、魔术方法、设计模式</p>
+                        <div class="section-tags">
+                            <span class="tag">面向对象</span>
+                            <span class="tag">设计模式</span>
+                            <span class="tag">装饰器</span>
+                        </div>
                     </div>
                 </div>
-                <div class="card">
-                    <h3>控制流程与循环</h3>
-                    <p>掌握if-elif-else条件判断，for循环和while循环，让程序具有判断和重复执行能力。</p>
-                    <div class="card-tags">
-                        <span class="tag">条件判断</span>
-                        <span class="tag">循环</span>
-                        <span class="tag">列表推导</span>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="section-content">
+                <div class="content-inner">
+                    <div class="content-block">
+                        <h3>2.1 类与对象基础 <span class="difficulty-badge difficulty-medium">基础</span></h3>
+                        <p>面向对象编程(OOP)是Python的核心范式。类(Class)是蓝图，对象(Object)是实例，理解这两者的关系至关重要。</p>
+                        <ul>
+                            <li>类定义使用class关键字</li>
+                            <li>__init__方法用于初始化对象</li>
+                            <li>self参数指向当前实例</li>
+                            <li>实例属性存储对象状态</li>
+                            <li>类属性是所有实例共享的数据</li>
+                        </ul>
                     </div>
-                </div>
-                <div class="card">
-                    <h3>函数与模块</h3>
-                    <p>学习定义和调用函数，理解参数传递、作用域，以及如何导入和使用Python模块。</p>
-                    <div class="card-tags">
-                        <span class="tag">函数</span>
-                        <span class="tag">模块</span>
-                        <span class="tag">作用域</span>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">class_basics.py - 类与对象基础</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s2e1')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s2e1')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s2e1-editor" class="code-editor"># ============================================
+# 类与对象基础
+# ============================================
+
+class Student:
+    """学生类"""
+    # 类属性 - 所有实例共享
+    school_name = "广东科学技术职业学院"
+    
+    def __init__(self, name, age, major):
+        """初始化方法，创建对象时自动调用"""
+        # 实例属性 - 每个对象独立
+        self.name = name
+        self.age = age
+        self.major = major
+        self.grades = {}  # 存储成绩的字典
+    
+    def add_grade(self, subject, score):
+        """添加成绩"""
+        self.grades[subject] = score
+        print(f"已添加: {self.name}的{subject}成绩是{score}分")
+    
+    def get_average(self):
+        """计算平均分"""
+        if not self.grades:
+            return 0
+        return sum(self.grades.values()) / len(self.grades)
+    
+    def display_info(self):
+        """显示学生信息"""
+        print(f"\n=== 学生信息 ===")
+        print(f"姓名: {self.name}")
+        print(f"年龄: {self.age}岁")
+        print(f"专业: {self.major}")
+        print(f"学校: {self.school_name}")
+        print(f"成绩: {self.grades}")
+        print(f"平均分: {self.get_average():.2f}")
+
+# 创建对象实例
+student1 = Student("钟心果", 20, "数据分析")
+student2 = Student("张三", 19, "人工智能")
+
+# 调用方法
+student1.add_grade("Python", 95)
+student1.add_grade("数学", 88)
+student1.add_grade("英语", 92)
+
+student1.display_info()
+student2.display_info()
+
+# 访问类属性
+print(f"\n学校名称(类属性): {Student.school_name}")
+print(f"学生1的学校: {student1.school_name}")</textarea>
+                        <div id="s2e1-output" class="code-output"></div>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>2.2 继承与多态 <span class="difficulty-badge difficulty-medium">基础</span></h3>
+                        <p>继承允许我们创建基于现有类的新类，实现代码重用。多态让不同对象可以用相同接口操作。</p>
+                        <ul>
+                            <li>子类继承父类的属性和方法</li>
+                            <li>super()调用父类方法</li>
+                            <li>方法重写(override)实现多态</li>
+                            <li>多重继承需注意方法解析顺序(MRO)</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">inheritance.py - 继承与多态</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s2e2')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s2e2')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s2e2-editor" class="code-editor"># ============================================
+# 继承与多态
+# ============================================
+
+class Animal:
+    """动物基类"""
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def speak(self):
+        """动物叫声"""
+        return "..."
+    
+    def info(self):
+        return f"{self.name}今年{self.age}岁了"
+
+class Dog(Animal):
+    """狗类 - 继承自动物类"""
+    def __init__(self, name, age, breed):
+        super().__init__(name, age)  # 调用父类构造方法
+        self.breed = breed  # 新增属性
+    
+    def speak(self):
+        """重写父类方法"""
+        return "汪汪汪！"
+    
+    def fetch(self):
+        """狗特有的方法"""
+        return f"{self.name}正在捡球..."
+
+class Cat(Animal):
+    """猫类"""
+    def speak(self):
+        return "喵喵喵~"
+    
+    def scratch(self):
+        return f"{self.name}正在抓老鼠"
+
+# 创建实例
+dog = Dog("旺财", 3, "金毛")
+cat = Cat("咪咪", 2)
+
+# 多态 - 不同对象调用相同方法
+animals = [dog, cat]
+print("=== 多态示例 ===")
+for animal in animals:
+    print(f"{animal.name}: {animal.speak()}")
+    print(animal.info())
+    print()
+
+# 验证继承关系
+print(f"Dog是Animal的子类: {issubclass(Dog, Animal)}")
+print(f"dog是Dog的实例: {isinstance(dog, Dog)}")
+print(f"dog是Animal的实例: {isinstance(dog, Animal)}")</textarea>
+                        <div id="s2e2-output" class="code-output"></div>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>2.3 魔术方法 <span class="difficulty-badge difficulty-hard">进阶</span></h3>
+                        <p>魔术方法(Magic Methods/Dunder Methods)是双下划线包围的特殊方法，让对象支持各种Python内置操作。</p>
+                        <ul>
+                            <li>__str__: 定义str()和print()的输出</li>
+                            <li>__repr__: 定义repr()的输出，用于调试</li>
+                            <li>__len__: 支持len()函数</li>
+                            <li>__eq__, __lt__等: 支持比较运算符</li>
+                            <li>__add__, __sub__等: 支持算术运算符</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">magic_methods.py - 魔术方法</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s2e3')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s2e3')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s2e3-editor" class="code-editor"># ============================================
+# 魔术方法（双下划线方法）
+# ============================================
+
+class Vector:
+    """二维向量类"""
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __str__(self):
+        """字符串表示"""
+        return f"Vector({self.x}, {self.y})"
+    
+    def __repr__(self):
+        """开发者表示"""
+        return f"Vector(x={self.x}, y={self.y})"
+    
+    def __len__(self):
+        """向量长度"""
+        return 2
+    
+    def __eq__(self, other):
+        """相等比较"""
+        if not isinstance(other, Vector):
+            return False
+        return self.x == other.x and self.y == other.y
+    
+    def __add__(self, other):
+        """向量加法"""
+        return Vector(self.x + other.x, self.y + other.y)
+    
+    def __sub__(self, other):
+        """向量减法"""
+        return Vector(self.x - other.x, self.y - other.y)
+    
+    def __mul__(self, scalar):
+        """向量数乘"""
+        return Vector(self.x * scalar, self.y * scalar)
+    
+    def dot(self, other):
+        """点积"""
+        return self.x * other.x + self.y * other.y
+
+# 创建向量
+v1 = Vector(3, 4)
+v2 = Vector(1, 2)
+
+print("=== 向量运算 ===")
+print(f"v1 = {v1}")
+print(f"v2 = {v2}")
+print(f"v1 == v2: {v1 == v2}")
+print(f"v1 + v2 = {v1 + v2}")
+print(f"v1 - v2 = {v1 - v2}")
+print(f"v1 * 3 = {v1 * 3}")
+print(f"v1 · v2 = {v1.dot(v2)}")
+print(f"len(v1) = {len(v1)}")
+print(f"repr(v1) = {repr(v1)}")</textarea>
+                        <div id="s2e3-output" class="code-output"></div>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">data_class.py - 数据类</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s2e4')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s2e4')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s2e4-editor" class="code-editor"># ============================================
+# dataclass - 简化数据类创建
+# Python 3.7+
+# ============================================
+
+from dataclasses import dataclass, field
+from typing import List
+
+@dataclass
+class Product:
+    """商品数据类"""
+    name: str
+    price: float
+    quantity: int = 0
+    tags: List[str] = field(default_factory=list)
+    
+    def total_value(self):
+        """计算商品总价值"""
+        return self.price * self.quantity
+    
+    def __post_init__(self):
+        """数据验证"""
+        if self.price < 0:
+            raise ValueError("价格不能为负数")
+        if self.quantity < 0:
+            raise ValueError("数量不能为负数")
+
+@dataclass
+class ShoppingCart:
+    """购物车"""
+    items: List[Product] = field(default_factory=list)
+    discount: float = 0.0
+    
+    def add_item(self, product, quantity):
+        """添加商品"""
+        for item in self.items:
+            if item.name == product.name:
+                item.quantity += quantity
+                return
+        product.quantity = quantity
+        self.items.append(product)
+    
+    def total(self):
+        """计算总价"""
+        subtotal = sum(item.total_value() for item in self.items)
+        return subtotal * (1 - self.discount)
+    
+    def __str__(self):
+        lines = ["购物车内容:"]
+        for item in self.items:
+            lines.append(f"  - {item.name}: {item.quantity}件 x ¥{item.price}")
+        lines.append(f"总计: ¥{self.total():.2f}")
+        return "\n".join(lines)
+
+# 使用示例
+cart = ShoppingCart(discount=0.1)  # 9折优惠
+cart.add_item(Product("Python书籍", 89.9), 1)
+cart.add_item(Product("键盘", 299.0), 2)
+cart.add_item(Product("鼠标", 79.0), 1)
+
+print(cart)</textarea>
+                        <div id="s2e4-output" class="code-output"></div>
+                    </div>
+
+                    <div class="tip-block">
+                        <strong>💡 学习要点：</strong>面向对象编程的核心是设计。思考什么是对象、对象有什么属性、能做什么操作。设计模式不是死板的规则，而是解决特定问题的经验总结。
+                    </div>
+
+                    <div class="exercise-block">
+                        <h4>📝 阶段二练习题</h4>
+                        <ul>
+                            <li>设计一个银行账户类，包含存款、取款、查询余额功能</li>
+                            <li>创建一个图形类层次结构：Shape -> Circle, Rectangle，包含计算面积和周长的方法</li>
+                            <li>实现一个栈(Stack)类，支持push、pop、peek、is_empty操作</li>
+                            <li>设计一个图书管理系统，使用继承实现电子书和实体书的区别</li>
+                            <li>使用装饰器实现一个函数执行时间统计器</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Footer -->
+        <div class="collapsible-section" id="stage3-section">
+            <div class="section-header" onclick="toggleSection('stage3-section')">
+                <div class="section-header-content">
+                    <div class="section-icon">📁</div>
+                    <div class="section-title-group">
+                        <h2>第三阶段：文件与异常处理</h2>
+                        <p class="section-subtitle">文件读写、异常捕获、上下文管理器、日志系统</p>
+                        <div class="section-tags">
+                            <span class="tag">文件操作</span>
+                            <span class="tag">异常处理</span>
+                            <span class="tag">日志系统</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="section-content">
+                <div class="content-inner">
+                    <div class="content-block">
+                        <h3>3.1 文件读写操作 <span class="difficulty-badge difficulty-medium">基础</span></h3>
+                        <p>文件操作是数据持久化的基础。Python提供了简洁的文件读写API，支持文本和二进制文件。</p>
+                        <ul>
+                            <li>open()函数打开文件，返回文件对象</li>
+                            <li>模式：'r'读、'w'写、'a'追加、'b'二进制</li>
+                            <li>读取：read()、readline()、readlines()</li>
+                            <li>写入：write()、writelines()</li>
+                            <li>使用with语句自动关闭文件</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">file_operations.py - 文件读写</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s3e1')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s3e1')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s3e1-editor" class="code-editor"># ============================================
+# 文件读写操作
+# ============================================
+
+import os
+
+# 文件路径
+file_path = "student_info.txt"
+
+# 写入文件（使用with语句自动关闭）
+print("=== 写入文件 ===")
+content = """学生信息表
+============
+姓名: 钟心果
+年龄: 20
+专业: 数据分析
+年级: 2025
+
+姓名: 张三
+年龄: 19
+专业: 人工智能
+年级: 2025
+"""
+
+with open(file_path, 'w', encoding='utf-8') as f:
+    f.write(content)
+print(f"已写入文件: {file_path}")
+
+# 读取文件
+print("\n=== 读取文件 ===")
+with open(file_path, 'r', encoding='utf-8') as f:
+    # 方式1: 读取全部内容
+    # content = f.read()
+    
+    # 方式2: 按行读取
+    lines = f.readlines()
+    for line in lines:
+        print(line.rstrip())
+
+# 追加模式
+print("\n=== 追加内容 ===")
+with open(file_path, 'a', encoding='utf-8') as f:
+    f.write("\n姓名: 李四\n年龄: 21\n专业: 软件工程\n年级: 2024\n")
+print("已追加内容")
+
+# 检查文件是否存在
+print(f"\n文件是否存在: {os.path.exists(file_path)}")
+
+# 清理测试文件
+if os.path.exists(file_path):
+    os.remove(file_path)
+    print("已清理测试文件")</textarea>
+                        <div id="s3e1-output" class="code-output"></div>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>3.2 异常处理 <span class="difficulty-badge difficulty-medium">基础</span></h3>
+                        <p>异常处理让程序能够优雅地应对错误。使用try-except-finally结构捕获和处理异常。</p>
+                        <ul>
+                            <li>try块：可能发生异常的代码</li>
+                            <li>except块：捕获并处理特定异常</li>
+                            <li>else块：try执行成功后执行</li>
+                            <li>finally块：无论是否异常都执行</li>
+                            <li>raise语句：主动抛出异常</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">exception_handling.py - 异常处理</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s3e2')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s3e2')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s3e2-editor" class="code-editor"># ============================================
+# 异常处理
+# ============================================
+
+def safe_divide(a, b):
+    """安全除法"""
+    try:
+        result = a / b
+        return result
+    except ZeroDivisionError:
+        print("错误: 除数不能为零！")
+        return None
+    except TypeError:
+        print("错误: 类型错误，请输入数字！")
+        return None
+    except Exception as e:
+        print(f"未知错误: {e}")
+        return None
+    else:
+        print("计算成功！")
+    finally:
+        print("执行完毕\n")
+
+print("=== 除法运算 ===")
+print(f"10 / 2 = {safe_divide(10, 2)}")
+print(f"10 / 0 = {safe_divide(10, 0)}")
+print(f"10 / 'a' = {safe_divide(10, 'a')}")
+
+def validate_age(age):
+    """验证年龄"""
+    if not isinstance(age, int):
+        raise TypeError("年龄必须是整数")
+    if age < 0:
+        raise ValueError("年龄不能为负数")
+    if age > 150:
+        raise ValueError("年龄值不合理")
+    return True
+
+def get_age_info(age):
+    """获取年龄信息"""
+    try:
+        validate_age(age)
+        if age < 18:
+            return "未成年"
+        elif age < 65:
+            return "成年人"
+        else:
+            return "老年人"
+    except (TypeError, ValueError) as e:
+        return f"输入错误: {e}"
+
+print("=== 年龄验证 ===")
+ages = [15, 25, 70, -5, 200, "二十"]
+for age in ages:
+    print(f"age={age} -> {get_age_info(age)}")
+
+# 自定义异常
+class GradeError(Exception):
+    """成绩异常"""
+    pass
+
+def validate_grade(grade):
+    if grade < 0 or grade > 100:
+        raise GradeError(f"成绩{grade}超出有效范围(0-100)")
+    return True
+
+print("\n=== 自定义异常 ===")
+try:
+    validate_grade(95)
+    print("成绩95: 有效")
+    validate_grade(150)
+except GradeError as e:
+    print(f"错误: {e}")</textarea>
+                        <div id="s3e2-output" class="code-output"></div>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">context_manager.py - 上下文管理器</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s3e3')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s3e3')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s3e3-editor" class="code-editor"># ============================================
+# 上下文管理器 - with语句
+# ============================================
+
+import os
+
+class FileManager:
+    """自定义文件管理器"""
+    def __init__(self, filename, mode):
+        self.filename = filename
+        self.mode = mode
+        self.file = None
+    
+    def __enter__(self):
+        """进入上下文时调用"""
+        self.file = open(self.filename, self.mode, encoding='utf-8')
+        print(f"打开文件: {self.filename}")
+        return self.file
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """退出上下文时调用"""
+        if self.file:
+            self.file.close()
+            print(f"关闭文件: {self.filename}")
+        return False  # 不处理异常
+
+# 使用自定义上下文管理器
+print("=== 自定义文件管理器 ===")
+test_file = "test.txt"
+
+with FileManager(test_file, 'w') as f:
+    f.write("测试内容\n第二行")
+
+# 使用with读写文件
+print("\n=== 标准文件操作 ===")
+with open(test_file, 'r', encoding='utf-8') as f:
+    content = f.read()
+    print(f"读取内容: {content.strip()}")
+
+# 清理测试文件
+if os.path.exists(test_file):
+    os.remove(test_file)
+
+# 使用contextlib简化上下文管理器
+from contextlib import contextmanager
+
+@contextmanager
+def timer(name):
+    """计时器上下文管理器"""
+    import time
+    start = time.time()
+    print(f"[{name}] 开始...")
+    try:
+        yield
+    finally:
+        end = time.time()
+        print(f"[{name}] 耗时: {end - start:.4f}秒")
+
+print("\n=== 计时器示例 ===")
+with timer("模拟计算"):
+    total = sum(range(1000000))
+    print(f"计算结果: {total}")</textarea>
+                        <div id="s3e3-output" class="code-output"></div>
+                    </div>
+
+                    <div class="tip-block">
+                        <strong>💡 学习要点：</strong>文件操作要养成使用with语句的习惯。异常处理要具体捕获，避免裸的except语句。日志系统对于调试和生产环境都很重要。
+                    </div>
+
+                    <div class="exercise-block">
+                        <h4>📝 阶段三练习题</h4>
+                        <ul>
+                            <li>编写一个学生信息管理程序，支持添加、查询、保存、加载学生数据到JSON文件</li>
+                            <li>实现一个计算器类，捕获各种异常并给出友好的错误提示</li>
+                            <li>创建一个配置文件的读写工具，支持从配置文件读取设置</li>
+                            <li>实现一个带进度显示的文件复制功能</li>
+                            <li>编写一个日志装饰器，记录函数的调用和执行时间</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapsible-section" id="stage4-section">
+            <div class="section-header" onclick="toggleSection('stage4-section')">
+                <div class="section-header-content">
+                    <div class="section-icon">📊</div>
+                    <div class="section-title-group">
+                        <h2>第四阶段：数据分析核心库</h2>
+                        <p class="section-subtitle">NumPy、Pandas、Matplotlib数据处理与可视化</p>
+                        <div class="section-tags">
+                            <span class="tag">NumPy</span>
+                            <span class="tag">Pandas</span>
+                            <span class="tag">Matplotlib</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="section-content">
+                <div class="content-inner">
+                    <div class="content-block">
+                        <h3>4.1 NumPy数值计算 <span class="difficulty-badge difficulty-medium">基础</span></h3>
+                        <p>NumPy是Python科学计算的基础库，提供了高效的多维数组对象ndarray和大量数学函数。</p>
+                        <ul>
+                            <li>ndarray：高效的多维数组，比Python列表快数十倍</li>
+                            <li>向量化操作：无需循环即可对整个数组操作</li>
+                            <li>广播机制：不同形状数组的自动扩展计算</li>
+                            <li>丰富的数学函数：sin, cos, sum, mean, std等</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">numpy_basics.py - NumPy基础</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s4e1')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s4e1')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s4e1-editor" class="code-editor"># ============================================
+# NumPy数值计算基础
+# ============================================
+
+import numpy as np
+
+print("=== NumPy数组创建 ===")
+# 从列表创建
+arr1 = np.array([1, 2, 3, 4, 5])
+print(f"从列表创建: {arr1}")
+
+# 创建特殊数组
+zeros = np.zeros(5)
+print(f"全零数组: {zeros}")
+
+ones = np.ones((3, 3))  # 3x3全1矩阵
+print(f"全1矩阵:\n{ones}")
+
+# 范围数组
+range_arr = np.arange(0, 10, 2)  # 0到10，步长2
+print(f"arange(0,10,2): {range_arr}")
+
+# 等差数组
+linspace_arr = np.linspace(0, 1, 5)  # 0到1之间等分5个点
+print(f"linspace(0,1,5): {linspace_arr}")
+
+print("\n=== 数组基本操作 ===")
+arr = np.array([1, 4, 9, 16, 25])
+print(f"原数组: {arr}")
+print(f"平方根: {np.sqrt(arr)}")
+print(f"平方: {arr ** 2}")
+print(f"求和: {arr.sum()}, 平均值: {arr.mean()}, 标准差: {arr.std()}")
+
+print("\n=== 索引和切片 ===")
+matrix = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+print(f"3x3矩阵:\n{matrix}")
+print(f"第2行: {matrix[1]}")
+print(f"第2行第3列: {matrix[1, 2]}")
+print(f"前2行:\n{matrix[:2]}")
+print(f"最后1列: {matrix[:, -1]}")
+
+print("\n=== 条件筛选 ===")
+arr = np.array([10, 20, 30, 40, 50])
+mask = arr > 25  # 布尔掩码
+print(f"原始: {arr}")
+print(f"条件 arr > 25: {mask}")
+print(f"筛选结果: {arr[mask]}")
+
+# 数组运算
+print("\n=== 数组运算 ===")
+a = np.array([1, 2, 3])
+b = np.array([4, 5, 6])
+print(f"a = {a}, b = {b}")
+print(f"a + b = {a + b}")
+print(f"a * b = {a * b}")  # 逐元素相乘
+print(f"点积: {np.dot(a, b)}")</textarea>
+                        <div id="s4e1-output" class="code-output"></div>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>4.2 Pandas数据处理 <span class="difficulty-badge difficulty-medium">基础</span></h3>
+                        <p>Pandas是数据分析的核心库，提供了Series和DataFrame两种主要数据结构，简化了数据清洗和分析。</p>
+                        <ul>
+                            <li>Series：一维带标签数组</li>
+                            <li>DataFrame：二维表格数据，类似Excel/SQL表</li>
+                            <li>数据选择：loc、iloc、条件筛选</li>
+                            <li>缺失值处理：isna、fillna、dropna</li>
+                            <li>分组聚合：groupby、agg</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">pandas_basics.py - Pandas基础</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s4e2')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s4e2')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s4e2-editor" class="code-editor"># ============================================
+# Pandas数据处理基础
+# ============================================
+
+import pandas as pd
+import numpy as np
+
+print("=== 创建DataFrame ===")
+# 从字典创建
+data = {
+    '姓名': ['钟心果', '张三', '李四', '王五', '赵六'],
+    '年龄': [20, 19, 21, 20, 22],
+    '专业': ['数据分析', '人工智能', '软件工程', '数据分析', '信息安全'],
+    '成绩': [88, 92, 78, 95, 85]
+}
+df = pd.DataFrame(data)
+print(df)
+
+print("\n=== 基本统计 ===")
+print(f"平均成绩: {df['成绩'].mean():.2f}")
+print(f"最高成绩: {df['成绩'].max()}")
+print(f"最低成绩: {df['成绩'].min()}")
+print(f"成绩标准差: {df['成绩'].std():.2f}")
+
+print("\n=== 数据选择 ===")
+# 选择单列
+print(f"姓名列:\n{df['姓名']}")
+
+# 条件筛选
+high_scorers = df[df['成绩'] >= 90]
+print(f"\n成绩>=90的学生:\n{high_scorers}")
+
+# 使用loc（标签索引）
+print(f"\n前3行:\n{df.loc[:2]}")
+
+# 使用iloc（位置索引）
+print(f"\n第2-4行:\n{df.iloc[1:4]}")
+
+print("\n=== 数据排序 ===")
+sorted_df = df.sort_values('成绩', ascending=False)
+print(f"按成绩降序:\n{sorted_df}")
+
+print("\n=== 分组聚合 ===")
+grouped = df.groupby('专业').agg({
+    '成绩': ['mean', 'max', 'count']
+})
+print(f"各专业成绩统计:\n{grouped}")
+
+print("\n=== 添加和删除列 ===")
+df['是否及格'] = df['成绩'] >= 60
+print(df)
+
+# 删除列
+df['备注'] = ['好', '优秀', '一般', '优秀', '好']
+df = df.drop('备注', axis=1)
+print(f"\n删除备注列后:\n{df}")</textarea>
+                        <div id="s4e2-output" class="code-output"></div>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>4.3 Matplotlib数据可视化 <span class="difficulty-badge difficulty-medium">基础</span></h3>
+                        <p>Matplotlib是Python最流行的可视化库，可以创建各种静态、动态、交互式图表。</p>
+                        <ul>
+                            <li>plot()：折线图，展示趋势</li>
+                            <li>bar()：柱状图，比较数量</li>
+                            <li>scatter()：散点图，展示关系</li>
+                            <li>hist()：直方图，展示分布</li>
+                            <li>pie()：饼图，展示比例</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">matplotlib_basics.py - Matplotlib基础</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s4e3')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s4e3')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s4e3-editor" class="code-editor"># ============================================
+# Matplotlib数据可视化
+# ============================================
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 设置中文字体支持
+plt.rcParams['font.sans-serif'] = ['SimHei', 'DejaVu Sans']
+plt.rcParams['axes.unicode_minus'] = False
+
+# 创建数据
+months = ['1月', '2月', '3月', '4月', '5月', '6月']
+sales_python = [120, 145, 168, 175, 190, 210]
+sales_java = [95, 102, 98, 105, 112, 108]
+
+# 创建图形
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+# 1. 折线图
+ax1 = axes[0, 0]
+ax1.plot(months, sales_python, 'b-o', label='Python课程', linewidth=2)
+ax1.plot(months, sales_java, 'r-s', label='Java课程', linewidth=2)
+ax1.set_title('月度销售额趋势', fontsize=14)
+ax1.set_xlabel('月份')
+ax1.set_ylabel('销售额(万元)')
+ax1.legend()
+ax1.grid(True, alpha=0.3)
+
+# 2. 柱状图
+ax2 = axes[0, 1]
+x = np.arange(len(months))
+width = 0.35
+ax2.bar(x - width/2, sales_python, width, label='Python', color='#00d2ff')
+ax2.bar(x + width/2, sales_java, width, label='Java', color='#ff6b6b')
+ax2.set_title('月度销售额对比', fontsize=14)
+ax2.set_xlabel('月份')
+ax2.set_ylabel('销售额(万元)')
+ax2.set_xticks(x)
+ax2.set_xticklabels(months)
+ax2.legend()
+ax2.grid(True, axis='y', alpha=0.3)
+
+# 3. 饼图
+ax3 = axes[1, 0]
+total_sales = [sum(sales_python), sum(sales_java)]
+labels = ['Python', 'Java']
+colors = ['#00d2ff', '#ff6b6b']
+ax3.pie(total_sales, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
+ax3.set_title('课程销售额占比', fontsize=14)
+
+# 4. 散点图
+ax4 = axes[1, 1]
+np.random.seed(42)
+hours_studied = np.random.uniform(1, 10, 30)
+scores = hours_studied * 8 + np.random.normal(0, 5, 30)
+scores = np.clip(scores, 0, 100)
+ax4.scatter(hours_studied, scores, alpha=0.6, c='#7b2ff7', s=100)
+ax4.set_title('学习时间与成绩关系', fontsize=14)
+ax4.set_xlabel('学习时间(小时)')
+ax4.set_ylabel('考试成绩')
+ax4.grid(True, alpha=0.3)
+
+# 添加趋势线
+z = np.polyfit(hours_studied, scores, 1)
+p = np.poly1d(z)
+ax4.plot([1, 10], [p(1), p(10)], 'r--', alpha=0.8, label='趋势线')
+ax4.legend()
+
+plt.tight_layout()
+plt.savefig('chart_demo.png', dpi=150, bbox_inches='tight')
+print("图表已保存为 chart_demo.png")
+print("图表配置完成！")</textarea>
+                        <div id="s4e3-output" class="code-output"></div>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">data_analysis_project.py - 数据分析项目</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s4e4')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s4e4')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s4e4-editor" class="code-editor"># ============================================
+# 数据分析综合项目
+# ============================================
+
+import pandas as pd
+import numpy as np
+
+# 模拟学生成绩数据
+np.random.seed(42)
+n_students = 100
+
+data = {
+    '学号': [f'2025{i:04d}' for i in range(1, n_students + 1)],
+    '姓名': [f'学生{i}' for i in range(1, n_students + 1)],
+    'Python成绩': np.random.normal(78, 12, n_students).clip(45, 100).round(1),
+    '数学成绩': np.random.normal(75, 15, n_students).clip(40, 100).round(1),
+    '英语成绩': np.random.normal(82, 10, n_students).clip(50, 100).round(1),
+    '出勤率': np.random.uniform(0.7, 1.0, n_students).round(2)
+}
+
+df = pd.DataFrame(data)
+
+# 添加综合列
+df['总成绩'] = df['Python成绩'] + df['数学成绩'] + df['英语成绩']
+df['平均成绩'] = (df['总成绩'] / 3).round(1)
+
+print("=" * 60)
+print("学生成绩数据分析报告")
+print("=" * 60)
+
+print("\n【1. 数据概览】")
+print(f"学生总数: {len(df)}人")
+print(f"\n数据前5行:")
+print(df.head())
+
+print("\n【2. 成绩统计】")
+subjects = ['Python成绩', '数学成绩', '英语成绩']
+stats = df[subjects].agg(['mean', 'std', 'min', 'max']).round(2)
+print(stats)
+
+print("\n【3. 各科成绩分布】")
+for subject in subjects:
+    mean = df[subject].mean()
+    std = df[subject].std()
+    print(f"{subject}: 平均{mean:.1f}分, 标准差{std:.1f}")
+
+print("\n【4. 优秀学生(平均>=90分)】")
+excellent = df[df['平均成绩'] >= 90][['学号', '姓名', '平均成绩']].sort_values('平均成绩', ascending=False)
+print(f"优秀学生人数: {len(excellent)}人 ({len(excellent)/len(df)*100:.1f}%)")
+print(excellent.head(10))
+
+print("\n【5. 成绩相关性分析】")
+correlation = df[subjects].corr().round(3)
+print("各科成绩相关系数矩阵:")
+print(correlation)
+
+print("\n【6. 综合数据分析完成】")
+print(f"总样本数: {len(df)}")
+print(f"最高平均分: {df['平均成绩'].max():.1f}")
+print(f"最低平均分: {df['平均成绩'].min():.1f}")
+print(f"平均出勤率: {df['出勤率'].mean()*100:.1f}%")</textarea>
+                        <div id="s4e4-output" class="code-output"></div>
+                    </div>
+
+                    <div class="tip-block">
+                        <strong>💡 学习要点：</strong>数据分析的核心流程是：数据获取 → 数据清洗 → 数据分析 → 数据可视化。多动手练习，逐步掌握NumPy的数组操作、Pandas的数据处理、Matplotlib的可视化技巧。
+                    </div>
+
+                    <div class="exercise-block">
+                        <h4>📝 阶段四练习题</h4>
+                        <ul>
+                            <li>使用NumPy生成一个5x5的随机矩阵，计算其特征值和特征向量</li>
+                            <li>读取CSV文件，筛选出特定条件的数据并保存到新文件</li>
+                            <li>使用Pandas处理缺失值，计算某列的平均值并填充缺失位置</li>
+                            <li>创建一个数据仪表盘，同时展示多张图表</li>
+                            <li>实现一个数据分析报告自动生成工具</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapsible-section" id="stage5-section">
+            <div class="section-header" onclick="toggleSection('stage5-section')">
+                <div class="section-header-content">
+                    <div class="section-icon">🤖</div>
+                    <div class="section-title-group">
+                        <h2>第五阶段：AI与机器学习</h2>
+                        <p class="section-subtitle">机器学习基础、Scikit-learn、大模型API</p>
+                        <div class="section-tags">
+                            <span class="tag">机器学习</span>
+                            <span class="tag">Scikit-learn</span>
+                            <span class="tag">大模型API</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="section-content">
+                <div class="content-inner">
+                    <div class="content-block">
+                        <h3>5.1 机器学习基础概念 <span class="difficulty-badge difficulty-medium">基础</span></h3>
+                        <p>机器学习是让计算机从数据中学习规律的技术。主要分为监督学习、无监督学习和强化学习。</p>
+                        <ul>
+                            <li><strong>监督学习：</strong>有标签数据，分类和回归</li>
+                            <li><strong>无监督学习：</strong>无标签，聚类和降维</li>
+                            <li><strong>模型评估：</strong>准确率、精确率、召回率、F1分数</li>
+                            <li><strong>过拟合与欠拟合：</strong>泛化能力是关键</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">ml_concepts.py - 机器学习概念</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s5e1')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s5e1')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s5e1-editor" class="code-editor"># ============================================
+# 机器学习基础概念
+# ============================================
+
+import numpy as np
+from sklearn.datasets import make_classification, make_regression
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.metrics import accuracy_score, mean_squared_error, r2_score
+
+print("=" * 60)
+print("机器学习基础示例")
+print("=" * 60)
+
+# 1. 回归问题示例
+print("\n【1. 线性回归 - 预测房价】")
+np.random.seed(42)
+
+# 生成模拟数据：房屋面积 -> 房价
+areas = np.random.uniform(50, 200, 100)  # 面积 50-200平方米
+prices = areas * 10000 + np.random.normal(0, 50000, 100)  # 价格公式 + 噪声
+
+# 划分训练集和测试集
+X_train, X_test, y_train, y_test = train_test_split(
+    areas.reshape(-1, 1), prices, test_size=0.2, random_state=42
+)
+
+# 训练模型
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# 预测
+predictions = model.predict(X_test)
+
+# 评估
+mse = mean_squared_error(y_test, predictions)
+r2 = r2_score(y_test, predictions)
+
+print(f"训练样本数: {len(X_train)}")
+print(f"测试样本数: {len(X_test)}")
+print(f"模型参数: 斜率={model.coef_[0]:.2f}, 截距={model.intercept_:.2f}")
+print(f"均方误差(MSE): {mse:.2f}")
+print(f"R²分数: {r2:.4f}")
+
+# 2. 分类问题示例
+print("\n【2. 逻辑回归 - 鸢尾花分类】")
+from sklearn.datasets import load_iris
+
+iris = load_iris()
+X = iris.data[:, :2]  # 只用前两个特征
+y = (iris.target != 0) * 1  # 二分类：setosa vs others
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+clf = LogisticRegression(random_state=42)
+clf.fit(X_train, y_train)
+
+y_pred = clf.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+
+print(f"特征: {iris.feature_names[:2]}")
+print(f"准确率: {accuracy*100:.2f}%")
+print(f"预测结果: {y_pred[:10]}")
+
+# 3. 数据预处理概念
+print("\n【3. 数据预处理】")
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+
+data = np.array([[1, 100], [2, 200], [3, 300], [4, 400]])
+print(f"原始数据:\n{data}")
+
+scaler = StandardScaler()
+standardized = scaler.fit_transform(data)
+print(f"标准化后:\n{standardized.round(2)}")
+
+minmax = MinMaxScaler()
+normalized = minmax.fit_transform(data)
+print(f"归一化后:\n{normalized.round(2)}")</textarea>
+                        <div id="s5e1-output" class="code-output"></div>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>5.2 Scikit-learn实战 <span class="difficulty-badge difficulty-medium">基础</span></h3>
+                        <p>Scikit-learn是Python最流行的机器学习库，提供了完整的机器学习流程API。</p>
+                        <ul>
+                            <li>统一API设计：fit(), predict(), transform()</li>
+                            <li>丰富的算法：分类、回归、聚类、降维</li>
+                            <li>数据预处理：标准化、归一化、编码</li>
+                            <li>模型选择：交叉验证、网格搜索</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">sklearn_practice.py - Scikit-learn实战</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s5e2')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s5e2')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s5e2-editor" class="code-editor"># ============================================
+# Scikit-learn机器学习实战
+# ============================================
+
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+
+print("=" * 60)
+print("Scikit-learn 鸢尾花分类实战")
+print("=" * 60)
+
+# 加载数据
+iris = load_iris()
+X, y = iris.data, iris.target
+feature_names = iris.feature_names
+target_names = iris.target_names
+
+print(f"\n数据集: 鸢尾花({len(X)}样本)")
+print(f"特征: {feature_names}")
+print(f"类别: {list(target_names)}")
+
+# 划分数据集
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42, stratify=y
+)
+
+# 标准化
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# 1. KNN分类器
+print("\n【1. KNN分类器】")
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(X_train_scaled, y_train)
+knn_score = knn.score(X_test_scaled, y_test)
+print(f"KNN准确率: {knn_score*100:.2f}%")
+
+# 2. 决策树
+print("\n【2. 决策树】")
+dt = DecisionTreeClassifier(max_depth=5, random_state=42)
+dt.fit(X_train, y_train)
+dt_score = dt.score(X_test, y_test)
+print(f"决策树准确率: {dt_score*100:.2f}%")
+
+# 3. 随机森林
+print("\n【3. 随机森林】")
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
+rf_score = rf.score(X_test, y_test)
+print(f"随机森林准确率: {rf_score*100:.2f}%")
+
+# 交叉验证
+print("\n【4. 交叉验证】")
+cv_scores = cross_val_score(rf, X, y, cv=5)
+print(f"5折交叉验证分数: {cv_scores.round(3)}")
+print(f"平均分数: {cv_scores.mean()*100:.2f}% (+/- {cv_scores.std()*2*100:.2f}%)")
+
+# 详细评估
+print("\n【5. 详细评估报告】")
+y_pred = rf.predict(X_test)
+print("混淆矩阵:")
+print(confusion_matrix(y_test, y_pred))
+print("\n分类报告:")
+print(classification_report(y_test, y_pred, target_names=target_names))
+
+# 特征重要性
+print("\n【6. 特征重要性】")
+importances = rf.feature_importances_
+for name, imp in sorted(zip(feature_names, importances), key=lambda x: -x[1]):
+    print(f"{name}: {imp:.3f}")</textarea>
+                        <div id="s5e2-output" class="code-output"></div>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">llm_api_example.py - 大模型API调用</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s5e3')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s5e3')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s5e3-editor" class="code-editor"># ============================================
+# 大模型API调用示例
+# ============================================
+
+print("=" * 60)
+print("大模型API调用概念与示例")
+print("=" * 60)
+
+# 注意：以下代码演示API调用的结构，实际使用需要有效的API密钥
+
+class LLMAssistant:
+    """大模型助手示例类"""
+    
+    def __init__(self, api_key="your-api-key"):
+        self.api_key = api_key
+        self.model = "gpt-3.5-turbo"
+    
+    def chat(self, prompt, temperature=0.7, max_tokens=500):
+        """
+        发送对话请求
+        
+        参数:
+            prompt: 用户输入
+            temperature: 创造性程度(0-1)
+            max_tokens: 最大回复长度
+        """
+        print(f"\n【发送请求】")
+        print(f"模型: {self.model}")
+        print(f"温度: {temperature}")
+        print(f"提示: {prompt[:50]}...")
+        
+        # 模拟API调用
+        return self._simulate_response(prompt)
+    
+    def _simulate_response(self, prompt):
+        """模拟API响应"""
+        responses = {
+            "数据分析": "数据分析是一个系统的过程，包括数据收集、清洗、分析和可视化。推荐使用Python的Pandas、NumPy和Matplotlib库。",
+            "Python": "Python是一种高级编程语言，适合数据分析、机器学习和Web开发。主要库包括NumPy、Pandas、Scikit-learn等。",
+            "学习": "有效的学习需要：1.设定明确目标 2.理论结合实践 3.及时复习总结 4.坚持不懈"
+        }
+        
+        for key, response in responses.items():
+            if key in prompt:
+                return response
+        return "感谢您的提问！作为AI助手，我可以帮助您解决各种问题。"
+    
+    def batch_process(self, prompts):
+        """批量处理多个请求"""
+        results = []
+        for prompt in prompts:
+            result = self.chat(prompt)
+            results.append(result)
+        return results
+
+# 使用示例
+assistant = LLMAssistant()
+
+print("\n【示例1: 数据分析咨询】")
+response1 = assistant.chat("如何用Python进行数据分析？")
+print(f"回复: {response1}")
+
+print("\n【示例2: 学习建议】")
+response2 = assistant.chat("如何高效学习Python？")
+print(f"回复: {response2}")
+
+print("\n【示例3: 批量处理】")
+prompts = ["什么是机器学习？", "Python有哪些优势？", "如何处理缺失值？"]
+results = assistant.batch_process(prompts)
+
+print("\n【API调用最佳实践】")
+print("1. 设置合适的超时时间")
+print("2. 实现重试机制处理网络错误")
+print("3. 使用流式输出提升用户体验")
+print("4. 注意API调用成本和速率限制")
+print("5. 敏感信息不要发送到外部API")</textarea>
+                        <div id="s5e3-output" class="code-output"></div>
+                    </div>
+
+                    <div class="tip-block">
+                        <strong>💡 学习要点：</strong>机器学习分为数据准备、模型选择、训练评估三步走。大模型API是当前的热门方向，但要注意数据隐私和API成本问题。
+                    </div>
+
+                    <div class="exercise-block">
+                        <h4>📝 阶段五练习题</h4>
+                        <ul>
+                            <li>使用KNN算法对鸢尾花数据集进行分类，并比较不同K值的效果</li>
+                            <li>实现一个简单的垃圾邮件分类器</li>
+                            <li>使用PCA对高维数据进行降维可视化</li>
+                            <li>调用一个大模型API，实现一个智能问答助手</li>
+                            <li>构建一个完整的机器学习pipeline，从数据预处理到模型部署</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapsible-section" id="stage6-section">
+            <div class="section-header" onclick="toggleSection('stage6-section')">
+                <div class="section-header-content">
+                    <div class="section-icon">⚡</div>
+                    <div class="section-title-group">
+                        <h2>第六阶段：高级主题与最佳实践</h2>
+                        <p class="section-subtitle">代码规范、测试、Git、性能优化</p>
+                        <div class="section-tags">
+                            <span class="tag">PEP8</span>
+                            <span class="tag">Git</span>
+                            <span class="tag">测试</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="section-content">
+                <div class="content-inner">
+                    <div class="content-block">
+                        <h3>6.1 代码规范与PEP8 <span class="difficulty-badge difficulty-easy">入门</span></h3>
+                        <p>良好的代码规范提高可读性和可维护性。PEP8是Python官方代码风格指南。</p>
+                        <ul>
+                            <li>缩进：4个空格（不用Tab）</li>
+                            <li>行长度：不超过79字符</li>
+                            <li>命名规范：变量小写下划线，类名大驼峰</li>
+                            <li>import顺序：标准库、第三方库、本地库</li>
+                            <li>使用空白符增强可读性</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">code_style.py - 代码规范示例</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s6e1')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s6e1')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s6e1-editor" class="code-editor"># ============================================
+# Python代码规范示例 - PEP8
+# ============================================
+
+# 标准库导入
+import os
+import sys
+from typing import List, Dict, Optional
+
+# 第三方库导入
+import numpy as np
+import pandas as pd
+
+# 本地导入
+from utils import helper_function
+
+
+# ===== 命名规范 =====
+
+# 变量和函数：小写下划线命名
+user_name = "钟心果"
+total_score = 95
+is_valid = True
+
+def calculate_average(scores: List[float]) -> float:
+    """计算平均分
+    
+    Args:
+        scores: 分数列表
+        
+    Returns:
+        平均分
+    """
+    if not scores:
+        return 0.0
+    return sum(scores) / len(scores)
+
+
+# 类名：大驼峰命名
+class StudentManager:
+    """学生管理系统"""
+    
+    def __init__(self):
+        self.students_dict = {}  # 字典用下划线
+    
+    def add_student(self, student_id: str, name: str) -> None:
+        """添加学生"""
+        self.students_dict[student_id] = name
+    
+    def get_student(self, student_id: str) -> Optional[str]:
+        """获取学生信息"""
+        return self.students_dict.get(student_id)
+
+
+# 常量：全大写下划线
+MAX_RETRY_COUNT = 3
+DEFAULT_TIMEOUT = 30
+
+
+# ===== 空白符使用 =====
+
+# 运算符周围加空格
+x = 1 + 2  # 推荐
+# y=1+2     # 不推荐
+
+# 函数参数默认值不加空格
+def func(a, b=10):
+    pass
+
+# 函数调用不加空格
+result = calculate_average([1, 2, 3])
+
+# 索引和切片不加空格
+data = [1, 2, 3, 4, 5]
+item = data[0]
+subset = data[1:3]
+
+
+# ===== 好的实践 =====
+
+# 使用描述性命名
+student_age = 20  # 好的
+s = 20  # 差的
+
+# 布尔变量使用is/has/can前缀
+is_active = True
+has_permission = True
+can_edit = True
+
+# 列表等使用复数名词
+fruits = ["apple", "banana"]
+scores = [95, 88, 92]
+
+
+# ===== 示例运行 =====
+print("=== 代码规范示例 ===")
+scores = [95, 88, 92, 78, 85]
+avg = calculate_average(scores)
+print(f"学生成绩: {scores}")
+print(f"平均分: {avg:.2f}")
+
+manager = StudentManager()
+manager.add_student("2025001", "钟心果")
+manager.add_student("2025002", "张三")
+print(f"\n学生列表: {manager.students_dict}")
+print(f"学号2025001: {manager.get_student('2025001')}")</textarea>
+                        <div id="s6e1-output" class="code-output"></div>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>6.2 单元测试 <span class="difficulty-badge difficulty-medium">基础</span></h3>
+                        <p>单元测试确保代码质量，是可靠软件的重要组成部分。unittest和pytest是常用的测试框架。</p>
+                        <ul>
+                            <li>测试用例：验证单个功能点</li>
+                            <li>setUp/tearDown：每个测试前后的准备和清理</li>
+                            <li>断言：assertEqual, assertTrue, assertRaises等</li>
+                            <li>覆盖率：测试覆盖的代码比例</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">unit_test.py - 单元测试示例</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s6e2')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s6e2')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s6e2-editor" class="code-editor"># ============================================
+# 单元测试示例 - 使用unittest
+# ============================================
+
+import unittest
+from typing import List
+
+# ===== 待测试的函数 =====
+
+def divide(a: float, b: float) -> float:
+    """除法运算"""
+    if b == 0:
+        raise ValueError("除数不能为零")
+    return a / b
+
+def find_max(numbers: List[int]) -> int:
+    """找最大值"""
+    if not numbers:
+        raise ValueError("列表不能为空")
+    return max(numbers)
+
+def is_prime(n: int) -> bool:
+    """判断素数"""
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    for i in range(3, int(n**0.5) + 1, 2):
+        if n % i == 0:
+            return False
+    return True
+
+
+# ===== 测试用例 =====
+print("=" * 60)
+print("运行测试用例")
+print("=" * 60)
+
+class TestMathFunctions(unittest.TestCase):
+    """数学函数测试"""
+    
+    def test_divide_normal(self):
+        """测试正常除法"""
+        self.assertEqual(divide(10, 2), 5.0)
+        self.assertEqual(divide(9, 3), 3.0)
+        self.assertAlmostEqual(divide(10, 3), 3.333, places=3)
+    
+    def test_divide_by_zero(self):
+        """测试除数为零"""
+        with self.assertRaises(ValueError):
+            divide(10, 0)
+    
+    def test_find_max_normal(self):
+        """测试找最大值"""
+        self.assertEqual(find_max([1, 5, 3]), 5)
+        self.assertEqual(find_max([-1, -5, -3]), -1)
+        self.assertEqual(find_max([42]), 42)
+    
+    def test_find_max_empty(self):
+        """测试空列表"""
+        with self.assertRaises(ValueError):
+            find_max([])
+
+
+class TestPrimeFunction(unittest.TestCase):
+    """素数判断测试"""
+    
+    def test_primes(self):
+        """测试素数"""
+        primes = [2, 3, 5, 7, 11, 13, 17, 19, 23]
+        for p in primes:
+            self.assertTrue(is_prime(p), f"{p}应该是素数")
+    
+    def test_not_primes(self):
+        """测试非素数"""
+        not_primes = [0, 1, 4, 6, 8, 9, 10]
+        for n in not_primes:
+            self.assertFalse(is_prime(n), f"{n}不应该素数")
+    
+    def test_negative(self):
+        """测试负数"""
+        self.assertFalse(is_prime(-1))
+        self.assertFalse(is_prime(-10))
+
+
+# 运行测试
+if __name__ == '__main__':
+    # 创建测试套件
+    loader = unittest.TestLoader()
+    suite = unittest.TestSuite()
+    
+    suite.addTests(loader.loadTestsFromTestCase(TestMathFunctions))
+    suite.addTests(loader.loadTestsFromTestCase(TestPrimeFunction))
+    
+    # 运行测试
+    runner = unittest.TextTestRunner(verbosity=2)
+    result = runner.run(suite)
+    
+    # 打印结果
+    print("\n" + "=" * 60)
+    print(f"测试总数: {result.testsRun}")
+    print(f"成功: {result.testsRun - len(result.failures) - len(result.errors)}")
+    print(f"失败: {len(result.failures)}")
+    print(f"错误: {len(result.errors)}")
+    print("=" * 60)</textarea>
+                        <div id="s6e2-output" class="code-output"></div>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">git_guide.py - Git版本控制概念</span>
+                            <div class="code-actions">
+                                <button class="code-btn code-btn-run" onclick="runCode('s6e3')">▶ 运行</button>
+                                <button class="code-btn code-btn-copy" onclick="copyCode('s6e3')">📋 复制</button>
+                            </div>
+                        </div>
+                        <textarea id="s6e3-editor" class="code-editor"># ============================================
+# Git版本控制指南
+# ============================================
+
+print("=" * 60)
+print("Git版本控制速查表")
+print("=" * 60)
+
+git_commands = """
+【基础配置】
+git config --global user.name "钟心果"
+git config --global user.email "zhongxinguo@example.com"
+
+【创建仓库】
+git init                    # 初始化新仓库
+git clone <url>              # 克隆远程仓库
+
+【基本操作】
+git add <file>              # 添加文件到暂存区
+git add .                   # 添加所有文件
+git commit -m "提交信息"     # 提交更改
+git status                  # 查看状态
+git log                     # 查看提交历史
+
+【分支操作】
+git branch                  # 列出分支
+git branch <name>           # 创建分支
+git checkout <branch>       # 切换分支
+git checkout -b <branch>    # 创建并切换
+git merge <branch>          # 合并分支
+git branch -d <branch>      # 删除分支
+
+【远程操作】
+git remote -v               # 查看远程仓库
+git fetch                   # 获取远程更新
+git pull                    # 拉取并合并
+git push                    # 推送到远程
+
+【撤销操作】
+git checkout -- <file>     # 放弃修改
+git reset HEAD <file>       # 取消暂存
+git reset --soft HEAD~1     # 撤销上次提交
+git revert <commit>         # 创建新提交来撤销
+
+【查看差异】
+git diff                    # 查看未暂存的修改
+git diff --staged           # 查看已暂存的修改
+git diff <branch1> <branch2> # 比较两个分支
+"""
+
+print(git_commands)
+
+# Git工作流说明
+print("=" * 60)
+print("Git工作流程")
+print("=" * 60)
+
+workflow = """
+┌─────────────────────────────────────────────────────┐
+│                    工作目录                           │
+│            (修改代码，添加新功能)                       │
+└─────────────────────┬───────────────────────────────┘
+                      │ git add
+                      ▼
+┌─────────────────────────────────────────────────────┐
+│                    暂存区                             │
+│            (git add 添加的文件)                       │
+└─────────────────────┬───────────────────────────────┘
+                      │ git commit
+                      ▼
+┌─────────────────────────────────────────────────────┐
+│                   本地仓库                            │
+│              (.git 目录)                             │
+└─────────────────────┬───────────────────────────────┘
+                      │ git push
+                      ▼
+┌─────────────────────────────────────────────────────┐
+│                   远程仓库                            │
+│            (GitHub, GitLab)                         │
+└─────────────────────────────────────────────────────┘
+"""
+print(workflow)
+
+# Git分支策略
+print("=" * 60)
+print("分支管理策略")
+print("=" * 60)
+
+branching = """
+main/master    : 主分支，保持稳定，可发布版本
+develop        : 开发分支，集成新功能
+feature/*      : 功能分支，开发新功能
+hotfix/*       : 热修复分支，紧急修复生产问题
+release/*      : 发布分支，准备发布版本
+
+常用工作流:
+1. 从develop创建feature分支
+2. 在feature分支开发并测试
+3. 合并回develop分支
+4. 从develop创建release分支进行测试
+5. 合并到main分支并发布
+"""
+print(branching)
+
+print("\n✓ Git版本控制学习完成！")</textarea>
+                        <div id="s6e3-output" class="code-output"></div>
+                    </div>
+
+                    <div class="tip-block">
+                        <strong>💡 学习要点：</strong>代码规范让代码更易读，测试让代码更可靠，Git让协作更顺畅。这三点是现代软件开发的基础技能，需要不断练习。
+                    </div>
+
+                    <div class="exercise-block">
+                        <h4>📝 阶段六练习题</h4>
+                        <ul>
+                            <li>使用flake8或pylint检查代码是否符合PEP8规范</li>
+                            <li>为一个数据处理函数编写完整的单元测试</li>
+                            <li>使用Git创建仓库，练习基本的add、commit、push操作</li>
+                            <li>配置pre-commit钩子，自动检查代码风格</li>
+                            <li>使用cProfile分析代码性能，找出瓶颈</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="footer">
-            <p>© 2026 钟心果 | 用代码改变世界 | 深圳</p>
-            <p style="margin-top: 10px; font-size: 0.9em;">持续学习，持续成长 ✨</p>
+            <p>© 2026 钟心果 | Python数据分析课程</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">深圳 · 商务数据分析与应用专业 · 2025级</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">持续学习，持续成长 ✨</p>
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/mode/python/python.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/addon/edit/matchbrackets.min.js"></script>
     
     <script>
         // Initialize CodeMirror editors
@@ -653,7 +2835,6 @@ print(f"学习Python已有：{study_years}年")
             matchBrackets: true
         };
 
-        // Initialize all code editors
         function initEditors() {
             const textareas = document.querySelectorAll('[id$="-editor"]');
             textareas.forEach(textarea => {
@@ -662,102 +2843,175 @@ print(f"学习Python已有：{study_years}年")
             });
         }
 
-        // Run Python code
+        // Run Python code simulation
         function runCode(codeId) {
             const editor = codeEditors[codeId];
+            if (!editor) {
+                console.error('Editor not found:', codeId);
+                return;
+            }
             const code = editor.getValue();
             const outputDiv = document.getElementById(codeId + '-output');
             
-            // Simple Python interpreter simulation
             let output = '';
             try {
-                // Capture print statements
-                const printMatches = code.match(/print\(([^)]+)\)/g);
+                const printMatches = code.match(/print\s*\(([^)]+)\)/g);
                 if (printMatches) {
                     printMatches.forEach(match => {
-                        let content = match.replace(/^print\(|\)$/g, '');
-                        
-                        // Simple f-string parsing
+                        let content = match.replace(/^print\s*\(|\)$/g, '');
                         content = content.replace(/f"([^"]+)"/g, (m, str) => {
                             return str.replace(/\{([^}]+)\}/g, (m, expr) => {
-                                // Very simple evaluation for demo
-                                if (expr === 'username') return '钟心果';
-                                if (expr === 'year') return '2026';
-                                if (expr === 'start_year') return '2025';
-                                if (expr === 'study_years') return '1';
-                                return expr;
+                                const context = {
+                                    'username': '钟心果',
+                                    'year': '2026',
+                                    'start_year': '2025',
+                                    'study_years': '1',
+                                    'name': '钟心果',
+                                    'age': '20',
+                                    'score': '95',
+                                    'a': '17',
+                                    'b': '5',
+                                    'total': '499999500000',
+                                    'standardized': '[[-1.41 -1.41]\n [-0.71 -0.71]\n [ 0.    0.  ]\n [ 0.71  0.71]]',
+                                    'normalized': '[[0.  0. ]\n [0.33 0.33]\n [0.67 0.67]\n [1.  1. ]]'
+                                };
+                                return context[expr] !== undefined ? context[expr] : expr;
                             });
                         });
-                        
-                        // Remove quotes
+                        content = content.replace(/f'([^']+)'/g, (m, str) => {
+                            return str.replace(/\{([^}]+)\}/g, (m, expr) => expr);
+                        });
                         content = content.replace(/^["']|["']$/g, '');
-                        
                         output += content + '\n';
                     });
                 }
                 
                 if (!output) {
-                    output = '程序执行完成！\n\n提示：为了安全，这里只模拟了print()函数的执行。\n实际运行请使用本地Python环境。';
+                    output = '程序执行完成！\n\n注意：这是代码模拟执行，仅显示print输出。\n实际运行请在本地Python环境中执行。';
                 }
                 
                 outputDiv.textContent = output;
-                outputDiv.style.color = 'rgba(255, 255, 255, 0.8)';
+                outputDiv.style.color = '#00ff88';
                 
             } catch (error) {
                 outputDiv.textContent = '错误：' + error.message;
-                outputDiv.style.color = '#ef4444';
+                outputDiv.style.color = '#ff5252';
             }
         }
 
         // Copy code to clipboard
         function copyCode(codeId) {
             const editor = codeEditors[codeId];
+            if (!editor) {
+                console.error('Editor not found:', codeId);
+                return;
+            }
             const code = editor.getValue();
             navigator.clipboard.writeText(code).then(() => {
-                alert('代码已复制到剪贴板！');
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ 已复制';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
             }).catch(err => {
                 console.error('复制失败：', err);
             });
         }
 
-        // Initialize particles
-        particlesJS('particles-canvas', {
-            particles: {
-                number: { value: 60, density: { enable: true, value_area: 800 } },
-                color: { value: '#00d2ff' },
-                shape: { type: 'circle' },
-                opacity: { value: 0.4, random: true },
-                size: { value: 3, random: true },
-                line_linked: {
-                    enable: true,
-                    distance: 130,
-                    color: '#00d2ff',
-                    opacity: 0.15,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 2,
-                    direction: 'none',
-                    random: true,
-                    straight: false,
-                    out_mode: 'out',
-                    bounce: false
-                }
-            },
-            interactivity: {
-                detect_on: 'canvas',
-                events: {
-                    onhover: { enable: true, mode: 'repulse' },
-                    onclick: { enable: true, mode: 'push' }
-                }
-            },
-            retina_detect: true
-        });
+        // Toggle section expand/collapse
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.toggle('active');
+            
+            if (section.classList.contains('active')) {
+                setTimeout(() => {
+                    section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 300);
+            }
+        }
 
-        // Initialize on load
+        // Initialize particles
+        function initParticles() {
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const particleCount = 80;
+            const connectionDistance = 150;
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            function createParticle() {
+                return {
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    size: Math.random() * 2 + 1,
+                    opacity: Math.random() * 0.5 + 0.2
+                };
+            }
+
+            function init() {
+                resize();
+                particles = [];
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(createParticle());
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach((p, i) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(0, 210, 255, ${p.opacity})`;
+                    ctx.fill();
+
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p2 = particles[j];
+                        const dx = p.x - p2.x;
+                        const dy = p.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < connectionDistance) {
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = `rgba(0, 210, 255, ${0.15 * (1 - dist / connectionDistance)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                });
+
+                requestAnimationFrame(draw);
+            }
+
+            window.addEventListener('resize', resize);
+            init();
+            draw();
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             initEditors();
+            initParticles();
+            
+            document.querySelectorAll('.collapsible-section').forEach((section, index) => {
+                if (index === 0) {
+                    section.classList.add('active');
+                }
+            });
         });
     </script>
 </body>
