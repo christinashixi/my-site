@@ -1,0 +1,2886 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第二章：面向对象编程 - Python数据分析师</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Rajdhani', sans-serif; line-height: 1.8; color: #e0e0e0; background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 50%, #24243e 100%); min-height: 100vh; overflow-x: hidden; position: relative; }
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; pointer-events: none; }
+        .grid-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(0, 210, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 210, 255, 0.03) 1px, transparent 1px); background-size: 40px 40px; z-index: 1; animation: gridMove 20s linear infinite; }
+        @keyframes gridMove { 0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 100% { transform: perspective(500px) rotateX(60deg) translateY(40px); } }
+        .light-effect { position: fixed; width: 600px; height: 600px; border-radius: 50%; filter: blur(120px); opacity: 0.15; z-index: 2; animation: floatLight 15s ease-in-out infinite; pointer-events: none; }
+        .light-1 { background: #00d2ff; top: -200px; left: -200px; }
+        .light-2 { background: #7b2ff7; bottom: -200px; right: -200px; animation-delay: -5s; }
+        .light-3 { background: #00ff88; top: 50%; left: 50%; width: 400px; height: 400px; animation-delay: -10s; }
+        @keyframes floatLight { 0%, 100% { transform: translate(0, 0) scale(1); } 25% { transform: translate(50px, -50px) scale(1.1); } 50% { transform: translate(0, -100px) scale(1); } 75% { transform: translate(-50px, -50px) scale(0.9); } }
+        .nav-container { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 15px 50px; background: rgba(15, 12, 41, 0.95); backdrop-filter: blur(20px); box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3); display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-family: 'Orbitron', sans-serif; font-size: 1.3em; font-weight: 700; color: #00d2ff; text-decoration: none; letter-spacing: 2px; }
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { color: rgba(255, 255, 255, 0.8); text-decoration: none; font-weight: 500; font-size: 1em; transition: all 0.3s ease; padding: 8px 15px; border-radius: 5px; }
+        .nav-links a:hover { color: #00d2ff; background: rgba(0, 210, 255, 0.1); }
+        .progress-bar { position: fixed; top: 70px; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #00d2ff, #7b2ff7, #00ff88); z-index: 999; transition: width 0.1s ease; }
+        .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 10; padding: 100px 20px 50px; }
+        .chapter-header { text-align: center; padding: 60px 0; position: relative; }
+        .chapter-badge { display: inline-block; padding: 10px 30px; background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(123, 47, 247, 0.1)); border: 1px solid rgba(0, 210, 255, 0.3); border-radius: 50px; color: #00d2ff; font-size: 0.9em; font-weight: 500; letter-spacing: 2px; margin-bottom: 30px; }
+        .chapter-header h1 { font-family: 'Orbitron', sans-serif; font-size: 3em; font-weight: 700; color: #fff; margin-bottom: 20px; letter-spacing: 2px; text-shadow: 0 0 30px rgba(0, 210, 255, 0.5); }
+        .chapter-header p { font-size: 1.2em; color: rgba(255, 255, 255, 0.7); max-width: 800px; margin: 0 auto; }
+        .toc-nav { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 210, 255, 0.1); border-radius: 15px; padding: 25px; margin: 40px 0; backdrop-filter: blur(10px); }
+        .toc-nav h3 { font-family: 'Orbitron', sans-serif; color: #00d2ff; margin-bottom: 20px; font-size: 1.2em; }
+        .toc-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; list-style: none; }
+        .toc-list a { display: block; padding: 12px 20px; background: rgba(0, 210, 255, 0.05); border: 1px solid rgba(0, 210, 255, 0.1); border-radius: 10px; color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: all 0.3s ease; font-weight: 500; }
+        .toc-list a:hover { background: rgba(0, 210, 255, 0.15); border-color: rgba(0, 210, 255, 0.3); color: #00d2ff; transform: translateX(5px); }
+        .toc-list a span { color: #00d2ff; margin-right: 10px; }
+        .section { margin: 60px 0; padding: 40px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)); border: 1px solid rgba(0, 210, 255, 0.1); border-radius: 25px; backdrop-filter: blur(10px); position: relative; overflow: hidden; }
+        .section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #00d2ff, #7b2ff7, #00ff88); opacity: 0; transition: opacity 0.3s ease; }
+        .section:hover::before { opacity: 1; }
+        .section h2 { font-family: 'Orbitron', sans-serif; font-size: 2em; color: #fff; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid rgba(0, 210, 255, 0.2); display: flex; align-items: center; gap: 15px; }
+        .section h2 .section-icon { font-size: 1.2em; }
+        .section h3 { font-family: 'Orbitron', sans-serif; font-size: 1.4em; color: #00d2ff; margin: 35px 0 20px; padding-left: 15px; border-left: 4px solid #7b2ff7; }
+        .section h4 { font-size: 1.2em; color: #fff; margin: 25px 0 15px; }
+        .learning-goals { background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 210, 255, 0.1)); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 15px; padding: 20px 25px; margin: 25px 0; }
+        .learning-goals h4 { color: #00ff88; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .learning-goals ul { list-style: none; padding-left: 0; }
+        .learning-goals li { padding: 8px 0; padding-left: 25px; position: relative; color: rgba(255, 255, 255, 0.85); }
+        .learning-goals li::before { content: '✓'; position: absolute; left: 0; color: #00ff88; }
+        .difficulty-tip { background: linear-gradient(135deg, rgba(123, 47, 247, 0.1), rgba(0, 210, 255, 0.1)); border: 1px solid rgba(123, 47, 247, 0.2); border-radius: 15px; padding: 20px 25px; margin: 25px 0; }
+        .difficulty-tip h4 { color: #7b2ff7; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .difficulty-tip p { color: rgba(255, 255, 255, 0.85); }
+        p { margin: 15px 0; color: rgba(255, 255, 255, 0.85); font-size: 1.05em; }
+        ul, ol { margin: 15px 0; padding-left: 30px; }
+        li { margin: 10px 0; color: rgba(255, 255, 255, 0.85); }
+        .code-block { margin: 25px 0; border-radius: 15px; overflow: hidden; border: 1px solid rgba(0, 210, 255, 0.2); background: rgba(0, 0, 0, 0.3); }
+        .code-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: rgba(0, 210, 255, 0.1); border-bottom: 1px solid rgba(0, 210, 255, 0.2); }
+        .code-title { color: #00d2ff; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .code-actions { display: flex; gap: 10px; }
+        .code-btn { padding: 6px 15px; background: rgba(0, 210, 255, 0.2); border: 1px solid rgba(0, 210, 255, 0.3); border-radius: 8px; color: #00d2ff; cursor: pointer; font-family: 'Rajdhani', sans-serif; font-size: 0.9em; transition: all 0.3s ease; }
+        .code-btn:hover { background: rgba(0, 210, 255, 0.3); transform: translateY(-2px); }
+        .code-output { padding: 15px 20px; background: rgba(0, 0, 0, 0.2); border-top: 1px solid rgba(0, 210, 255, 0.1); font-family: 'Courier New', monospace; color: #00ff88; white-space: pre-wrap; display: none; }
+        .code-output.show { display: block; }
+        .CodeMirror { font-family: 'Courier New', monospace !important; font-size: 14px !important; height: auto !important; min-height: 80px; max-height: 400px; }
+        .exercise-box { background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(123, 47, 247, 0.1)); border: 1px solid rgba(255, 107, 107, 0.2); border-radius: 15px; padding: 25px; margin: 30px 0; }
+        .exercise-box h4 { color: #ff6b6b; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .exercise-box p { color: rgba(255, 255, 255, 0.9); }
+        .resource-box { background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(123, 47, 247, 0.1)); border: 1px solid rgba(0, 210, 255, 0.2); border-radius: 15px; padding: 25px; margin: 30px 0; }
+        .resource-box h4 { color: #00d2ff; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .resource-list { display: grid; gap: 15px; }
+        .resource-item { display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(0, 210, 255, 0.05); border-radius: 10px; transition: all 0.3s ease; }
+        .resource-item:hover { background: rgba(0, 210, 255, 0.1); transform: translateX(5px); }
+        .resource-icon { font-size: 1.5em; width: 40px; text-align: center; }
+        .footer { text-align: center; padding: 60px 20px; border-top: 1px solid rgba(0, 210, 255, 0.1); margin-top: 80px; }
+        .footer p { color: rgba(255, 255, 255, 0.5); font-size: 1em; }
+        .footer a { color: #00d2ff; text-decoration: none; }
+        .footer a:hover { color: #7b2ff7; }
+        @media (max-width: 768px) { .nav-container { padding: 12px 20px; } .nav-links { gap: 15px; } .nav-links a { font-size: 0.9em; padding: 6px 10px; } .chapter-header h1 { font-size: 2em; } .section { padding: 25px 20px; } .section h2 { font-size: 1.5em; } .toc-list { grid-template-columns: 1fr; } }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #00d2ff, #7b2ff7); border-radius: 4px; }
+        .concept-card { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 25px 0; }
+        .concept-item { padding: 20px; background: rgba(0, 210, 255, 0.05); border: 1px solid rgba(0, 210, 255, 0.15); border-radius: 12px; transition: all 0.3s ease; }
+        .concept-item:hover { background: rgba(0, 210, 255, 0.1); transform: translateY(-5px); }
+        .concept-item h4 { color: #00d2ff; margin-bottom: 10px; font-size: 1.1em; }
+        .concept-item p { font-size: 0.95em; color: rgba(255, 255, 255, 0.75); }
+        .code-editor { width: 100%; min-height: 150px; padding: 15px; background: #1e1e1e; color: #d4d4d4; border: none; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.5; resize: vertical; }
+        .code-editor:focus { outline: none; }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="grid-bg"></div>
+    <div class="light-effect light-1"></div>
+    <div class="light-effect light-2"></div>
+    <div class="light-effect light-3"></div>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <nav class="nav-container">
+        <a href="index.html" class="nav-logo">钟心果</a>
+        <ul class="nav-links">
+            <li><a href="index.html">返回首页</a></li>
+            <li><a href="python-course.html">返回课程主页</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <header class="chapter-header">
+            <div class="chapter-badge">📚 第二单元</div>
+            <h1>面向对象编程</h1>
+            <p>本单元将带你深入探索Python面向对象编程的核心概念，包括类与对象、继承与多态、魔术方法、设计模式和高级特性。</p>
+        </header>
+
+        <nav class="toc-nav">
+            <h3>📑 章节导航</h3>
+            <div class="toc-list">
+                <a href="#section-2-1"><span>2.1</span> 类与对象基础</a>
+                <a href="#section-2-2"><span>2.2</span> 继承与多态</a>
+                <a href="#section-2-3"><span>2.3</span> 魔术方法与运算符重载</a>
+                <a href="#section-2-4"><span>2.4</span> 设计模式入门</a>
+                <a href="#section-2-5"><span>2.5</span> 高级特性</a>
+            </div>
+        </nav>
+
+        <section id="section-2-1" class="section">
+            <h2><span class="section-icon">🏗️</span> 2.1 类与对象基础</h2>
+            <p>面向对象编程（OOP）是一种程序设计范式，将程序中的数据和操作数据的方法封装在一起形成"对象"。类是对象的蓝图，定义了对象的属性和方法。本节详细介绍类的定义、对象的创建以及self参数。</p>
+
+            <div class="learning-goals">
+                <h4>🎯 学习目标</h4>
+                <ul>
+                    <li>理解类和对象的概念及其关系</li>
+                    <li>掌握类的定义和对象的创建方法</li>
+                    <li>理解self参数的作用和使用方式</li>
+                    <li>掌握构造函数__init__的使用</li>
+                    <li>区分实例属性和类属性的区别</li>
+                </ul>
+            </div>
+
+            <h3>2.1.1 类的定义与组成</h3>
+            <p>类是创建对象的蓝图，描述了对象的共同特征和行为。使用class关键字定义类，由属性（数据）和方法（函数）组成。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 类的定义与组成</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python类的定义与组成
+# 类是创建对象的蓝图，定义了对象的属性和方法
+
+print("=" * 60)
+print("示例1：定义第一个类")
+print("=" * 60)
+
+class Dog:
+    """定义一个Dog类，用于表示狗"""
+    # 类属性 - 所有实例共享
+    species = "犬科动物"
+    
+    # 构造函数 - 初始化对象的属性
+    def __init__(self, name, age):
+        # 实例属性 - 每个对象独有的数据
+        self.name = name
+        self.age = age
+    
+    # 实例方法 - 操作对象的行为
+    def bark(self):
+        """狗叫的方法"""
+        return f"{self.name} 汪汪叫！"
+    
+    def get_info(self):
+        """获取狗的信息"""
+        return f"名字：{self.name}，年龄：{self.age}岁"
+
+# 创建类的实例（对象）
+dog1 = Dog("旺财", 3)
+dog2 = Dog("小白", 2)
+
+print(f"创建对象：{dog1.name} 和 {dog2.name}")
+print(f"dog1的信息：{dog1.get_info()}")
+print(f"dog1的叫声：{dog1.bark()}")
+print(f"狗的物种：{Dog.species}")
+
+print("\n" + "=" * 60)
+print("示例2：学生类 - 演示属性和方法")
+print("=" * 60)
+
+class Student:
+    """学生类"""
+    school_name = "广东科学技术职业学院"
+    total_students = 0
+    
+    def __init__(self, name, student_id, major):
+        self.name = name
+        self.student_id = student_id
+        self.major = major
+        self.grades = []
+        Student.total_students += 1
+    
+    def add_grade(self, grade):
+        self.grades.append(grade)
+        return f"已添加成绩：{grade}"
+    
+    def get_average(self):
+        if not self.grades:
+            return 0
+        return sum(self.grades) / len(self.grades)
+    
+    def introduce(self):
+        avg = self.get_average()
+        return f"我叫{self.name}，学号{self.student_id}，专业{self.major}，平均分：{avg:.2f}"
+
+# 创建学生对象
+student1 = Student("小明", "S001", "数据科学")
+student2 = Student("小红", "S002", "人工智能")
+
+print(f"学生总数：{Student.total_students}")
+print(f"学校名称：{Student.school_name}")
+
+student1.add_grade(85)
+student1.add_grade(92)
+student1.add_grade(88)
+
+student2.add_grade(90)
+student2.add_grade(85)
+student2.add_grade(95)
+
+print(f"\n学生1：{student1.introduce()}")
+print(f"学生2：{student2.introduce()}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.1.2 self参数详解</h3>
+            <p>self参数指向对象实例本身，调用方法时Python自动传递。self允许方法访问和修改对象的属性，使不同对象能独立维护状态。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 self参数详解</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python self参数详解
+# self是对当前实例的引用，用于访问实例属性和方法
+
+print("=" * 60)
+print("示例1：self的基本使用")
+print("=" * 60)
+
+class Car:
+    """汽车类"""
+    
+    def __init__(self, brand, model, year):
+        self.brand = brand
+        self.model = model
+        self.year = year
+        self.speed = 0
+    
+    def accelerate(self):
+        self.speed += 10
+        return f"{self.brand} 加速！当前速度：{self.speed} km/h"
+    
+    def get_info(self):
+        return f"{self.year}款 {self.brand} {self.model}"
+
+car1 = Car("特斯拉", "Model 3", 2024)
+car2 = Car("比亚迪", "汉", 2023)
+
+print(f"Car1信息：{car1.get_info()}")
+print(f"Car2信息：{car2.get_info()}")
+print()
+print(car1.accelerate())
+print(car1.accelerate())
+print(car2.accelerate())
+print()
+print(f"Car1当前速度：{car1.speed} km/h")
+print(f"Car2当前速度：{car2.speed} km/h")
+
+print("\n" + "=" * 60)
+print("示例2：self用于方法链式调用")
+print("=" * 60)
+
+class StringBuilder:
+    """字符串构建器"""
+    
+    def __init__(self):
+        self.content = ""
+    
+    def append(self, text):
+        self.content += text
+        return self
+    
+    def to_upper(self):
+        self.content = self.content.upper()
+        return self
+    
+    def get_result(self):
+        return self.content
+
+# 使用链式调用
+sb = StringBuilder()
+result = sb.append("World").append("!").to_upper().get_result()
+print(f"链式调用结果：'{result}'")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.1.3 构造函数__init__详解</h3>
+            <p>__init__是特殊方法，创建实例时自动调用。用于初始化对象属性，构造函数可接受参数进行参数验证。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 构造函数详解</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python构造函数__init__详解
+
+print("=" * 60)
+print("示例1：基本构造函数")
+print("=" * 60)
+
+class Rectangle:
+    """矩形类"""
+    
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height
+    
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+    
+    def __str__(self):
+        return f"矩形(宽={self.width}, 高={self.height})"
+
+rect1 = Rectangle(5, 3)
+rect2 = Rectangle(10, 4)
+
+print(f"rect1：{rect1}")
+print(f"rect1 面积：{rect1.area()}")
+print(f"rect1 周长：{rect1.perimeter()}")
+print()
+print(f"rect2：{rect2}")
+print(f"rect2 面积：{rect2.area()}")
+
+print("\n" + "=" * 60)
+print("示例2：带默认参数的构造函数")
+print("=" * 60)
+
+class User:
+    """用户类"""
+    
+    def __init__(self, username, email, age=18, is_active=True):
+        self.username = username
+        self.email = email
+        self.age = age
+        self.is_active = is_active
+        self.login_count = 0
+    
+    def login(self):
+        self.login_count += 1
+        return f"用户 {self.username} 登录成功！"
+    
+    def show_profile(self):
+        status = "活跃" if self.is_active else "未激活"
+        return f"{self.username}({self.email}) - {self.age}岁 - {status}"
+
+user1 = User("xiaoming", "xiaoming@example.com")
+user2 = User("xiaohong", "xiaohong@example.com", 20)
+user3 = User("admin", "admin@example.com", 25, False)
+
+print(f"user1：{user1.show_profile()}")
+print(f"user2：{user2.show_profile()}")
+print(f"user3：{user3.show_profile()}")
+
+print("\n" + "=" * 60)
+print("示例3：参数验证")
+print("=" * 60)
+
+class BankAccount:
+    """银行账户类"""
+    
+    def __init__(self, account_holder, account_number, initial_balance=0):
+        if initial_balance < 0:
+            raise ValueError("初始余额不能为负数")
+        self.account_holder = account_holder
+        self.account_number = account_number
+        self.balance = initial_balance
+    
+    def deposit(self, amount):
+        if amount <= 0:
+            return "存款金额必须大于0"
+        self.balance += amount
+        return f"存款成功！余额：{self.balance}"
+    
+    def withdraw(self, amount):
+        if amount <= 0:
+            return "取款金额必须大于0"
+        if amount > self.balance:
+            return f"余额不足！当前余额：{self.balance}"
+        self.balance -= amount
+        return f"取款成功！余额：{self.balance}"
+
+account1 = BankAccount("张三", "6222-8888-1234", 1000)
+print(f"创建账户：{account1.account_holder}，余额：{account1.balance}")
+print(account1.deposit(500))
+print(account1.withdraw(200))</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.1.4 实例属性与类属性</h3>
+            <p>实例属性绑定到特定对象，类属性被所有实例共享。修改类属性影响所有实例，修改实例属性只影响当前对象。</p>
+
+            <div class="difficulty-tip">
+                <h4>💡 难点提示</h4>
+                <p><strong>属性访问优先级</strong>：当实例属性和类属性同名时，实例属性会覆盖类属性，但不修改类属性本身。</p>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 实例属性与类属性</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python实例属性与类属性
+
+print("=" * 60)
+print("示例1：实例属性 vs 类属性")
+print("=" * 60)
+
+class Person:
+    """人员类"""
+    # 类属性 - 被所有实例共享
+    species = "智人"
+    population = 0
+    
+    def __init__(self, name, age):
+        # 实例属性 - 每个对象独有
+        self.name = name
+        self.age = age
+        Person.population += 1
+
+person1 = Person("小明", 18)
+person2 = Person("小红", 20)
+
+print(f"类属性 - 物种：{Person.species}")
+print(f"类属性 - 人口：{Person.population}")
+print(f"person1 - 名字：{person1.name}，年龄：{person1.age}")
+print(f"person2 - 名字：{person2.name}，年龄：{person2.age}")
+
+print("\n" + "=" * 60)
+print("示例2：修改类属性 vs 实例属性")
+print("=" * 60)
+
+class Vehicle:
+    """交通工具类"""
+    vehicle_type = "陆地交通工具"
+    total_created = 0
+    
+    def __init__(self, brand, color):
+        self.brand = brand
+        self.color = color
+        Vehicle.total_created += 1
+
+car1 = Vehicle("特斯拉", "红色")
+car2 = Vehicle("比亚迪", "白色")
+
+print(f"创建的车辆总数：{Vehicle.total_created}")
+print(f"car1：{car1.brand} {car1.color}")
+print(f"car2：{car2.brand} {car2.color}")
+
+print("\n修改类属性（影响所有实例）：")
+Vehicle.vehicle_type = "新能源汽车"
+print(f"car1看到的类型：{car1.vehicle_type}")
+print(f"car2看到的类型：{car2.vehicle_type}")
+
+print("\n修改实例属性（只影响当前实例）：")
+car1.color = "蓝色"
+print(f"car1的新颜色：{car1.color}")
+print(f"car2保持原颜色：{car2.color}")
+
+print("\n" + "=" * 60)
+print("示例3：类方法访问类属性")
+print("=" * 60)
+
+class Product:
+    """产品类"""
+    discount_rate = 0.1
+    products_created = 0
+    
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+        Product.products_created += 1
+    
+    def get_final_price(self):
+        return self.price * (1 - Product.discount_rate)
+    
+    @classmethod
+    def set_discount(cls, rate):
+        cls.discount_rate = rate
+        return f"折扣率已更新为：{rate*100}%"
+
+product1 = Product("手机", 3000)
+product2 = Product("电脑", 8000)
+
+print(f"产品1：{product1.name}，原价：{product1.price}，折后价：{product1.get_final_price()}")
+print(Product.set_discount(0.2))
+print(f"新折后价：{product1.get_final_price()}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 实践练习</h4>
+                <p><strong>练习2.1.1</strong>：设计一个"图书"类，包含书名、作者、价格等属性，以及借阅和归还的方法。</p>
+                <p><strong>练习2.1.2</strong>：设计一个"游戏角色"类，包含角色名、职业、血量、攻击力等属性。</p>
+                <p><strong>练习2.1.3</strong>：创建一个"智能家居设备"类，区分类属性和实例属性，实现开关控制。</p>
+            </div>
+        </section>
+
+        <section id="section-2-2" class="section">
+            <h2><span class="section-icon">🔄</span> 2.2 继承与多态</h2>
+            <p>继承允许创建新类（子类）继承现有类（父类）的属性和方法。多态允许不同类的对象对同一消息做出不同响应。</p>
+
+            <div class="learning-goals">
+                <h4>🎯 学习目标</h4>
+                <ul>
+                    <li>理解继承的概念和作用</li>
+                    <li>掌握单继承和多继承的实现方式</li>
+                    <li>学会使用super()函数调用父类方法</li>
+                    <li>理解多态的概念并能够实现</li>
+                    <li>掌握isinstance和issubclass的使用</li>
+                </ul>
+            </div>
+
+            <h3>2.2.1 单继承与多继承</h3>
+            <p>单继承每个子类只有一个父类，多继承一个子类可有多个父类。Python支持多继承，需注意方法解析顺序（MRO）。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 单继承与多继承</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python单继承与多继承
+
+print("=" * 60)
+print("示例1：单继承 - 动物类体系")
+print("=" * 60)
+
+class Animal:
+    """动物基类"""
+    
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def speak(self):
+        return "..."
+    
+    def info(self):
+        return f"名字：{self.name}，年龄：{self.age}岁"
+
+class Dog(Animal):
+    """狗类 - 继承自动物类"""
+    
+    def __init__(self, name, age, breed):
+        super().__init__(name, age)
+        self.breed = breed
+    
+    def speak(self):
+        return "汪汪汪！"
+    
+    def fetch(self):
+        return f"{self.name}正在捡球..."
+
+class Cat(Animal):
+    """猫类"""
+    
+    def __init__(self, name, age, color):
+        super().__init__(name, age)
+        self.color = color
+    
+    def speak(self):
+        return "喵喵喵！"
+
+dog = Dog("旺财", 3, "金毛")
+cat = Cat("小白", 2, "白色")
+
+print(f"动物信息：{dog.info()}")
+print(f"狗的品种：{dog.breed}")
+print(f"狗叫声：{dog.speak()}")
+print(f"猫叫声：{cat.speak()}")
+
+print("\n多态演示：")
+animals = [dog, cat]
+for animal in animals:
+    print(f"{animal.name}：{animal.speak()}")
+
+print("\n" + "=" * 60)
+print("示例2：多继承")
+print("=" * 60)
+
+class Flyer:
+    """飞行类"""
+    def __init__(self, max_altitude):
+        self.max_altitude = max_altitude
+    
+    def fly(self):
+        return f"最高飞行高度：{self.max_altitude}米"
+
+class Swimmer:
+    """游泳类"""
+    def __init__(self, max_depth):
+        self.max_depth = max_depth
+    
+    def swim(self):
+        return f"最大下潜深度：{self.max_depth}米"
+
+class Duck(Animal, Flyer, Swimmer):
+    """鸭子类 - 多继承"""
+    
+    def __init__(self, name, age, max_altitude, max_depth):
+        Animal.__init__(self, name, age)
+        Flyer.__init__(self, max_altitude)
+        Swimmer.__init__(self, max_depth)
+    
+    def speak(self):
+        return "嘎嘎嘎！"
+    
+    def display_abilities(self):
+        return f"{self.name}会：{self.speak()}, {self.fly()}, {self.swim()}"
+
+duck = Duck("唐老鸭", 5, 1000, 30)
+print(f"Duck的MRO：{[cls.__name__ for cls in Duck.__mro__]}")
+print(f"所有能力：{duck.display_abilities()}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.2.2 super()函数的使用</h3>
+            <p>super()返回父类代理对象，确保正确调用MRO中的下一个类。避免在多继承中重复调用父类构造函数。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 super()函数使用</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python super()函数详解
+
+print("=" * 60)
+print("示例1：基本super()用法")
+print("=" * 60)
+
+class Person:
+    """人员基类"""
+    
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        print(f"Person.__init__ 被调用")
+    
+    def introduce(self):
+        return f"我是{self.name}，今年{self.age}岁"
+
+class Student(Person):
+    """学生类"""
+    
+    def __init__(self, name, age, student_id):
+        super().__init__(name, age)
+        self.student_id = student_id
+        print(f"Student.__init__ 被调用")
+    
+    def introduce(self):
+        base_info = super().introduce()
+        return f"{base_info}，学号：{self.student_id}"
+
+class CollegeStudent(Student):
+    """大学生类"""
+    
+    def __init__(self, name, age, student_id, major):
+        super().__init__(name, age, student_id)
+        self.major = major
+        print(f"CollegeStudent.__init__ 被调用")
+    
+    def introduce(self):
+        base_info = super().introduce()
+        return f"{base_info}，专业：{self.major}"
+
+print("创建大学生对象：")
+student = CollegeStudent("小明", 20, "S2024001", "数据科学")
+print(f"\n自我介绍：{student.introduce()}")
+
+print("\n" + "=" * 60)
+print("示例2：super()在方法重写中的应用")
+print("=" * 60)
+
+class Shape:
+    """图形基类"""
+    
+    def __init__(self, color="黑色"):
+        self.color = color
+    
+    def describe(self):
+        return f"一个{self.color}的图形"
+
+class Rectangle(Shape):
+    """矩形类"""
+    
+    def __init__(self, width, height, color="黑色"):
+        super().__init__(color)
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height
+    
+    def describe(self):
+        base_desc = super().describe()
+        return f"{base_desc}，宽：{self.width}，高：{self.height}，面积：{self.area()}"
+
+rect = Rectangle(5, 3, "蓝色")
+print(f"矩形：{rect.describe()}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.2.3 方法重写与多态</h3>
+            <p>方法重写是子类重新定义父类方法。多态使不同类对象可响应相同消息，Python使用Duck Typing实现多态。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 方法重写与多态</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python方法重写与多态
+
+print("=" * 60)
+print("示例1：方法重写基础")
+print("=" * 60)
+
+class Animal:
+    """动物基类"""
+    
+    def __init__(self, name):
+        self.name = name
+    
+    def make_sound(self):
+        return "...（动物发出声音）"
+
+class Dog(Animal):
+    def make_sound(self):
+        return f"{self.name}：汪汪汪！"
+
+class Cat(Animal):
+    def make_sound(self):
+        return f"{self.name}：喵喵喵！"
+
+class Cow(Animal):
+    def make_sound(self):
+        return f"{self.name}：哞哞哞！"
+
+animals = [Dog("旺财"), Cat("小白"), Cow("大黄"), Animal("神秘生物")]
+
+print("动物叫声（多态）：")
+for animal in animals:
+    print(f"  {animal.make_sound()}")
+
+print("\n" + "=" * 60)
+print("示例2：多态在实际场景中的应用")
+print("=" * 60)
+
+class Shape:
+    """图形基类"""
+    
+    def calculate_area(self):
+        raise NotImplementedError
+    
+    def display(self):
+        return f"面积：{self.calculate_area():.2f}"
+
+class Triangle(Shape):
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+    
+    def calculate_area(self):
+        s = (self.a + self.b + self.c) / 2
+        return (s * (s - self.a) * (s - self.b) * (s - self.c)) ** 0.5
+
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    
+    def calculate_area(self):
+        return self.side ** 2
+
+shapes = [Triangle(3, 4, 5), Square(5), Triangle(6, 8, 10)]
+
+print("图形信息（使用多态）：")
+for shape in shapes:
+    print(f"  {type(shape).__name__}：{shape.display()}")
+
+total_area = sum(shape.calculate_area() for shape in shapes)
+print(f"\n所有图形总面积：{total_area:.2f}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.2.4 isinstance和issubclass</h3>
+            <p>isinstance()检查对象是否是类的实例，issubclass()检查类是否是另一个类的子类。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 isinstance和issubclass</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python isinstance和issubclass
+
+print("=" * 60)
+print("示例1：isinstance()基本用法")
+print("=" * 60)
+
+class Animal:
+    pass
+
+class Dog(Animal):
+    pass
+
+class Puppy(Dog):
+    pass
+
+dog = Dog()
+puppy = Puppy()
+animal = Animal()
+
+print(f"dog是Dog的实例：{isinstance(dog, Dog)}")
+print(f"dog是Animal的实例：{isinstance(dog, Animal)}")
+print(f"puppy是Dog的实例：{isinstance(puppy, Dog)}")
+print(f"puppy是Animal的实例：{isinstance(puppy, Animal)}")
+
+print("\n" + "=" * 60)
+print("示例2：issubclass()基本用法")
+print("=" * 60)
+
+class Shape:
+    pass
+
+class Polygon(Shape):
+    pass
+
+class Rectangle(Polygon):
+    pass
+
+class Square(Rectangle):
+    pass
+
+print(f"Square是Rectangle的子类：{issubclass(Square, Rectangle)}")
+print(f"Square是Shape的子类：{issubclass(Square, Shape)}")
+print(f"Rectangle是Polygon的子类：{issubclass(Rectangle, Polygon)}")
+
+print("\n" + "=" * 60)
+print("示例3：MRO和__mro__属性")
+print("=" * 60)
+
+class A:
+    pass
+
+class B(A):
+    pass
+
+class C(A):
+    pass
+
+class D(B, C):
+    pass
+
+print(f"D的MRO：{[cls.__name__ for cls in D.__mro__]}")
+print("方法解析顺序确保正确调用父类方法")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 实践练习</h4>
+                <p><strong>练习2.2.1</strong>：设计一个"图形"类层次结构，包含圆形、矩形、三角形等子类。</p>
+                <p><strong>练习2.2.2</strong>：创建一个"交通工具"继承体系，包含汽车、飞机、船等类。</p>
+                <p><strong>练习2.2.3</strong>：设计一个"支付系统"，支持支付宝、微信支付、银行卡等多种支付方式。</p>
+            </div>
+        </section>
+
+        <section id="section-2-3" class="section">
+            <h2><span class="section-icon">✨</span> 2.3 魔术方法与运算符重载</h2>
+            <p>魔术方法是以双下划线开头和结尾的特殊方法，允许自定义类的行为使其使用内置操作符和函数。</p>
+
+            <div class="learning-goals">
+                <h4>🎯 学习目标</h4>
+                <ul>
+                    <li>理解魔术方法的概念和作用</li>
+                    <li>掌握__str__和__repr__的区别和使用</li>
+                    <li>学会实现迭代器协议（__iter__、__next__）</li>
+                    <li>掌握运算符重载的实现方法</li>
+                    <li>理解上下文管理器的实现</li>
+                </ul>
+            </div>
+
+            <h3>2.3.1 __str__和__repr__</h3>
+            <p>__str__用于用户友好的字符串表示，__repr__用于开发者友好的字符串表示。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 __str__和__repr__</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python __str__和__repr__
+
+print("=" * 60)
+print("__str__和__repr__")
+print("=" * 60)
+
+class Person:
+    """人员类"""
+    
+    def __init__(self, name, age, city):
+        self.name = name
+        self.age = age
+        self.city = city
+    
+    def __str__(self):
+        """用户友好的字符串表示"""
+        return f"{self.name}，{self.age}岁，来自{self.city}"
+    
+    def __repr__(self):
+        """开发者友好的字符串表示"""
+        return f"Person(name='{self.name}', age={self.age}, city='{self.city}')"
+
+person = Person("小明", 18, "广州")
+
+print("使用str()或print()：")
+print(f"  {str(person)}")
+
+print("\n使用repr()：")
+print(f"  {repr(person)}")
+
+print("\n在列表中使用：")
+people = [Person("小红", 19, "深圳"), Person("小华", 20, "北京")]
+print(f"  {people}")
+
+print("\n" + "=" * 60)
+print("向量类示例")
+print("=" * 60)
+
+class Vector:
+    """向量类"""
+    
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __str__(self):
+        return f"向量({self.x}, {self.y})"
+    
+    def __repr__(self):
+        return f"Vector({self.x}, {self.y})"
+
+vec = Vector(3, 4)
+print(f"__str__：{str(vec)}")
+print(f"__repr__：{repr(vec)}")
+print(f"eval(repr(vec)) = {eval(repr(vec))}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.3.2 __len__和__iter__迭代器协议</h3>
+            <p>__len__使对象支持len()函数，__iter__和__next__实现迭代器协议。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 __len__和__iter__</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python __len__和__iter__
+
+print("=" * 60)
+print("示例1：实现__len__")
+print("=" * 60)
+
+class Inventory:
+    """库存类"""
+    
+    def __init__(self):
+        self.items = {}
+    
+    def add_item(self, name, quantity):
+        if name in self.items:
+            self.items[name] += quantity
+        else:
+            self.items[name] = quantity
+    
+    def __len__(self):
+        return len(self.items)
+
+inventory = Inventory()
+inventory.add_item("手机", 100)
+inventory.add_item("电脑", 50)
+inventory.add_item("耳机", 200)
+
+print(f"库存商品种类数：{len(inventory)}")
+
+print("\n" + "=" * 60)
+print("示例2：实现__iter__和__next__")
+print("=" * 60)
+
+class Fibonacci:
+    """斐波那契数列迭代器"""
+    
+    def __init__(self, limit):
+        self.limit = limit
+        self.current = 0
+        self.next_value = 1
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.current >= self.limit:
+            raise StopIteration
+        
+        result = self.current
+        self.current, self.next_value = self.next_value, self.current + self.next_value
+        return result
+
+print("斐波那契数列（小于100）：")
+for num in Fibonacci(100):
+    print(f"  {num}", end=" ")
+print()
+
+print("\n使用list()转换：")
+fib = Fibonacci(1000)
+print(f"前20个斐波那契数：{list(fib)[:20]}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.3.3 __getitem__和__setitem__</h3>
+            <p>__getitem__和__setitem__允许对象使用索引语法进行访问，就像列表和字典一样。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 __getitem__和__setitem__</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python __getitem__和__setitem__
+
+print("=" * 60)
+print("示例1：基本的索引访问")
+print("=" * 60)
+
+class NumberList:
+    """数字列表类"""
+    
+    def __init__(self, *numbers):
+        self.numbers = list(numbers)
+    
+    def __getitem__(self, index):
+        return self.numbers[index]
+    
+    def __setitem__(self, index, value):
+        self.numbers[index] = value
+    
+    def __len__(self):
+        return len(self.numbers)
+    
+    def __repr__(self):
+        return f"NumberList{self.numbers}"
+
+nums = NumberList(10, 20, 30, 40, 50)
+
+print(f"原始列表：{nums}")
+print(f"nums[0] = {nums[0]}")
+print(f"nums[-1] = {nums[-1]}")
+print(f"nums[1:3] = {nums[1:3]}")
+
+nums[0] = 100
+print(f"修改后 nums[0] = {nums[0]}")
+print(f"修改后列表：{nums}")
+
+print("\n" + "=" * 60)
+print("示例2：字典式访问")
+print("=" * 60)
+
+class AttributeDict:
+    """属性字典"""
+    
+    def __init__(self, **kwargs):
+        self.data = kwargs
+    
+    def __getitem__(self, key):
+        return self.data[key]
+    
+    def __setitem__(self, key, value):
+        self.data[key] = value
+    
+    def __contains__(self, key):
+        return key in self.data
+
+user = AttributeDict(name="小明", age=18, city="广州")
+
+print(f"创建用户：{user.data}")
+print(f"用户名：{user['name']}")
+print(f"用户年龄：{user['age']}")
+
+user['age'] = 19
+user['major'] = "数据科学"
+print(f"更新后：{user.data}")
+
+print(f"'name' in user：{'name' in user}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.3.4 运算符重载</h3>
+            <p>运算符重载让自定义类支持+、-、*、/等运算符的操作。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 运算符重载</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python运算符重载
+
+print("=" * 60)
+print("示例1：向量运算")
+print("=" * 60)
+
+class Vector2D:
+    """二维向量类"""
+    
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __repr__(self):
+        return f"Vector2D({self.x}, {self.y})"
+    
+    def __add__(self, other):
+        """向量加法"""
+        return Vector2D(self.x + other.x, self.y + other.y)
+    
+    def __sub__(self, other):
+        """向量减法"""
+        return Vector2D(self.x - other.x, self.y - other.y)
+    
+    def __mul__(self, scalar):
+        """向量数乘"""
+        return Vector2D(self.x * scalar, self.y * scalar)
+    
+    def __rmul__(self, scalar):
+        """标量在左边"""
+        return self.__mul__(scalar)
+    
+    def magnitude(self):
+        """向量的模"""
+        return (self.x ** 2 + self.y ** 2) ** 0.5
+
+v1 = Vector2D(3, 4)
+v2 = Vector2D(1, 2)
+
+print(f"v1 = {v1}")
+print(f"v2 = {v2}")
+print(f"v1 + v2 = {v1 + v2}")
+print(f"v1 - v2 = {v1 - v2}")
+print(f"v1 * 2 = {v1 * 2}")
+print(f"3 * v2 = {3 * v2}")
+print(f"|v1| = {v1.magnitude():.2f}")
+
+print("\n" + "=" * 60)
+print("示例2：复数运算")
+print("=" * 60)
+
+class Complex:
+    """复数类"""
+    
+    def __init__(self, real, imag):
+        self.real = real
+        self.imag = imag
+    
+    def __repr__(self):
+        if self.imag >= 0:
+            return f"{self.real}+{self.imag}i"
+        else:
+            return f"{self.real}{self.imag}i"
+    
+    def __add__(self, other):
+        return Complex(self.real + other.real, self.imag + other.imag)
+    
+    def __mul__(self, other):
+        real = self.real * other.real - self.imag * other.imag
+        imag = self.real * other.imag + self.imag * other.real
+        return Complex(real, imag)
+
+c1 = Complex(3, 4)
+c2 = Complex(1, 2)
+
+print(f"c1 = {c1}")
+print(f"c2 = {c2}")
+print(f"c1 + c2 = {c1 + c2}")
+print(f"c1 * c2 = {c1 * c2}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.3.5 上下文管理器__enter__和__exit__</h3>
+            <p>上下文管理器通过with语句使用，__enter__初始化资源，__exit__清理资源。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 上下文管理器</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python上下文管理器
+
+print("=" * 60)
+print("示例1：基本的上下文管理器")
+print("=" * 60)
+
+class FileManager:
+    """文件管理器"""
+    
+    def __init__(self, filename, mode):
+        self.filename = filename
+        self.mode = mode
+        self.file = None
+    
+    def __enter__(self):
+        print(f"打开文件：{self.filename}")
+        self.file = f"<文件对象: {self.filename}>"
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print(f"关闭文件：{self.filename}")
+        self.file = None
+        return False
+    
+    def read(self):
+        return f"从 {self.filename} 读取数据..."
+
+with FileManager("data.txt", "r") as fm:
+    print(f"  读取：{fm.read()}")
+
+print("文件已关闭\n")
+
+print("\n" + "=" * 60)
+print("示例2：计时器上下文管理器")
+print("=" * 60)
+
+import time
+
+class Timer:
+    """计时器"""
+    
+    def __enter__(self):
+        self.start = time.time()
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.end = time.time()
+        self.elapsed = self.end - self.start
+        print(f"代码执行耗时：{self.elapsed:.4f} 秒")
+        return False
+
+with Timer():
+    total = sum(range(1000000))
+    print(f"  1到1000000的和：{total}")
+
+print("\n" + "=" * 60)
+print("示例3：使用contextlib简化")
+print("=" * 60)
+
+from contextlib import contextmanager
+
+@contextmanager
+def tag(name):
+    """HTML标签上下文管理器"""
+    print(f"<{name}>")
+    yield
+    print(f"</{name}>")
+
+with tag("html"):
+    with tag("head"):
+        print("  页面标题")
+    with tag("body"):
+        print("  页面内容")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.3.6 综合示例：智能数组类</h3>
+            <p>融合所有魔术方法的完整实现，展示如何创建功能强大且易用的自定义数据结构。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 智能数组类</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python综合示例：智能数组类
+
+print("=" * 60)
+print("智能数组类 - 融合所有魔术方法")
+print("=" * 60)
+
+class SmartArray:
+    """智能数组类"""
+    
+    def __init__(self, *initial_values):
+        self._data = list(initial_values)
+        self._history = []
+    
+    def __str__(self):
+        return f"[{', '.join(str(x) for x in self._data)}]"
+    
+    def __repr__(self):
+        return f"SmartArray({', '.join(repr(x) for x in self._data)})"
+    
+    def __getitem__(self, index):
+        if isinstance(index, slice):
+            return SmartArray(*self._data[index])
+        return self._data[index]
+    
+    def __setitem__(self, index, value):
+        self._data[index] = value
+    
+    def __len__(self):
+        return len(self._data)
+    
+    def __iter__(self):
+        return iter(self._data)
+    
+    def __contains__(self, item):
+        return item in self._data
+    
+    def __add__(self, other):
+        if isinstance(other, SmartArray):
+            return SmartArray(*self._data, *other._data)
+        return SmartArray(*self._data, other)
+    
+    def __mul__(self, n):
+        return SmartArray(*(self._data * n))
+    
+    def __enter__(self):
+        self._history.append(list(self._data))
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        return False
+    
+    def append(self, value):
+        self._data.append(value)
+    
+    def undo(self):
+        if self._history:
+            self._data = self._history.pop()
+        return self
+
+# 测试
+print("\n1. 基本操作：")
+arr = SmartArray(1, 2, 3, 4, 5)
+print(f"   创建数组：{arr}")
+print(f"   长度：{len(arr)}")
+print(f"   第3个元素：{arr[2]}")
+
+print("\n2. 索引赋值：")
+arr[0] = 10
+print(f"   修改后：{arr}")
+
+print("\n3. 迭代：")
+print("   遍历：", end="")
+for x in arr:
+    print(x, end=" ")
+print()
+
+print("\n4. 成员检查：")
+print(f"   10 in arr：{10 in arr}")
+
+print("\n5. 运算符重载：")
+arr1 = SmartArray(1, 2, 3)
+arr2 = SmartArray(4, 5, 6)
+print(f"   arr1 + arr2：{arr1 + arr2}")
+print(f"   arr1 * 3：{arr1 * 3}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 实践练习</h4>
+                <p><strong>练习2.3.1</strong>：创建一个"时间"类，支持加法和减法运算。</p>
+                <p><strong>练习2.3.2</strong>：设计一个"集合"类，支持交集（&）、并集（|）运算。</p>
+                <p><strong>练习2.3.3</strong>：设计一个"事务"上下文管理器，支持自动提交和回滚。</p>
+            </div>
+        </section>
+
+        <section id="section-2-4" class="section">
+            <h2><span class="section-icon">🎨</span> 2.4 设计模式入门</h2>
+            <p>设计模式是解决常见问题的最佳实践。本节介绍四种常用设计模式：单例模式、工厂模式、观察者模式和策略模式。</p>
+
+            <div class="learning-goals">
+                <h4>🎯 学习目标</h4>
+                <ul>
+                    <li>理解设计模式的概念和作用</li>
+                    <li>掌握单例模式的多种实现方式</li>
+                    <li>理解工厂模式的核心思想</li>
+                    <li>学会使用观察者模式实现事件系统</li>
+                    <li>掌握策略模式解耦算法</li>
+                </ul>
+            </div>
+
+            <h3>2.4.1 单例模式</h3>
+            <p>单例模式确保一个类只有一个实例，应用于配置管理器、数据库连接池、日志系统等场景。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 单例模式</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python单例模式
+
+print("=" * 60)
+print("示例1：基础单例模式")
+print("=" * 60)
+
+class Singleton:
+    """单例模式基础实现"""
+    _instance = None
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+    
+    def __init__(self):
+        self.value = "单例实例的值"
+    
+    def show_message(self):
+        return "这是单例模式实例！"
+
+singleton1 = Singleton()
+singleton2 = Singleton()
+
+print(f"singleton1 is singleton2：{singleton1 is singleton2}")
+print(f"单例的值：{singleton1.value}")
+
+singleton1.value = "修改后的值"
+print(f"修改后的值：{singleton2.value}")
+
+print("\n" + "=" * 60)
+print("示例2：单例模式应用 - 配置管理器")
+print("=" * 60)
+
+class ConfigManager:
+    """配置管理器"""
+    _instance = None
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+    
+    def __init__(self):
+        if self._initialized:
+            return
+        
+        self._config = {
+            "app_name": "AI助手",
+            "version": "1.0.0",
+            "debug": False
+        }
+        self._initialized = True
+    
+    def get(self, key, default=None):
+        return self._config.get(key, default)
+    
+    def set(self, key, value):
+        self._config[key] = value
+
+config1 = ConfigManager()
+config2 = ConfigManager()
+
+print(f"应用名称：{config1.get('app_name')}")
+print(f"版本：{config2.get('version')}")
+
+config1.set("debug", True)
+config1.set("theme", "dark")
+print(f"调试模式：{config2.get('debug')}")
+print(f"主题：{config1.get('theme')}")
+
+print("\n" + "=" * 60)
+print("示例3：单例装饰器")
+print("=" * 60)
+
+def singleton_class(cls):
+    """单例装饰器"""
+    instances = {}
+    
+    def get_instance(*args, **kwargs):
+        if cls not in instances:
+            instances[cls] = cls(*args, **kwargs)
+        return instances[cls]
+    
+    return get_instance
+
+@singleton_class
+class DatabaseConnection:
+    """数据库连接类"""
+    
+    def __init__(self, host="localhost"):
+        self.host = host
+        print(f"建立数据库连接：{host}")
+
+db1 = DatabaseConnection("192.168.1.100")
+db2 = DatabaseConnection("192.168.1.200")
+
+print(f"db1 is db2：{db1 is db2}")
+print(f"db1的主机：{db1.host}")
+print(f"db2的主机：{db2.host}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.4.2 工厂模式</h3>
+            <p>工厂模式将对象的创建与使用分离，通过工厂类统一创建不同类型的对象。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 工厂模式</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python工厂模式
+
+print("=" * 60)
+print("示例1：简单工厂模式")
+print("=" * 60)
+
+class Animal:
+    """动物基类"""
+    def speak(self):
+        raise NotImplementedError
+
+class Dog(Animal):
+    def speak(self):
+        return "汪汪汪！"
+
+class Cat(Animal):
+    def speak(self):
+        return "喵喵喵！"
+
+class Bird(Animal):
+    def speak(self):
+        return "叽叽喳！"
+
+class AnimalFactory:
+    """动物工厂"""
+    
+    @staticmethod
+    def create_animal(animal_type):
+        animals = {
+            "dog": Dog,
+            "cat": Cat,
+            "bird": Bird
+        }
+        animal_class = animals.get(animal_type.lower())
+        if animal_class:
+            return animal_class()
+        raise ValueError(f"不支持的动物类型：{animal_type}")
+
+print("简单工厂创建动物：")
+for animal_type in ["dog", "cat", "bird", "dog"]:
+    animal = AnimalFactory.create_animal(animal_type)
+    print(f"  {animal_type}：{animal.speak()}")
+
+print("\n" + "=" * 60)
+print("示例2：工厂模式应用 - AI模型工厂")
+print("=" * 60)
+
+class AIModel:
+    """AI模型基类"""
+    def predict(self, data):
+        raise NotImplementedError
+
+class TextClassifier(AIModel):
+    def __init__(self, model_name="BERT"):
+        self.model_name = model_name
+    
+    def predict(self, text):
+        return f"文本分类结果：{text[:20]}..."
+
+class ImageRecognizer(AIModel):
+    def __init__(self, model_name="ResNet"):
+        self.model_name = model_name
+    
+    def predict(self, image):
+        return f"图像识别结果：{image[:20]}..."
+
+class AIModelFactory:
+    """AI模型工厂"""
+    _models = {
+        "text": TextClassifier,
+        "image": ImageRecognizer
+    }
+    
+    @classmethod
+    def create_model(cls, model_type, **kwargs):
+        model_class = cls._models.get(model_type.lower())
+        if model_class:
+            return model_class(**kwargs)
+        raise ValueError(f"不支持的模型类型：{model_type}")
+    
+    @classmethod
+    def register_model(cls, model_type, model_class):
+        cls._models[model_type.lower()] = model_class
+
+print("AI模型工厂创建模型：")
+model_types = ["text", "image"]
+input_data = ["这是一段文本", "image_data_001"]
+
+for model_type, data in zip(model_types, input_data):
+    model = AIModelFactory.create_model(model_type)
+    print(f"  {model_type}模型：{model.predict(data)}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.4.3 观察者模式</h3>
+            <p>观察者模式定义对象之间的一对多依赖关系，当对象状态改变时，所有依赖者自动收到通知。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 观察者模式</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python观察者模式
+
+print("=" * 60)
+print("示例1：基础观察者模式")
+print("=" * 60)
+
+class Observer:
+    """观察者基类"""
+    def update(self, subject):
+        pass
+
+class Subject:
+    """主题"""
+    
+    def __init__(self):
+        self._observers = []
+        self._state = None
+    
+    def attach(self, observer):
+        if observer not in self._observers:
+            self._observers.append(observer)
+    
+    def detach(self, observer):
+        if observer in self._observers:
+            self._observers.remove(observer)
+    
+    def notify(self):
+        for observer in self._observers:
+            observer.update(self)
+    
+    @property
+    def state(self):
+        return self._state
+    
+    @state.setter
+    def state(self, value):
+        self._state = value
+        self.notify()
+
+class EmailSubscriber(Observer):
+    def __init__(self, email):
+        self.email = email
+    
+    def update(self, subject):
+        print(f"📧 邮件通知 {self.email}：{subject.state}")
+
+class SMSSubscriber(Observer):
+    def __init__(self, phone):
+        self.phone = phone
+    
+    def update(self, subject):
+        print(f"📱 短信通知 {self.phone}：{subject.state}")
+
+# 测试
+print("新闻订阅系统：")
+news_agency = Subject()
+
+subscriber1 = EmailSubscriber("user1@example.com")
+subscriber2 = SMSSubscriber("138-0000-1234")
+
+news_agency.attach(subscriber1)
+news_agency.attach(subscriber2)
+
+print("\n发布新闻1：")
+news_agency.state = "Python 4.0 发布！"
+
+print("\n发布新闻2：")
+news_agency.state = "AI技术新突破！"
+
+print("\n用户取消订阅：")
+news_agency.detach(subscriber2)
+
+print("\n发布新闻3：")
+news_agency.state = "Python课程更新！"
+
+print("\n" + "=" * 60)
+print("示例2：数据绑定")
+print("=" * 60)
+
+class DataBinding:
+    """数据绑定类"""
+    
+    def __init__(self, initial_value=None):
+        self._value = initial_value
+        self._bindings = []
+    
+    def bind(self, callback):
+        self._bindings.append(callback)
+    
+    @property
+    def value(self):
+        return self._value
+    
+    @value.setter
+    def value(self, new_value):
+        old_value = self._value
+        self._value = new_value
+        for callback in self._bindings:
+            callback(old_value, new_value)
+
+user_name = DataBinding("小明")
+
+def on_change(old, new):
+    print(f"  名称变化：{old} -> {new}")
+
+user_name.bind(on_change)
+
+print("修改用户名：")
+user_name.value = "小红"
+user_name.value = "小华"</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.4.4 策略模式</h3>
+            <p>策略模式定义一系列算法并封装起来，使它们可以相互替换。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 策略模式</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python策略模式
+
+print("=" * 60)
+print("示例1：支付策略模式")
+print("=" * 60)
+
+class PaymentStrategy:
+    """支付策略接口"""
+    def pay(self, amount):
+        raise NotImplementedError
+
+class Alipay(PaymentStrategy):
+    def __init__(self):
+        self.name = "支付宝"
+    
+    def pay(self, amount):
+        return f"使用{self.name}支付¥{amount}，收取0.6%手续费"
+
+class WeChatPay(PaymentStrategy):
+    def __init__(self):
+        self.name = "微信支付"
+    
+    def pay(self, amount):
+        return f"使用{self.name}支付¥{amount}，收取0.6%手续费"
+
+class Cash(PaymentStrategy):
+    def __init__(self):
+        self.name = "现金"
+    
+    def pay(self, amount):
+        return f"使用{self.name}支付¥{amount}，无手续费"
+
+class ShoppingCart:
+    """购物车"""
+    def __init__(self):
+        self.items = []
+        self.payment_strategy = None
+    
+    def add_item(self, item, price):
+        self.items.append({"item": item, "price": price})
+    
+    def set_payment(self, strategy):
+        self.payment_strategy = strategy
+    
+    def checkout(self):
+        total = sum(item["price"] for item in self.items)
+        if self.payment_strategy:
+            return self.payment_strategy.pay(total)
+        return "请选择支付方式"
+
+# 使用策略模式
+cart = ShoppingCart()
+cart.add_item("Python书籍", 59.00)
+cart.add_item("咖啡", 28.00)
+
+print(f"购物车总价：¥{sum(i['price'] for i in cart.items)}")
+print()
+
+payment_methods = [Alipay(), WeChatPay(), Cash()]
+for method in payment_methods:
+    cart.set_payment(method)
+    print(f"  {cart.checkout()}")
+
+print("\n" + "=" * 60)
+print("示例2：排序策略模式")
+print("=" * 60)
+
+class SortStrategy:
+    """排序策略接口"""
+    def sort(self, data):
+        raise NotImplementedError
+
+class BubbleSort(SortStrategy):
+    def sort(self, data):
+        arr = data.copy()
+        n = len(arr)
+        for i in range(n):
+            for j in range(0, n-i-1):
+                if arr[j] > arr[j+1]:
+                    arr[j], arr[j+1] = arr[j+1], arr[j]
+        return arr
+
+class QuickSort(SortStrategy):
+    def sort(self, data):
+        if len(data) <= 1:
+            return data
+        pivot = data[len(data) // 2]
+        left = [x for x in data if x < pivot]
+        middle = [x for x in data if x == pivot]
+        right = [x for x in data if x > pivot]
+        return self.sort(left) + middle + self.sort(right)
+
+class DataSorter:
+    """数据排序器"""
+    def __init__(self, strategy=None):
+        self.strategy = strategy
+    
+    def set_strategy(self, strategy):
+        self.strategy = strategy
+    
+    def sort(self, data):
+        if self.strategy:
+            return self.strategy.sort(data)
+        return sorted(data)
+
+data = [64, 34, 25, 12, 22, 11, 90]
+sorter = DataSorter()
+
+print(f"原始数据：{data}")
+print()
+sorter.set_strategy(BubbleSort())
+print(f"冒泡排序：{sorter.sort(data)}")
+sorter.set_strategy(QuickSort())
+print(f"快速排序：{sorter.sort(data)}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 实践练习</h4>
+                <p><strong>练习2.4.1</strong>：实现一个日志系统，使用单例模式确保全局唯一实例。</p>
+                <p><strong>练习2.4.2</strong>：设计一个图表生成器工厂，支持折线图、柱状图、饼图等。</p>
+                <p><strong>练习2.4.3</strong>：实现一个事件系统，使用观察者模式处理用户行为。</p>
+                <p><strong>练习2.4.4</strong>：设计一个折扣策略系统，支持不同会员等级享有不同折扣。</p>
+            </div>
+        </section>
+
+        <section id="section-2-5" class="section">
+            <h2><span class="section-icon">🚀</span> 2.5 高级特性</h2>
+            <p>本节介绍Python面向对象编程的高级特性，包括装饰器、@property、类方法与静态方法、抽象基类和元类。</p>
+
+            <div class="learning-goals">
+                <h4>🎯 学习目标</h4>
+                <ul>
+                    <li>理解装饰器的基本概念和使用方法</li>
+                    <li>掌握@property装饰器实现属性访问控制</li>
+                    <li>区分类方法和静态方法的区别</li>
+                    <li>学会使用抽象基类定义接口</li>
+                    <li>理解元类的概念和作用</li>
+                </ul>
+            </div>
+
+            <h3>2.5.1 装饰器基础</h3>
+            <p>装饰器是修改函数或类行为的强大工具，使用@语法糖应用，允许在不修改原函数的情况下添加新功能。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 装饰器基础</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python装饰器基础
+
+print("=" * 60)
+print("示例1：基本装饰器")
+print("=" * 60)
+
+def timer_decorator(func):
+    """计时装饰器"""
+    def wrapper(*args, **kwargs):
+        import time
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f"函数 {func.__name__} 执行耗时：{end-start:.4f}秒")
+        return result
+    return wrapper
+
+@timer_decorator
+def slow_function():
+    """模拟慢函数"""
+    import time
+    time.sleep(0.1)
+    return "函数执行完成"
+
+result = slow_function()
+print(f"返回值：{result}")
+
+print("\n" + "=" * 60)
+print("示例2：带参数的装饰器")
+print("=" * 60)
+
+def repeat(times):
+    """重复执行装饰器"""
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            results = []
+            for _ in range(times):
+                result = func(*args, **kwargs)
+                results.append(result)
+            return results
+        return wrapper
+    return decorator
+
+@repeat(times=3)
+def greet(name):
+    return f"你好，{name}！"
+
+greetings = greet("小明")
+print(f"执行3次的结果：{greetings}")
+
+print("\n" + "=" * 60)
+print("示例3：日志装饰器")
+print("=" * 60)
+
+def log_calls(func):
+    """日志记录装饰器"""
+    def wrapper(*args, **kwargs):
+        print(f"[日志] 调用函数：{func.__name__}")
+        print(f"[日志] 参数：{args}, {kwargs}")
+        result = func(*args, **kwargs)
+        print(f"[日志] 返回值：{result}")
+        return result
+    return wrapper
+
+@log_calls
+def calculate(x, y):
+    return x + y
+
+@log_calls
+def multiply(x, y):
+    return x * y
+
+print("计算结果：")
+calculate(5, 3)
+print()
+multiply(4, 7)</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.5.2 @property装饰器</h3>
+            <p>@property允许将方法当作属性访问，实现属性的 getter、setter 和 deleter 功能，同时保持数据封装。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 @property装饰器</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python @property装饰器
+
+print("=" * 60)
+print("示例1：基本@property用法")
+print("=" * 60)
+
+class Person:
+    """人员类"""
+    
+    def __init__(self, name, age):
+        self._name = name
+        self._age = age
+    
+    @property
+    def name(self):
+        """获取姓名"""
+        return self._name
+    
+    @name.setter
+    def name(self, value):
+        """设置姓名"""
+        if not value:
+            raise ValueError("姓名不能为空")
+        self._name = value
+    
+    @property
+    def age(self):
+        """获取年龄"""
+        return self._age
+    
+    @age.setter
+    def age(self, value):
+        """设置年龄"""
+        if value < 0 or value > 150:
+            raise ValueError("年龄必须在0-150之间")
+        self._age = value
+
+person = Person("小明", 18)
+
+print(f"姓名：{person.name}")
+print(f"年龄：{person.age}")
+
+person.name = "小红"
+person.age = 20
+print(f"修改后：{person.name}，{person.age}")
+
+print("\n" + "=" * 60)
+print("示例2：只读属性")
+print("=" * 60)
+
+class Circle:
+    """圆形类"""
+    
+    def __init__(self, radius):
+        self._radius = radius
+    
+    @property
+    def radius(self):
+        return self._radius
+    
+    @radius.setter
+    def radius(self, value):
+        if value < 0:
+            raise ValueError("半径不能为负")
+        self._radius = value
+    
+    @property
+    def area(self):
+        """只读属性 - 面积"""
+        return 3.14159 * self._radius ** 2
+    
+    @property
+    def perimeter(self):
+        """只读属性 - 周长"""
+        return 2 * 3.14159 * self._radius
+
+circle = Circle(5)
+print(f"半径：{circle.radius}")
+print(f"面积：{circle.area:.2f}")
+print(f"周长：{circle.perimeter:.2f}")
+
+circle.radius = 10
+print(f"\n修改半径为10后：")
+print(f"半径：{circle.radius}")
+print(f"面积：{circle.area:.2f}")
+
+print("\n" + "=" * 60)
+print("示例3：实际应用 - 银行账户")
+print("=" * 60)
+
+class BankAccount:
+    """银行账户"""
+    
+    def __init__(self, account_holder, initial_balance=0):
+        self._account_holder = account_holder
+        self._balance = initial_balance
+        self._transactions = []
+    
+    @property
+    def balance(self):
+        """获取余额"""
+        return self._balance
+    
+    @balance.setter
+    def balance(self, value):
+        """设置余额（通过交易）"""
+        if value < 0:
+            raise ValueError("余额不能为负")
+        self._balance = value
+    
+    def deposit(self, amount):
+        if amount <= 0:
+            raise ValueError("存款金额必须大于0")
+        self._balance += amount
+        self._transactions.append(f"存款：+{amount}")
+        return f"存款成功，余额：{self._balance}"
+    
+    def withdraw(self, amount):
+        if amount <= 0:
+            raise ValueError("取款金额必须大于0")
+        if amount > self._balance:
+            raise ValueError("余额不足")
+        self._balance -= amount
+        self._transactions.append(f"取款：-{amount}")
+        return f"取款成功，余额：{self._balance}"
+    
+    @property
+    def transaction_history(self):
+        """只读属性 - 交易历史"""
+        return self._transactions.copy()
+    
+    def __str__(self):
+        return f"账户：{self._account_holder}，余额：{self._balance}"
+
+account = BankAccount("张三", 1000)
+print(account)
+print(account.deposit(500))
+print(account.withdraw(200))
+print(f"交易记录：{account.transaction_history}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.5.3 类方法与静态方法</h3>
+            <p>类方法通过@classmethod修饰，接收类本身作为第一个参数；静态方法通过@staticmethod修饰，不需要self或cls参数。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 类方法与静态方法</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python类方法与静态方法
+
+print("=" * 60)
+print("示例1：类方法 vs 实例方法")
+print("=" * 60)
+
+class Counter:
+    """计数器类"""
+    count = 0
+    
+    def __init__(self):
+        Counter.count += 1
+    
+    def instance_method(self):
+        """实例方法 - 需要self"""
+        return f"实例方法，计数：{Counter.count}"
+    
+    @classmethod
+    def class_method(cls):
+        """类方法 - 需要cls"""
+        cls.count += 1
+        return f"类方法，当前计数：{cls.count}"
+    
+    @staticmethod
+    def static_method():
+        """静态方法 - 不需要参数"""
+        return "静态方法，不访问类属性"
+
+counter1 = Counter()
+counter2 = Counter()
+
+print(f"实例方法：{counter1.instance_method()}")
+print(f"类方法：{Counter.class_method()}")
+print(f"静态方法：{Counter.static_method()}")
+
+print("\n" + "=" * 60)
+print("示例2：类方法的实际应用")
+print("=" * 60)
+
+class Date:
+    """日期类"""
+    
+    def __init__(self, year, month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+    
+    @classmethod
+    def from_string(cls, date_string):
+        """从字符串创建日期对象"""
+        year, month, day = map(int, date_string.split('-'))
+        return cls(year, month, day)
+    
+    @classmethod
+    def today(cls):
+        """创建今天的日期"""
+        import datetime
+        today = datetime.date.today()
+        return cls(today.year, today.month, today.day)
+    
+    def __str__(self):
+        return f"{self.year}年{self.month}月{self.day}日"
+
+# 使用类方法创建对象
+date1 = Date.from_string("2024-12-25")
+date2 = Date.today()
+
+print(f"从字符串创建：{date1}")
+print(f"今天的日期：{date2}")
+
+print("\n" + "=" * 60)
+print("示例3：静态方法的实际应用")
+print("=" * 60)
+
+class MathUtils:
+    """数学工具类"""
+    
+    @staticmethod
+    def is_prime(n):
+        """判断是否为质数"""
+        if n < 2:
+            return False
+        for i in range(2, int(n ** 0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+    
+    @staticmethod
+    def fibonacci(n):
+        """计算斐波那契数列"""
+        if n <= 1:
+            return n
+        a, b = 0, 1
+        for _ in range(n - 1):
+            a, b = b, a + b
+        return b
+    
+    @staticmethod
+    def factorial(n):
+        """计算阶乘"""
+        if n <= 1:
+            return 1
+        return n * MathUtils.factorial(n - 1)
+
+print("质数判断：")
+for num in [2, 10, 17, 23, 100]:
+    result = "是质数" if MathUtils.is_prime(num) else "不是质数"
+    print(f"  {num}：{result}")
+
+print("\n斐波那契数列：")
+for i in range(10):
+    print(f"  F({i}) = {MathUtils.fibonacci(i)}")
+
+print("\n阶乘：")
+for n in [5, 6, 7]:
+    print(f"  {n}! = {MathUtils.factorial(n)}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.5.4 抽象基类（ABC）</h3>
+            <p>抽象基类（Abstract Base Class）用于定义接口，子类必须实现抽象方法才能实例化。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 抽象基类</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python抽象基类（ABC）
+
+from abc import ABC, abstractmethod
+
+print("=" * 60)
+print("示例1：基本抽象基类")
+print("=" * 60)
+
+class Animal(ABC):
+    """动物抽象基类"""
+    
+    @abstractmethod
+    def speak(self):
+        """必须实现的抽象方法"""
+        pass
+    
+    @abstractmethod
+    def move(self):
+        """必须实现的抽象方法"""
+        pass
+
+class Dog(Animal):
+    """狗类"""
+    
+    def speak(self):
+        return "汪汪汪！"
+    
+    def move(self):
+        return "用四条腿奔跑"
+
+class Bird(Animal):
+    """鸟类"""
+    
+    def speak(self):
+        return "叽叽喳！"
+    
+    def move(self):
+        return "用翅膀飞翔"
+
+# 不能实例化抽象基类
+# animal = Animal()  # TypeError
+
+dog = Dog()
+bird = Bird()
+
+print(f"狗：{dog.speak()}，{dog.move()}")
+print(f"鸟：{bird.speak()}，{bird.move()}")
+
+print("\n" + "=" * 60)
+print("示例2：抽象基类定义接口")
+print("=" * 60)
+
+class PaymentMethod(ABC):
+    """支付方式抽象基类"""
+    
+    @abstractmethod
+    def process_payment(self, amount):
+        """处理支付"""
+        pass
+    
+    @abstractmethod
+    def refund(self, amount):
+        """处理退款"""
+        pass
+
+class CreditCardPayment(PaymentMethod):
+    """信用卡支付"""
+    
+    def __init__(self, card_number):
+        self.card_number = card_number
+    
+    def process_payment(self, amount):
+        return f"使用信用卡 {self.card_number[-4:]} 支付 ¥{amount}"
+    
+    def refund(self, amount):
+        return f"信用卡退款 ¥{amount} 到 {self.card_number[-4:]}"
+
+class AlipayPayment(PaymentMethod):
+    """支付宝支付"""
+    
+    def __init__(self, account):
+        self.account = account
+    
+    def process_payment(self, amount):
+        return f"使用支付宝账户 {self.account} 支付 ¥{amount}"
+    
+    def refund(self, amount):
+        return f"支付宝退款 ¥{amount} 到 {self.account}"
+
+# 多态应用
+payment_methods = [
+    CreditCardPayment("1234-5678-9012-3456"),
+    AlipayPayment("user@example.com")
+]
+
+for method in payment_methods:
+    print(f"  支付：{method.process_payment(100)}")
+    print(f"  退款：{method.refund(50)}\n")
+
+print("\n" + "=" * 60)
+print("示例3：抽象属性")
+print("=" * 60)
+
+class Shape(ABC):
+    """图形抽象基类"""
+    
+    @property
+    @abstractmethod
+    def area(self):
+        """抽象属性 - 面积"""
+        pass
+    
+    @property
+    @abstractmethod
+    def perimeter(self):
+        """抽象属性 - 周长"""
+        pass
+
+class Rectangle(Shape):
+    """矩形"""
+    
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    @property
+    def area(self):
+        return self.width * self.height
+    
+    @property
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+
+rect = Rectangle(5, 3)
+print(f"矩形面积：{rect.area}")
+print(f"矩形周长：{rect.perimeter}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.5.5 元类概念入门</h3>
+            <p>元类是创建类的类。在Python中，默认的元类是type。元类允许我们控制类的创建过程，实现类的注册、验证等功能。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 元类概念入门</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python元类概念入门
+
+print("=" * 60)
+print("示例1：type创建类")
+print("=" * 60)
+
+# 使用type创建简单的类
+Person = type('Person', (), {
+    'greeting': '你好',
+    'say_hello': lambda self: f"{self.greeting}！"
+})
+
+person = Person()
+print(f"type创建的类：{type(person)}")
+print(f"打招呼：{person.say_hello()}")
+
+print("\n" + "=" * 60)
+print("示例2：自定义元类")
+print("=" * 60)
+
+class Meta(type):
+    """自定义元类"""
+    
+    def __new__(mcs, name, bases, attrs):
+        # 在创建类时添加额外属性
+        attrs['created_by_meta'] = True
+        attrs['creation_time'] = '2024-12-25'
+        
+        # 添加类方法
+        def get_info(cls):
+            return f"类名：{cls.__name__}，由元类创建"
+        
+        attrs['get_info'] = classmethod(get_info)
+        
+        return super().__new__(mcs, name, bases, attrs)
+
+class MyClass(metaclass=Meta):
+    """使用元类创建的类"""
+    value = 100
+
+print(f"类名：{MyClass.__name__}")
+print(f"created_by_meta：{MyClass.created_by_meta}")
+print(f"creation_time：{MyClass.creation_time}")
+print(f"get_info：{MyClass.get_info()}")
+
+print("\n" + "=" * 60)
+print("示例3：元类应用 - 类注册")
+print("=" * 60)
+
+class Registry(type):
+    """类注册元类"""
+    _registry = {}
+    
+    def __new__(mcs, name, bases, attrs):
+        cls = super().__new__(mcs, name, bases, attrs)
+        # 自动注册类
+        Registry._registry[name] = cls
+        return cls
+    
+    @classmethod
+    def get_registered_classes(mcs):
+        return list(Registry._registry.keys())
+
+class Animal(metaclass=Registry):
+    pass
+
+class Dog(Animal):
+    pass
+
+class Cat(Animal):
+    pass
+
+class Bird(Animal):
+    pass
+
+print("已注册的类：")
+for cls_name in Registry.get_registered_classes():
+    print(f"  - {cls_name}")
+
+print("\n" + "=" * 60)
+print("示例4：元类应用 - 验证类定义")
+print("=" * 60)
+
+class ValidateMeta(type):
+    """验证元类"""
+    
+    def __new__(mcs, name, bases, attrs):
+        # 验证类名必须以大写字母开头
+        if not name[0].isupper():
+            raise ValueError(f"类名 '{name}' 必须以大写字母开头")
+        
+        # 验证方法名不能以下划线开头（除非是特殊方法）
+        for attr_name in attrs:
+            if attr_name.startswith('_') and not attr_name.startswith('__'):
+                raise ValueError(f"属性名 '{attr_name}' 不能以单个下划线开头")
+        
+        return super().__new__(mcs, name, bases, attrs)
+
+class ValidClass(metaclass=ValidateMeta):
+    """正确的类定义"""
+    def public_method(self):
+        return "公共方法"
+    
+    def _private_method(self):
+        return "私有方法"  # 这会触发错误
+
+# 这会报错
+try:
+    class invalid_class(metaclass=ValidateMeta):
+        pass
+except ValueError as e:
+    print(f"错误：{e}")
+
+print("\n元类是Python高级特性，用于框架开发、ORM系统等场景")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>2.5.6 综合示例：插件系统</h3>
+            <p>综合运用装饰器、抽象基类和元类，构建一个灵活的插件系统。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 插件系统</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python综合示例：插件系统
+# 综合运用装饰器、抽象基类和元类
+
+from abc import ABC, abstractmethod
+
+print("=" * 60)
+print("插件系统 - 综合应用示例")
+print("=" * 60)
+
+# ==================== 插件基类 ====================
+class PluginBase(ABC):
+    """插件抽象基类"""
+    
+    @property
+    @abstractmethod
+    def name(self):
+        """插件名称"""
+        pass
+    
+    @property
+    @abstractmethod
+    def version(self):
+        """插件版本"""
+        pass
+    
+    @abstractmethod
+    def initialize(self):
+        """初始化插件"""
+        pass
+    
+    @abstractmethod
+    def execute(self, data):
+        """执行插件功能"""
+        pass
+
+# ==================== 插件注册装饰器 ====================
+class PluginRegistry(type):
+    """插件注册元类"""
+    _plugins = {}
+    
+    def __new__(mcs, name, bases, attrs):
+        cls = super().__new__(mcs, name, bases, attrs)
+        # 自动注册插件
+        if hasattr(cls, 'plugin_name'):
+            PluginRegistry._plugins[cls.plugin_name] = cls
+        return cls
+
+# ==================== 定义插件 ====================
+class TextProcessorPlugin(PluginBase, metaclass=PluginRegistry):
+    """文本处理插件"""
+    plugin_name = "text_processor"
+    
+    @property
+    def name(self):
+        return "文本处理器"
+    
+    @property
+    def version(self):
+        return "1.0.0"
+    
+    def initialize(self):
+        return f"初始化 {self.name}"
+    
+    def execute(self, data):
+        return data.upper()
+
+class NumberAnalyzerPlugin(PluginBase, metaclass=PluginRegistry):
+    """数字分析插件"""
+    plugin_name = "number_analyzer"
+    
+    @property
+    def name(self):
+        return "数字分析器"
+    
+    @property
+    def version(self):
+        return "1.0.0"
+    
+    def initialize(self):
+        return f"初始化 {self.name}"
+    
+    def execute(self, data):
+        try:
+            numbers = [float(x) for x in data.split() if x.replace('.', '').replace('-', '').isdigit()]
+            return {
+                "count": len(numbers),
+                "sum": sum(numbers),
+                "average": sum(numbers) / len(numbers) if numbers else 0
+            }
+        except:
+            return "无法分析数据"
+
+# ==================== 插件管理器 ====================
+class PluginManager:
+    """插件管理器"""
+    
+    def __init__(self):
+        self.loaded_plugins = {}
+    
+    def load_plugin(self, plugin_name):
+        if plugin_name in PluginRegistry._plugins:
+            plugin_class = PluginRegistry._plugins[plugin_name]
+            plugin = plugin_class()
+            plugin.initialize()
+            self.loaded_plugins[plugin_name] = plugin
+            return plugin
+        return None
+    
+    def execute_plugin(self, plugin_name, data):
+        if plugin_name in self.loaded_plugins:
+            return self.loaded_plugins[plugin_name].execute(data)
+        return None
+    
+    def list_plugins(self):
+        return list(PluginRegistry._plugins.keys())
+
+# ==================== 测试 ====================
+manager = PluginManager()
+
+print("可用的插件：")
+for plugin_name in manager.list_plugins():
+    print(f"  - {plugin_name}")
+
+print("\n加载插件：")
+text_plugin = manager.load_plugin("text_processor")
+num_plugin = manager.load_plugin("number_analyzer")
+
+print(f"文本处理：{text_plugin.execute('hello world')}")
+print(f"数字分析：{num_plugin.execute('10 20 30 40 50')}")
+
+print("\n插件系统成功运行！")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 实践练习</h4>
+                <p><strong>练习2.5.1</strong>：创建一个计时装饰器，测量函数执行时间并记录日志。</p>
+                <p><strong>练习2.5.2</strong>：设计一个用户类，使用@property实现密码的验证和加密存储。</p>
+                <p><strong>练习2.5.3</strong>：创建一个抽象基类Shape及其子类Circle、Rectangle，实现面积计算。</p>
+                <p><strong>练习2.5.4</strong>：使用元类实现一个类文档自动生成系统。</p>
+                <p><strong>练习2.5.5</strong>：设计一个插件系统，支持动态加载和卸载插件。</p>
+            </div>
+        </section>
+
+        <div class="resource-box">
+            <h4>📚 学习资源推荐</h4>
+            <div class="resource-list">
+                <div class="resource-item">
+                    <span class="resource-icon">🔗</span>
+                    <span>Python官方文档 - 类和类实例：docs.python.org/zh-cn/3/tutorial/classes.html</span>
+                </div>
+                <div class="resource-item">
+                    <span class="resource-icon">📖</span>
+                    <span>《Python面向对象编程》- 深入讲解OOP核心概念和设计模式</span>
+                </div>
+                <div class="resource-item">
+                    <span class="resource-icon">🎬</span>
+                    <span>B站：Python设计模式实战教程</span>
+                </div>
+                <div class="resource-item">
+                    <span class="resource-icon">💡</span>
+                    <span>GitHub：Python设计模式示例代码仓库</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 钟心果 | Python数据分析师 | <a href="index.html">返回首页</a> | <a href="python-course.html">返回课程主页</a></p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#00d2ff' },
+                shape: { type: 'circle', stroke: { width: 0, color: '#000000' } },
+                opacity: { value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
+                size: { value: 3, random: true, anim: { enable: true, speed: 2, size_min: 0.1, sync: false } },
+                line_linked: { enable: true, distance: 150, color: '#00d2ff', opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'out', attract: { enable: true, rotateX: 600, rotateY: 1200 } }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
+                modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+            },
+            retina_detect: true
+        });
+
+        window.addEventListener('scroll', function() {
+            const progressBar = document.getElementById('progressBar');
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = (scrollTop / scrollHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+
+        document.querySelectorAll('.code-editor').forEach(function(textarea) {
+            CodeMirror.fromTextArea(textarea, {
+                mode: 'python',
+                theme: 'monokai',
+                lineNumbers: true,
+                indentUnit: 4,
+                tabSize: 4
+            });
+        });
+
+        function runCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const output = codeBlock.querySelector('.code-output');
+            const cm = codeBlock.querySelector('.CodeMirror').CodeMirror;
+            let code = cm.getValue();
+
+            output.innerHTML = '正在运行...\n\n';
+            output.classList.add('show');
+
+            setTimeout(function() {
+                try {
+                    let logs = [];
+                    const originalLog = console.log;
+                    console.log = function() {
+                        const args = Array.from(arguments);
+                        logs.push(args.map(arg => typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)).join(' '));
+                    };
+                    eval(code);
+                    console.log = originalLog;
+                    output.innerHTML = logs.length > 0 ? logs.join('\n') : '代码执行完成（无输出）';
+                } catch (error) {
+                    output.innerHTML = '错误: ' + error.message;
+                }
+            }, 100);
+        }
+
+        function resetCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const output = codeBlock.querySelector('.code-output');
+            output.classList.remove('show');
+            output.innerHTML = '';
+        }
+
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const cm = codeBlock.querySelector('.CodeMirror').CodeMirror;
+            const code = cm.getValue();
+
+            navigator.clipboard.writeText(code).then(function() {
+                const originalText = button.textContent;
+                button.textContent = '已复制!';
+                setTimeout(function() {
+                    button.textContent = originalText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,3170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第三章：文件操作与异常处理 - Python数据分析师</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.8;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 50%, #24243e 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 210, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 210, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(40px); }
+        }
+
+        .light-effect {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            z-index: 2;
+            animation: floatLight 15s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .light-1 {
+            background: #00d2ff;
+            top: -200px;
+            left: -200px;
+        }
+
+        .light-2 {
+            background: #7b2ff7;
+            bottom: -200px;
+            right: -200px;
+            animation-delay: -5s;
+        }
+
+        .light-3 {
+            background: #00ff88;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 400px;
+            animation-delay: -10s;
+        }
+
+        @keyframes floatLight {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.1); }
+            50% { transform: translate(0, -100px) scale(1); }
+            75% { transform: translate(-50px, -50px) scale(0.9); }
+        }
+
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 15px 50px;
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #00d2ff;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            color: #00d2ff;
+            background: rgba(0, 210, 255, 0.1);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #00d2ff, #7b2ff7, #00ff88);
+            z-index: 999;
+            transition: width 0.1s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            padding: 100px 20px 50px;
+        }
+
+        .chapter-header {
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .chapter-badge {
+            display: inline-block;
+            padding: 10px 30px;
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(123, 47, 247, 0.1));
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            border-radius: 50px;
+            color: #00d2ff;
+            font-size: 0.9em;
+            font-weight: 500;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .chapter-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3em;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 30px rgba(0, 210, 255, 0.5);
+        }
+
+        .chapter-header p {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .toc-nav {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 210, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .toc-nav h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00d2ff;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .toc-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            list-style: none;
+        }
+
+        .toc-list a {
+            display: block;
+            padding: 12px 20px;
+            background: rgba(0, 210, 255, 0.05);
+            border: 1px solid rgba(0, 210, 255, 0.1);
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .toc-list a:hover {
+            background: rgba(0, 210, 255, 0.15);
+            border-color: rgba(0, 210, 255, 0.3);
+            color: #00d2ff;
+            transform: translateX(5px);
+        }
+
+        .toc-list a span {
+            color: #00d2ff;
+            margin-right: 10px;
+        }
+
+        .section {
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(0, 210, 255, 0.1);
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00d2ff, #7b2ff7, #00ff88);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .section:hover::before {
+            opacity: 1;
+        }
+
+        .section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2em;
+            color: #fff;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 210, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section h2 .section-icon {
+            font-size: 1.2em;
+        }
+
+        .section h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4em;
+            color: #00d2ff;
+            margin: 35px 0 20px;
+            padding-left: 15px;
+            border-left: 4px solid #7b2ff7;
+        }
+
+        .section h4 {
+            font-size: 1.2em;
+            color: #fff;
+            margin: 25px 0 15px;
+        }
+
+        .learning-goals {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 210, 255, 0.1));
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 15px;
+            padding: 20px 25px;
+            margin: 25px 0;
+        }
+
+        .learning-goals h4 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .learning-goals ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .learning-goals li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .learning-goals li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+        }
+
+        .difficulty-tip {
+            background: linear-gradient(135deg, rgba(123, 47, 247, 0.1), rgba(0, 210, 255, 0.1));
+            border: 1px solid rgba(123, 47, 247, 0.2);
+            border-radius: 15px;
+            padding: 20px 25px;
+            margin: 25px 0;
+        }
+
+        .difficulty-tip h4 {
+            color: #7b2ff7;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .difficulty-tip p {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        p {
+            margin: 15px 0;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.05em;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 10px 0;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .code-block {
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: rgba(0, 210, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+        }
+
+        .code-title {
+            color: #00d2ff;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .code-btn {
+            padding: 6px 15px;
+            background: rgba(0, 210, 255, 0.2);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            border-radius: 8px;
+            color: #00d2ff;
+            cursor: pointer;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .code-btn:hover {
+            background: rgba(0, 210, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .code-output {
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(0, 210, 255, 0.1);
+            font-family: 'Courier New', monospace;
+            color: #00ff88;
+            white-space: pre-wrap;
+            display: none;
+        }
+
+        .code-output.show {
+            display: block;
+        }
+
+        .CodeMirror {
+            font-family: 'Courier New', monospace !important;
+            font-size: 14px !important;
+            height: auto !important;
+            min-height: 80px;
+            max-height: 400px;
+        }
+
+        .exercise-box {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(123, 47, 247, 0.1));
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .exercise-box h4 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .exercise-box p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .resource-box {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(123, 47, 247, 0.1));
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .resource-box h4 {
+            color: #00d2ff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .resource-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .resource-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(0, 210, 255, 0.05);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .resource-item:hover {
+            background: rgba(0, 210, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .resource-icon {
+            font-size: 1.5em;
+            width: 40px;
+            text-align: center;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid rgba(0, 210, 255, 0.1);
+            margin-top: 80px;
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1em;
+        }
+
+        .footer a {
+            color: #00d2ff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #7b2ff7;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 12px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 0.9em;
+                padding: 6px 10px;
+            }
+
+            .chapter-header h1 {
+                font-size: 2em;
+            }
+
+            .section {
+                padding: 25px 20px;
+            }
+
+            .section h2 {
+                font-size: 1.5em;
+            }
+
+            .toc-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #00d2ff, #7b2ff7);
+            border-radius: 4px;
+        }
+
+        .concept-card {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .concept-item {
+            padding: 20px;
+            background: rgba(0, 210, 255, 0.05);
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .concept-item:hover {
+            background: rgba(0, 210, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .concept-item h4 {
+            color: #00d2ff;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .concept-item p {
+            font-size: 0.95em;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .concept-item code {
+            background: rgba(0, 210, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 25px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.1);
+        }
+
+        th {
+            background: rgba(0, 210, 255, 0.15);
+            color: #00d2ff;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+        }
+
+        td {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        tr:hover td {
+            background: rgba(0, 210, 255, 0.05);
+        }
+
+        .code-editor {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            resize: vertical;
+        }
+
+        .code-editor:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="grid-bg"></div>
+    <div class="light-effect light-1"></div>
+    <div class="light-effect light-2"></div>
+    <div class="light-effect light-3"></div>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <nav class="nav-container">
+        <a href="index.html" class="nav-logo">钟心果</a>
+        <ul class="nav-links">
+            <li><a href="index.html">返回首页</a></li>
+            <li><a href="python-course.html">返回课程主页</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <header class="chapter-header">
+            <div class="chapter-badge">📚 第三单元</div>
+            <h1>文件操作与异常处理</h1>
+            <p>本单元将深入学习Python的文件操作和异常处理机制，掌握文件读写、上下文管理器、异常捕获、日志系统等核心技能。这些是编写健壮、可靠Python程序的必备知识。</p>
+        </header>
+
+        <nav class="toc-nav">
+            <h3>📑 章节导航</h3>
+            <div class="toc-list">
+                <a href="#section-3-1"><span>3.1</span> 文件读写操作</a>
+                <a href="#section-3-2"><span>3.2</span> 异常捕获与处理</a>
+                <a href="#section-3-3"><span>3.3</span> 上下文管理器</a>
+                <a href="#section-3-4"><span>3.4</span> 日志系统</a>
+            </div>
+        </nav>
+
+        <section id="section-3-1" class="section">
+            <h2><span class="section-icon">📁</span> 3.1 文件读写操作</h2>
+            
+            <p>文件操作是Python编程中最基础也是最重要的技能之一。无论是配置文件、数据存储还是日志记录，都离不开文件的读写操作。本节将详细介绍Python中文件操作的各种方法，包括打开文件、读取文件、写入文件以及文件指针的操作。</p>
+
+            <div class="learning-goals">
+                <h4>🎯 学习目标</h4>
+                <ul>
+                    <li>掌握open函数的各种打开模式</li>
+                    <li>熟练使用read、readline、readlines读取文件</li>
+                    <li>掌握write和writelines写入文件</li>
+                    <li>理解文件指针和seek操作</li>
+                    <li>熟练使用with语句进行文件操作</li>
+                </ul>
+            </div>
+
+            <h3>3.1.1 打开文件（open函数）</h3>
+            
+            <p>Python使用内置的open函数来打开文件，该函数返回一个文件对象。open函数的基本语法是：<code>open(filename, mode, encoding)</code>。其中mode参数指定打开模式，encoding参数指定字符编码。</p>
+
+            <div class="concept-card">
+                <div class="concept-item">
+                    <h4>📌 文件打开模式</h4>
+                    <p><code>r</code> - 只读（默认）<br>
+                    <code>w</code> - 只写（覆盖）<br>
+                    <code>a</code> - 追加<br>
+                    <code>x</code> - 新建文件（存在则报错）<br>
+                    <code>r+</code> - 读写<br>
+                    <code>w+</code> - 读写（覆盖）<br>
+                    <code>a+</code> - 追加读写</p>
+                </div>
+                <div class="concept-item">
+                    <h4>📌 文本与二进制模式</h4>
+                    <p><code>t</code> - 文本模式（默认）<br>
+                    <code>b</code> - 二进制模式<br>
+                    <code>rb</code> - 二进制只读<br>
+                    <code>wb</code> - 二进制只写<br>
+                    <code>ab</code> - 二进制追加</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 文件打开基础 - file_open.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python文件打开基础
+# 本示例演示不同的文件打开模式
+
+import os
+
+print("=" * 60)
+print("文件打开模式详解")
+print("=" * 60)
+
+test_file = "test_demo.txt"
+
+print("\n1. 创建测试文件用于演示:")
+with open(test_file, 'w', encoding='utf-8') as f:
+    f.write("第一行：Python文件操作\n")
+    f.write("第二行：学习异常处理\n")
+    f.write("第三行：掌握上下文管理器\n")
+print(f"  已创建文件: {test_file}")
+
+print("\n2. 读取模式 'r':")
+with open(test_file, 'r', encoding='utf-8') as f:
+    content = f.read()
+    print(f"  读取内容:\n{content}")
+
+print("\n3. 写入模式 'w'（会覆盖原文件）:")
+with open(test_file, 'w', encoding='utf-8') as f:
+    f.write("新内容：完全覆盖\n")
+with open(test_file, 'r', encoding='utf-8') as f:
+    print(f"  写入后内容: {f.read().strip()}")
+
+print("\n4. 追加模式 'a':")
+with open(test_file, 'a', encoding='utf-8') as f:
+    f.write("追加一行内容\n")
+with open(test_file, 'r', encoding='utf-8') as f:
+    print(f"  追加后内容:\n{f.read()}")
+
+print("\n5. 读写模式 'r+':")
+with open(test_file, 'r+', encoding='utf-8') as f:
+    content = f.read()
+    f.seek(0)
+    f.write("R+模式: 在开头写入\n")
+with open(test_file, 'r', encoding='utf-8') as f:
+    print(f"  r+模式后内容:\n{f.read()}")
+
+print("\n6. 创建模式 'x'（文件存在会报错）:")
+try:
+    with open(test_file, 'x', encoding='utf-8') as f:
+        f.write("x模式创建\n")
+except FileExistsError:
+    print("  x模式：文件已存在，报错")
+with open("new_x_file.txt", 'x', encoding='utf-8') as f:
+    f.write("新文件创建成功\n")
+print("  新文件创建成功")
+
+print("\n7. 二进制模式 'rb'/'wb':")
+with open("binary_test.bin", 'wb') as f:
+    f.write(b'\x00\x01\x02\x03')
+with open("binary_test.bin", 'rb') as f:
+    data = f.read()
+    print(f"  读取二进制数据: {data}")
+
+print("\n8. 清理测试文件:")
+for f in [test_file, "new_x_file.txt", "binary_test.bin"]:
+    if os.path.exists(f):
+        os.remove(f)
+        print(f"  删除: {f}")
+print("\n所有测试文件已清理")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.1.2 读取文件（read、readline、readlines）</h3>
+
+            <p>Python提供了三种读取文件的方法：read()读取整个文件或指定字节数，readline()读取一行，readlines()读取所有行并返回列表。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 文件读取方法 - file_read.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python文件读取方法详解
+
+import os
+
+print("=" * 60)
+print("文件读取方法详解")
+print("=" * 60)
+
+test_file = "read_demo.txt"
+with open(test_file, 'w', encoding='utf-8') as f:
+    f.write("第一行：Python文件操作\n")
+    f.write("第二行：学习读取方法\n")
+    f.write("第三行：掌握read系列函数\n")
+    f.write("第四行：文件处理很重要\n")
+
+print("\n1. read() - 读取整个文件:")
+with open(test_file, 'r', encoding='utf-8') as f:
+    content = f.read()
+    print(f"  文件全部内容:\n{content}")
+
+print("\n2. read(n) - 读取指定字节数:")
+with open(test_file, 'r', encoding='utf-8') as f:
+    content_10 = f.read(10)
+    print(f"  读取前10个字符: '{content_10}'")
+    content_20 = f.read(20)
+    print(f"  再读取20个字符: '{content_20}'")
+
+print("\n3. readline() - 读取一行:")
+with open(test_file, 'r', encoding='utf-8') as f:
+    line1 = f.readline()
+    print(f"  第一行: '{line1}'")
+    line2 = f.readline()
+    print(f"  第二行: '{line2}'")
+
+print("\n4. readlines() - 读取所有行到列表:")
+with open(test_file, 'r', encoding='utf-8') as f:
+    lines = f.readlines()
+    print(f"  返回类型: {type(lines)}")
+    print(f"  行数: {len(lines)}")
+    for i, line in enumerate(lines, 1):
+        print(f"  第{i}行: {line}", end="")
+
+print("\n5. 逐行遍历（最推荐的方式）:")
+with open(test_file, 'r', encoding='utf-8') as f:
+    for i, line in enumerate(f, 1):
+        print(f"  第{i}行: {line}", end="")
+
+print("\n6. 去除换行符:")
+with open(test_file, 'r', encoding='utf-8') as f:
+    lines = [line.strip() for line in f]
+    print(f"  去除换行后: {lines}")
+
+print("\n7. 读取大文件的正确方式:")
+with open(test_file, 'r', encoding='utf-8') as f:
+    for line in f:
+        if "Python" in line:
+            print(f"  找到包含Python的行: {line.strip()}")
+
+os.remove(test_file)
+print("\n测试文件已清理")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.1.3 写入文件（write、writelines）</h3>
+
+            <p>写入文件使用write()方法写入字符串，writelines()方法写入字符串列表。注意write()不会自动添加换行符，需要手动添加'\n'。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 文件写入方法 - file_write.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python文件写入方法详解
+
+import os
+
+print("=" * 60)
+print("文件写入方法详解")
+print("=" * 60)
+
+test_file = "write_demo.txt"
+
+print("\n1. write() - 写入字符串:")
+with open(test_file, 'w', encoding='utf-8') as f:
+    f.write("第一行内容\n")
+    f.write("第二行内容\n")
+    f.write("第三行内容\n")
+with open(test_file, 'r', encoding='utf-8') as f:
+    print(f"  写入后内容:\n{f.read()}")
+
+print("\n2. writelines() - 写入字符串列表:")
+lines_to_write = ["序号1的文本\n", "序号2的文本\n", "序号3的文本\n"]
+with open(test_file, 'w', encoding='utf-8') as f:
+    f.writelines(lines_to_write)
+with open(test_file, 'r', encoding='utf-8') as f:
+    print(f"  writelines写入后:\n{f.read()}")
+
+print("\n3. 写入不自动换行的情况:")
+with open(test_file, 'w', encoding='utf-8') as f:
+    f.write("没有换行")
+    f.write("连在一起")
+with open(test_file, 'r', encoding='utf-8') as f:
+    print(f"  没有换行的结果: '{f.read()}'")
+
+print("\n4. 格式化写入:")
+name = "小明"
+age = 18
+score = 95.5
+with open(test_file, 'w', encoding='utf-8') as f:
+    f.write(f"姓名: {name}\n")
+    f.write(f"年龄: {age}\n")
+    f.write(f"成绩: {score:.1f}\n")
+with open(test_file, 'r', encoding='utf-8') as f:
+    print(f"  格式化写入:\n{f.read()}")
+
+print("\n5. 追加写入 'a' 模式:")
+with open(test_file, 'a', encoding='utf-8') as f:
+    f.write("追加的内容1\n")
+    f.write("追加的内容2\n")
+with open(test_file, 'r', encoding='utf-8') as f:
+    print(f"  追加后内容:\n{f.read()}")
+
+print("\n6. 使用print()函数写入文件:")
+with open(test_file, 'w', encoding='utf-8') as f:
+    print("这是print写入的第一行", file=f)
+    print("这是print写入的第二行", file=f)
+    print("年龄:", 18, "成绩:", 95.5, file=f)
+with open(test_file, 'r', encoding='utf-8') as f:
+    print(f"  print写入结果:\n{f.read()}")
+
+print("\n7. 写入CSV格式数据:")
+csv_file = "data.csv"
+data = [
+    ["姓名", "年龄", "城市"],
+    ["张三", "20", "北京"],
+    ["李四", "22", "上海"],
+    ["王五", "19", "广州"]
+]
+with open(csv_file, 'w', encoding='utf-8') as f:
+    for row in data:
+        f.write(",".join(row) + "\n")
+with open(csv_file, 'r', encoding='utf-8') as f:
+    print(f"  CSV格式内容:\n{f.read()}")
+
+for f in [test_file, csv_file]:
+    if os.path.exists(f):
+        os.remove(f)
+print("\n测试文件已清理")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.1.4 文件指针与seek</h3>
+
+            <p>文件指针标记当前读取或写入的位置。seek()方法用于移动文件指针，tell()方法返回当前指针位置。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 文件指针操作 - file_seek.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python文件指针操作详解
+
+import os
+
+print("=" * 60)
+print("文件指针与seek操作")
+print("=" * 60)
+
+test_file = "seek_demo.txt"
+content = "0123456789ABCDEF"
+with open(test_file, 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print(f"\n1. tell() - 获取当前指针位置:")
+with open(test_file, 'r', encoding='utf-8') as f:
+    print(f"  初始位置: {f.tell()}")
+    f.read(5)
+    print(f"  读取5字符后: {f.tell()}")
+    f.read(3)
+    print(f"  再读取3字符后: {f.tell()}")
+
+print("\n2. seek(offset, whence) - 移动指针:")
+print("  whence: 0=起始, 1=当前位置, 2=末尾")
+
+with open(test_file, 'r', encoding='utf-8') as f:
+    print(f"  文件内容: '{content}'")
+    print(f"  字符索引:  0123456789...")
+    
+    print(f"\n  seek(0, 0) - 移到开头:")
+    f.seek(0)
+    print(f"    指针位置: {f.tell()}, 读取: '{f.read(5)}'")
+    
+    print(f"\n  seek(5, 0) - 从开头偏移5:")
+    f.seek(5)
+    print(f"    指针位置: {f.tell()}, 读取: '{f.read(5)}'")
+    
+    print(f"\n  seek(-5, 2) - 从末尾向前5:")
+    f.seek(-5, 2)
+    print(f"    指针位置: {f.tell()}, 读取: '{f.read(5)}'")
+
+print("\n3. seek在文本模式下的限制:")
+print("  文本模式下 whence 只能为 0，offset 只能为相对开头的偏移")
+
+with open(test_file, 'rb') as f:
+    print(f"\n  二进制模式可以任意seek:")
+    f.seek(-3, 2)
+    data = f.read(3)
+    print(f"    从末尾-3读取3字节: '{data}' (ASCII: {[b for b in data]})")
+
+print("\n4. 实战：随机访问文件:")
+records = [
+    {"id": 1, "name": "张三", "score": 95},
+    {"id": 2, "name": "李四", "score": 88},
+    {"id": 3, "name": "王五", "score": 92}
+]
+
+record_file = "records.dat"
+record_size = 50
+
+with open(record_file, 'w', encoding='utf-8') as f:
+    for record in records:
+        f.write(f"{record['id']:05d}{record['name']:<10s}{record['score']:03d}\n")
+
+with open(record_file, 'r', encoding='utf-8') as f:
+    print("  所有记录:")
+    for line in f:
+        print(f"    {line}", end="")
+
+print("\n  读取第二条记录:")
+with open(record_file, 'r') as f:
+    f.seek(record_size)
+    line = f.readline()
+    print(f"    {line.strip()}")
+
+for f in [test_file, record_file]:
+    if os.path.exists(f):
+        os.remove(f)
+print("\n测试文件已清理")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.1.5 with语句与上下文管理器</h3>
+
+            <p>使用with语句可以确保文件在使用后正确关闭，即使发生异常也不例外。这是处理文件的标准方式。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 with语句与上下文管理器 - with_statement.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python with语句与上下文管理器
+
+import os
+
+print("=" * 60)
+print("with语句与上下文管理器")
+print("=" * 60)
+
+test_file = "with_demo.txt"
+
+print("\n1. 不使用with语句（需要手动关闭）:")
+f = open(test_file, 'w', encoding='utf-8')
+f.write("手动打开文件\n")
+f.close()
+print("  文件已手动关闭")
+
+print("\n2. 使用with语句（自动关闭）:")
+with open(test_file, 'w', encoding='utf-8') as f:
+    f.write("使用with语句\n")
+    f.write("自动关闭文件\n")
+print("  with块结束后文件自动关闭")
+
+print("\n3. with语句的优势 - 异常安全:")
+try:
+    with open(test_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+        int("abc")
+        f.write("这条不会执行")
+except ValueError as e:
+    print(f"  捕获异常: {e}")
+
+with open(test_file, 'r', encoding='utf-8') as f:
+    content = f.read()
+print(f"  文件内容仍可读取: {content.strip()}")
+
+print("\n4. 嵌套with语句:")
+file1 = "file1.txt"
+file2 = "file2.txt"
+
+with open(file1, 'w', encoding='utf-8') as f1:
+    f1.write("文件1内容\n")
+    with open(file2, 'w', encoding='utf-8') as f2:
+        f2.write("文件2内容\n")
+        print("  同时打开两个文件")
+    print("  file2已关闭")
+print("  file1已关闭")
+
+print("\n5. 多个文件在一行with中:")
+with open(file1, 'r', encoding='utf-8') as f1, \
+         open(file2, 'r', encoding='utf-8') as f2:
+    content1 = f1.read()
+    content2 = f2.read()
+    print(f"  file1内容: {content1.strip()}")
+    print(f"  file2内容: {content2.strip()}")
+
+print("\n6. Python 3.10+ 的新语法:")
+with (
+    open(file1, 'w', encoding='utf-8') as f1,
+    open(file2, 'w', encoding='utf-8') as f2
+):
+    f1.write("新语法文件1\n")
+    f2.write("新语法文件2\n")
+    print("  使用圆括号的多文件语法")
+
+for f in [test_file, file1, file2]:
+    if os.path.exists(f):
+        os.remove(f)
+print("\n测试文件已清理")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 实践练习</h4>
+                <p><strong>练习3.1.1</strong>：编写程序读取一个文本文件，统计文件中每个字符出现的频率</p>
+                <p><strong>练习3.1.2</strong>：实现一个简单的日志文件写入器，支持追加模式和覆盖模式</p>
+                <p><strong>练习3.1.3</strong>：创建一个配置文件管理程序，能够读取、修改和保存配置</p>
+                <p><strong>练习3.1.4</strong>：实现文件的备份功能，复制文件并添加时间戳</p>
+                <p><strong>练习3.1.5</strong>：使用seek实现一个简单的文本文件编辑器，支持在指定位置插入内容</p>
+            </div>
+        </section>
+
+        <section id="section-3-2" class="section">
+            <h2><span class="section-icon">⚠️</span> 3.2 异常捕获与处理</h2>
+            
+            <p>异常处理是编写健壮程序的关键。Python提供了强大的异常处理机制，能够优雅地处理程序运行过程中出现的各种错误。本节将详细介绍Python的异常处理语法和最佳实践。</p>
+
+            <div class="learning-goals">
+                <h4>🎯 学习目标</h4>
+                <ul>
+                    <li>理解Python异常的概念和分类</li>
+                    <li>掌握try-except结构的使用方法</li>
+                    <li>学会处理多个异常和使用else/finally子句</li>
+                    <li>掌握raise语句和自定义异常</li>
+                    <li>能够编写健壮的异常处理代码</li>
+                </ul>
+            </div>
+
+            <h3>3.2.1 常见异常类型</h3>
+
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>异常类型</th>
+                        <th>描述</th>
+                        <th>常见场景</th>
+                    </tr>
+                    <tr>
+                        <td>SyntaxError</td>
+                        <td>语法错误</td>
+                        <td>代码书写错误</td>
+                    </tr>
+                    <tr>
+                        <td>IndexError</td>
+                        <td>索引越界</td>
+                        <td>访问列表不存在的索引</td>
+                    </tr>
+                    <tr>
+                        <td>KeyError</td>
+                        <td>键不存在</td>
+                        <td>访问字典不存在的键</td>
+                    </tr>
+                    <tr>
+                        <td>ValueError</td>
+                        <td>值错误</td>
+                        <td>类型转换失败</td>
+                    </tr>
+                    <tr>
+                        <td>TypeError</td>
+                        <td>类型错误</td>
+                        <td>操作类型不匹配</td>
+                    </tr>
+                    <tr>
+                        <td>FileNotFoundError</td>
+                        <td>文件不存在</td>
+                        <td>打开不存在的文件</td>
+                    </tr>
+                    <tr>
+                        <td>ZeroDivisionError</td>
+                        <td>除数为零</td>
+                        <td>除法运算除数为0</td>
+                    </tr>
+                    <tr>
+                        <td>AttributeError</td>
+                        <td>属性错误</td>
+                        <td>访问不存在的属性</td>
+                    </tr>
+                    <tr>
+                        <td>ImportError</td>
+                        <td>导入错误</td>
+                        <td>模块导入失败</td>
+                    </tr>
+                    <tr>
+                        <td>RuntimeError</td>
+                        <td>运行时错误</td>
+                        <td>程序运行时错误</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 常见异常类型 - common_exceptions.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python常见异常类型演示
+
+print("=" * 60)
+print("Python常见异常类型")
+print("=" * 60)
+
+print("\n1. IndexError - 索引越界:")
+my_list = [1, 2, 3]
+try:
+    print(my_list[10])
+except IndexError as e:
+    print(f"  捕获IndexError: {e}")
+
+print("\n2. KeyError - 键不存在:")
+my_dict = {"name": "张三", "age": 18}
+try:
+    print(my_dict["score"])
+except KeyError as e:
+    print(f"  捕获KeyError: {e}")
+
+print("\n3. ValueError - 值错误:")
+try:
+    num = int("abc")
+except ValueError as e:
+    print(f"  捕获ValueError: {e}")
+
+print("\n4. TypeError - 类型错误:")
+try:
+    result = "hello" + 123
+except TypeError as e:
+    print(f"  捕获TypeError: {e}")
+
+print("\n5. ZeroDivisionError - 除数为零:")
+try:
+    result = 10 / 0
+except ZeroDivisionError as e:
+    print(f"  捕获ZeroDivisionError: {e}")
+
+print("\n6. FileNotFoundError - 文件不存在:")
+try:
+    with open("不存在的文件.txt", "r") as f:
+        content = f.read()
+except FileNotFoundError as e:
+    print(f"  捕获FileNotFoundError: {e}")
+
+print("\n7. AttributeError - 属性错误:")
+try:
+    my_list = [1, 2, 3]
+    my_list.no_such_method()
+except AttributeError as e:
+    print(f"  捕获AttributeError: {e}")
+
+print("\n8. AssertionError - 断言错误:")
+try:
+    assert 1 == 2, "数字不相等"
+except AssertionError as e:
+    print(f"  捕获AssertionError: {e}")
+
+print("\n9. 异常继承关系:")
+print("  BaseException")
+print("  └── Exception (常见异常基类)")
+print("      ├── LookupError")
+print("      │   ├── IndexError")
+print("      │   └── KeyError")
+print("      ├── ArithmeticError")
+print("      │   ├── ZeroDivisionError")
+print("      │   └── FloatingPointError")
+print("      └── ... 更多异常类型")
+
+print("\n10. 查看异常继承关系:")
+print(f"  IndexError的基类: {IndexError.__bases__}")
+print(f"  KeyError的基类: {KeyError.__bases__}")
+print(f"  ValueError的基类: {ValueError.__bases__}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.2.2 try-except结构</h3>
+
+            <p>try-except是Python异常处理的基本结构。将可能引发异常的代码放在try块中，异常处理代码放在except块中。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 try-except结构 - try_except.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python try-except结构详解
+
+print("=" * 60)
+print("try-except结构详解")
+print("=" * 60)
+
+print("\n1. 基础try-except结构:")
+def divide(a, b):
+    try:
+        result = a / b
+        print(f"  计算结果: {result}")
+    except ZeroDivisionError:
+        print("  错误: 除数不能为零")
+
+divide(10, 2)
+divide(10, 0)
+
+print("\n2. except捕获异常对象:")
+def convert_to_int(value):
+    try:
+        result = int(value)
+        print(f"  转换成功: {result}")
+        return result
+    except ValueError as e:
+        print(f"  捕获异常对象: {e}")
+        print(f"  异常类型: {type(e).__name__}")
+        return None
+
+convert_to_int("123")
+convert_to_int("abc")
+
+print("\n3. except捕获多个异常（方式一）:")
+def process_data(data):
+    try:
+        value = int(data)
+        result = 100 / value
+        print(f"  处理结果: {result}")
+    except ValueError as e:
+        print(f"  值错误: {e}")
+    except ZeroDivisionError as e:
+        print(f"  除零错误: {e}")
+
+process_data("123")
+process_data("abc")
+process_data("0")
+
+print("\n4. except捕获多个异常（方式二）:")
+def process_data2(data):
+    try:
+        value = int(data)
+        result = 100 / value
+        print(f"  处理结果: {result}")
+    except (ValueError, ZeroDivisionError) as e:
+        print(f"  捕获异常: {type(e).__name__} - {e}")
+
+process_data2("123")
+process_data2("abc")
+
+print("\n5. except不带具体异常类型（捕获所有异常）:")
+def risky_operation():
+    try:
+        result = 10 / 0
+    except:
+        print("  捕获了某个异常（不推荐）")
+
+risky_operation()
+
+print("\n6. 捕获异常后重新抛出:")
+def handle_with_reraise():
+    try:
+        data = int("abc")
+    except ValueError as e:
+        print(f"  记录日志: {e}")
+        raise
+
+try:
+    handle_with_reraise()
+except ValueError:
+    print("  异常被重新抛出并捕获")
+
+print("\n7. 使用as保存异常引用:")
+try:
+    with open("不存在.txt", "r") as f:
+        content = f.read()
+except FileNotFoundError as e:
+    print(f"  异常信息: {e}")
+    print(f"  文件名: {e.filename}")
+    print(f"  异常类型: {type(e).__name__}")
+
+print("\n8. 异常处理的最佳实践:")
+print("  ✓ 尽量捕获具体异常类型")
+print("  ✓ 记录异常日志")
+print("  ✓ 提供有意义的错误信息")
+print("  ✓ 不要过度使用异常处理")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.2.3 多个except子句与异常链</h3>
+
+            <p>可以为一个try块编写多个except子句来处理不同类型的异常。Python 3还支持异常链，使用raise...from语法来保留原始异常信息。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 多个except与异常链 - multiple_except.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python多个except子句与异常链
+
+print("=" * 60)
+print("多个except子句与异常链")
+print("=" * 60)
+
+print("\n1. 多个except子句（按顺序匹配）:")
+def handle_user_input(data):
+    try:
+        value = int(data)
+        result = 100 / value
+        my_list = [1, 2, 3]
+        item = my_list[value]
+        return result
+    except ValueError:
+        print("  捕获ValueError: 无法转换为整数")
+    except ZeroDivisionError:
+        print("  捕获ZeroDivisionError: 除数为零")
+    except IndexError:
+        print("  捕获IndexError: 索引越界")
+    except Exception as e:
+        print(f"  捕获其他异常: {type(e).__name__}")
+
+print("测试ValueError:")
+handle_user_input("abc")
+
+print("\n测试ZeroDivisionError:")
+handle_user_input("0")
+
+print("\n测试IndexError:")
+handle_user_input("5")
+
+print("\n测试正常情况:")
+result = handle_user_input("1")
+print(f"  返回值: {result}")
+
+print("\n2. except子句的顺序很重要:")
+print("  应该从具体到一般排序异常")
+print("  错误示例:")
+print("    except Exception: ...")
+print("    except ValueError: ...  # 永远不会执行")
+print("  正确示例:")
+print("    except ValueError: ...")
+print("    except Exception: ...")
+
+print("\n3. Python 3异常链 - raise from:")
+def level1():
+    try:
+        num = int("abc")
+    except ValueError as e:
+        raise RuntimeError("level1处理失败") from e
+
+def level2():
+    try:
+        level1()
+    except RuntimeError as e:
+        print(f"  RuntimeError: {e}")
+        if e.__cause__:
+            print(f"  原始异常: {e.__cause__}")
+
+print("演示异常链:")
+level2()
+
+print("\n4. 隐式异常链:")
+def level1_implicit():
+    try:
+        num = int("abc")
+    except ValueError:
+        raise RuntimeError("隐式链")
+
+def level2_implicit():
+    try:
+        level1_implicit()
+    except RuntimeError as e:
+        print(f"  RuntimeError: {e}")
+        print(f"  __context__: {e.__context__}")
+        print(f"  __suppress_context__: {e.__suppress_context__}")
+
+print("演示隐式异常链:")
+level2_implicit()
+
+print("\n5. 使用raise without from（抑制异常链）:")
+def level1_suppress():
+    try:
+        num = int("abc")
+    except ValueError:
+        raise RuntimeError("抑制链") from None
+
+try:
+    level1_suppress()
+except RuntimeError as e:
+    print(f"  RuntimeError: {e}")
+    print(f"  __cause__: {e.__cause__}")
+    print(f"  __context__: {e.__context__}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.2.4 else子句与finally子句</h3>
+
+            <p>try-except结构还可以包含else和finally子句。else在try块没有异常时执行，finally无论是否有异常都会执行。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 else与finally子句 - else_finally.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python else子句与finally子句
+
+print("=" * 60)
+print("else子句与finally子句")
+print("=" * 60)
+
+print("\n1. else子句 - try块无异常时执行:")
+def validate_positive(num):
+    try:
+        value = int(num)
+        if value <= 0:
+            raise ValueError("必须为正数")
+        print(f"  转换成功: {value}")
+    except ValueError:
+        print("  捕获ValueError")
+    else:
+        print(f"  else执行: 验证通过，值为{value}")
+
+print("测试正数:")
+validate_positive(10)
+
+print("\n测试零:")
+validate_positive(0)
+
+print("\n测试负数:")
+validate_positive(-5)
+
+print("\n测试非数字:")
+validate_positive("abc")
+
+print("\n2. finally子句 - 无论是否有异常都执行:")
+def file_operation():
+    print("  打开文件")
+    try:
+        content = "test content"
+        print("  写入文件")
+        return "操作成功"
+    finally:
+        print("  finally: 关闭文件")
+
+result = file_operation()
+print(f"  返回值: {result}")
+
+print("\n3. 异常发生在finally之前:")
+def operation_with_error():
+    try:
+        print("  尝试执行")
+        raise ValueError("测试异常")
+    except ValueError:
+        print("  捕获异常")
+    finally:
+        print("  finally仍会执行")
+
+operation_with_error()
+
+print("\n4. finally中也有异常（可能被覆盖）:")
+def both_exceptions():
+    try:
+        raise ValueError("try中的异常")
+    except:
+        raise TypeError("except中的异常")
+    finally:
+        raise RuntimeError("finally中的异常")
+
+try:
+    both_exceptions()
+except RuntimeError as e:
+    print(f"  最终异常: {e}")
+
+print("\n5. 常见使用场景 - 文件操作:")
+import os
+
+def safe_read_file(filename):
+    file = None
+    try:
+        file = open(filename, 'r', encoding='utf-8')
+        content = file.read()
+        return content
+    except FileNotFoundError:
+        print(f"  文件不存在: {filename}")
+        return None
+    except PermissionError:
+        print(f"  权限不足: {filename}")
+        return None
+    finally:
+        if file:
+            file.close()
+            print("  文件已关闭")
+
+print("读取不存在的文件:")
+content = safe_read_file("不存在.txt")
+print(f"  结果: {content}")
+
+print("\n6. 常见使用场景 - 资源清理:")
+def process_with_cleanup():
+    resource = None
+    try:
+        resource = "获取的资源"
+        print(f"  使用资源: {resource}")
+        result = resource.upper()
+        print(f"  处理结果: {result}")
+        return result
+    except Exception as e:
+        print(f"  处理异常: {e}")
+    finally:
+        print("  清理资源")
+        resource = None
+
+process_with_cleanup()
+
+print("\n7. else和finally组合使用:")
+def complete_operation():
+    try:
+        print("  尝试操作")
+        num = 10
+    except Exception as e:
+        print(f"  异常: {e}")
+    else:
+        print("  else: 操作成功")
+    finally:
+        print("  finally: 清理完成")
+
+complete_operation()</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.2.5 raise语句与自定义异常</h3>
+
+            <p>使用raise语句可以主动抛出异常。Python允许创建自定义异常类来处理特定的业务逻辑错误。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 raise语句与自定义异常 - raise_custom.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python raise语句与自定义异常
+
+print("=" * 60)
+print("raise语句与自定义异常")
+print("=" * 60)
+
+print("\n1. raise基本用法 - 抛出异常:")
+def divide(a, b):
+    if b == 0:
+        raise ValueError("除数不能为零")
+    return a / b
+
+try:
+    result = divide(10, 0)
+except ValueError as e:
+    print(f"  捕获异常: {e}")
+
+print("\n2. raise再次抛出当前异常:")
+def outer():
+    try:
+        inner()
+    except ValueError as e:
+        print("  记录日志")
+        raise
+
+def inner():
+    raise ValueError("内部错误")
+
+try:
+    outer()
+except ValueError:
+    print("  异常被重新抛出")
+
+print("\n3. raise不带参数（重新抛出当前异常）:")
+def catch_and_reraise():
+    try:
+        x = 1 / 0
+    except:
+        print("  捕获异常")
+        raise
+
+try:
+    catch_and_reraise()
+except:
+    print("  异常重新抛出")
+
+print("\n4. 自定义异常类:")
+class ValidationError(Exception):
+    def __init__(self, field, message):
+        self.field = field
+        self.message = message
+        super().__init__(f"{field}: {message}")
+
+try:
+    raise ValidationError("email", "邮箱格式不正确")
+except ValidationError as e:
+    print(f"  自定义异常: {e}")
+    print(f"  字段: {e.field}")
+    print(f"  消息: {e.message}")
+
+print("\n5. 自定义异常的最佳实践:")
+class BankError(Exception):
+    pass
+
+class InsufficientFundsError(BankError):
+    def __init__(self, balance, amount):
+        self.balance = balance
+        self.amount = amount
+        super().__init__(f"余额不足: 余额={balance}, 需要={amount}")
+
+class InvalidAccountError(BankError):
+    pass
+
+def withdraw(balance, amount):
+    if amount > balance:
+        raise InsufficientFundsError(balance, amount)
+    return balance - amount
+
+try:
+    new_balance = withdraw(100, 200)
+except InsufficientFundsError as e:
+    print(f"  捕获自定义异常")
+    print(f"  当前余额: {e.balance}")
+    print(f"  取款金额: {e.amount}")
+    print(f"  提示: 还需 {e.amount - e.balance}")
+
+print("\n6. 异常层次结构设计:")
+print("  BaseError")
+print("  ├── SystemError")
+print("  ├── ValidationError")
+print("  │   ├── InvalidEmailError")
+print("  │   └── InvalidPhoneError")
+print("  └── BusinessError")
+print("      ├── InsufficientFundsError")
+print("      └── AccountLockedError")
+
+print("\n7. 异常处理的封装:")
+class DatabaseError(Exception):
+    pass
+
+def execute_query(sql):
+    try:
+        if "DROP" in sql.upper():
+            raise DatabaseError("危险操作被拒绝")
+        print(f"  执行SQL: {sql}")
+    except DatabaseError as e:
+        raise DatabaseError(f"数据库错误: {e}")
+
+try:
+    execute_query("DROP TABLE users")
+except DatabaseError as e:
+    print(f"  最终捕获: {e}")
+
+print("\n8. 异常处理的最佳实践:")
+print("  ✓ 自定义异常应继承Exception而非BaseException")
+print("  ✓ 异常应有清晰的命名和描述")
+print("  ✓ 在合适的地方抛出异常")
+print("  ✓ 不要过度使用异常控制流程")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 实践练习</h4>
+                <p><strong>练习3.2.1</strong>：编写一个安全的除法函数，能够捕获并处理各种异常情况</p>
+                <p><strong>练习3.2.2</strong>：创建一个学生信息验证器，使用自定义异常处理各种验证错误</p>
+                <p><strong>练习3.2.3</strong>：实现一个带重试机制的文件读取函数，自动处理文件暂时不可用的情况</p>
+                <p><strong>练习3.2.4</strong>：设计一个异常层次结构来管理一个在线商城的各种错误</p>
+                <p><strong>练习3.2.5</strong>：实现一个配置解析器，能够捕获并报告配置文件的格式错误</p>
+            </div>
+        </section>
+
+        <section id="section-3-3" class="section">
+            <h2><span class="section-icon">🔄</span> 3.3 上下文管理器</h2>
+            
+            <p>上下文管理器是Python中处理资源分配的优雅方式，确保资源在使用后正确释放。本节将深入学习上下文管理器的原理和实际应用。</p>
+
+            <div class="learning-goals">
+                <h4>🎯 学习目标</h4>
+                <ul>
+                    <li>理解上下文管理器的概念和作用</li>
+                    <li>掌握__enter__和__exit__方法</li>
+                    <li>学会使用contextlib模块简化实现</li>
+                    <li>掌握@contextmanager装饰器的使用</li>
+                    <li>能够创建自定义上下文管理器</li>
+                </ul>
+            </div>
+
+            <h3>3.3.1 with语句详解</h3>
+
+            <p>with语句是Python中进行资源管理的标准方式，它确保资源在使用后被正确清理，无论是否发生异常。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 with语句详解 - with_statement_detail.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python with语句详解
+
+import os
+
+print("=" * 60)
+print("with语句详解")
+print("=" * 60)
+
+print("\n1. with语句的工作原理:")
+print("  with expression as variable:")
+print("      with_block")
+print()
+print("  等价于:")
+print("  manager = expression")
+print("  variable = manager.__enter__()")
+print("  try:")
+print("      with_block")
+print("  finally:")
+print("      manager.__exit__()")
+
+print("\n2. 文件操作是典型的上下文管理器:")
+with open("demo.txt", "w", encoding="utf-8") as f:
+    f.write("使用with语句\n")
+    f.write("文件会自动关闭")
+print("  with块执行完毕，文件已自动关闭")
+
+with open("demo.txt", "r", encoding="utf-8") as f:
+    content = f.read()
+    print(f"  读取内容: {content.strip()}")
+
+print("\n3. 线程锁的上下文管理器:")
+import threading
+
+lock = threading.Lock()
+
+def thread_safe_operation():
+    with lock:
+        print("  获取锁")
+        print("  执行操作")
+        print("  释放锁")
+
+thread_safe_operation()
+
+print("\n4. Decimal的小数精度管理:")
+from decimal import Decimal, localcontext
+
+print("  普通计算:")
+result1 = Decimal('1') / Decimal('7')
+print(f"    1/7 = {result1:.15f}")
+
+print("  使用上下文管理器控制精度:")
+with localcontext() as ctx:
+    ctx.prec = 3
+    result2 = Decimal('1') / Decimal('7')
+    print(f"    精度3: 1/7 = {result2}")
+
+with localcontext() as ctx:
+    ctx.prec = 10
+    result3 = Decimal('1') / Decimal('7')
+    print(f"    精度10: 1/7 = {result3}")
+
+print("\n5. 嵌套with语句:")
+with open("outer.txt", "w") as outer:
+    outer.write("外层文件")
+    with open("inner.txt", "w") as inner:
+        inner.write("内层文件")
+        print("  同时打开两个文件")
+    print("  内层文件已关闭")
+print("  外层文件已关闭")
+
+print("\n6. 一行多个with（Python 3.10+）:")
+with (
+    open("file1.txt", "w") as f1,
+    open("file2.txt", "w") as f2
+):
+    f1.write("文件1")
+    f2.write("文件2")
+    print("  同时操作两个文件")
+
+with open("file1.txt", "r") as f1, \
+     open("file2.txt", "r") as f2:
+    print(f"  file1: {f1.read()}")
+    print(f"  file2: {f2.read()}")
+
+for f in ["demo.txt", "outer.txt", "inner.txt", "file1.txt", "file2.txt"]:
+    if os.path.exists(f):
+        os.remove(f)
+print("\n测试文件已清理")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.3.2 __enter__和__exit__方法</h3>
+
+            <p>要创建上下文管理器，需要定义一个类并实现__enter__和__exit__方法。这两个方法在with语句进入和退出时被调用。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 __enter__和__exit__方法 - enter_exit.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python __enter__和__exit__方法
+
+import os
+import time
+
+print("=" * 60)
+print("__enter__和__exit__方法")
+print("=" * 60)
+
+print("\n1. 基本上下文管理器结构:")
+class Timer:
+    def __enter__(self):
+        self.start = time.time()
+        print("  计时开始")
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.end = time.time()
+        elapsed = self.end - self.start
+        print(f"  计时结束，用时: {elapsed:.4f}秒")
+        return False
+
+with Timer() as t:
+    time.sleep(0.1)
+    print("  执行操作...")
+
+print("\n2. __exit__方法的参数:")
+class DebugContext:
+    def __enter__(self):
+        print("  __enter__被调用")
+        return "返回值"
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print(f"  exc_type: {exc_type}")
+        print(f"  exc_val: {exc_val}")
+        print(f"  exc_tb: {exc_tb}")
+        return False
+
+with DebugContext() as result:
+    print(f"  with语句的as值: {result}")
+
+print("\n3. 捕获异常时的__exit__:")
+class ExceptionContext:
+    def __enter__(self):
+        print("  进入上下文")
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is None:
+            print("  没有异常")
+        else:
+            print(f"  捕获异常: {exc_val}")
+        return False
+
+try:
+    with ExceptionContext():
+        print("  正常执行")
+except:
+    print("  异常被传播")
+
+print("\n4. 返回True阻止异常传播:")
+class SuppressException:
+    def __enter__(self):
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type == ValueError:
+            print(f"  抑制ValueError: {exc_val}")
+            return True
+        return False
+
+with SuppressException():
+    raise ValueError("测试异常")
+
+print("  异常被抑制，程序继续执行")
+
+print("\n5. 实际应用：数据库连接管理:")
+class DatabaseConnection:
+    def __init__(self, db_name):
+        self.db_name = db_name
+        self.connected = False
+    
+    def __enter__(self):
+        print(f"  连接数据库: {self.db_name}")
+        self.connected = True
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.connected:
+            print(f"  关闭数据库连接: {self.db_name}")
+            self.connected = False
+        return False
+    
+    def query(self, sql):
+        print(f"  执行SQL: {sql}")
+
+with DatabaseConnection("my_database") as db:
+    db.query("SELECT * FROM users")
+    db.query("INSERT INTO users VALUES (1, '张三')")
+
+print(f"  连接状态: {db.connected}")
+
+print("\n6. 实际应用：临时文件管理:")
+class TempFile:
+    def __init__(self, suffix=".tmp"):
+        self.suffix = suffix
+        self.path = None
+    
+    def __enter__(self):
+        import tempfile
+        fd, self.path = tempfile.mkstemp(suffix=self.suffix)
+        print(f"  创建临时文件: {self.path}")
+        return self.path
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.path and os.path.exists(self.path):
+            os.remove(self.path)
+            print(f"  删除临时文件: {self.path}")
+        return False
+
+with TempFile(".txt") as path:
+    print(f"  使用的文件路径: {path}")
+    with open(path, "w") as f:
+        f.write("临时内容")
+
+print("\n所有示例执行完毕")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.3.3 contextlib模块与@contextmanager</h3>
+
+            <p>Python的contextlib模块提供了更简单的方式来创建上下文管理器，其中@contextmanager装饰器是最常用的工具。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 contextlib与@contextmanager - contextlib_demo.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python contextlib模块与@contextmanager
+
+import os
+import time
+from contextlib import contextmanager, closing, suppress
+
+print("=" * 60)
+print("contextlib模块与@contextmanager")
+print("=" * 60)
+
+print("\n1. @contextmanager装饰器基础:")
+@contextmanager
+def timer():
+    print("  进入上下文")
+    start = time.time()
+    try:
+        yield "返回值"
+    finally:
+        end = time.time()
+        print(f"  退出上下文，用时: {end - start:.4f}秒")
+
+with timer() as result:
+    print(f"  接收到的值: {result}")
+    time.sleep(0.1)
+
+print("\n2. @contextmanager处理异常:")
+@contextmanager
+def managed_resource():
+    print("  获取资源")
+    try:
+        yield "资源对象"
+    finally:
+        print("  释放资源")
+
+try:
+    with managed_resource() as res:
+        print(f"  使用: {res}")
+        raise ValueError("测试异常")
+except ValueError as e:
+    print(f"  捕获异常: {e}")
+
+print("\n3. closing上下文管理器:")
+class Resource:
+    def close(self):
+        print("  关闭资源")
+
+print("  使用closing包装有close方法的对象:")
+with closing(Resource()) as res:
+    print("  使用资源")
+
+print("\n4. suppress上下文管理器:")
+print("  使用suppress抑制特定异常:")
+with suppress(FileNotFoundError):
+    os.remove("不存在的文件.txt")
+    print("  文件删除成功")
+print("  程序继续执行")
+
+print("\n5. redirect_stdout重定向输出:")
+from contextlib import redirect_stdout
+from io import StringIO
+
+output = StringIO()
+with redirect_stdout(output):
+    print("这条输出会被重定向")
+    print("不会显示在控制台")
+
+captured = output.getvalue()
+print(f"  捕获的输出: {repr(captured)}")
+
+print("\n6. 自定义计时器上下文管理器:")
+@contextmanager
+def benchmark(name="操作"):
+    start = time.perf_counter()
+    yield
+    elapsed = time.perf_counter() - start
+    print(f"  {name} 用时: {elapsed:.4f}秒")
+
+with benchmark("数据处理"):
+    time.sleep(0.05)
+
+print("\n7. 多资源上下文管理器:")
+@contextmanager
+def multi_open(file1, file2):
+    f1 = open(file1, 'w')
+    f2 = open(file2, 'w')
+    try:
+        yield f1, f2
+    finally:
+        f1.close()
+        f2.close()
+        print("  两个文件都已关闭")
+
+with multi_open("out1.txt", "out2.txt") as (f1, f2):
+    f1.write("文件1内容")
+    f2.write("文件2内容")
+    print("  写入完成")
+
+print("\n8. 属性代理上下文管理器:")
+@contextmanager
+def attribute_proxy(obj, **kwargs):
+    original = {}
+    for key, value in kwargs.items():
+        original[key] = getattr(obj, key, None)
+        setattr(obj, key, value)
+    try:
+        yield obj
+    finally:
+        for key, value in original.items():
+            if value is None:
+                delattr(obj, key)
+            else:
+                setattr(obj, key, value)
+
+class Config:
+    pass
+
+config = Config()
+config.debug = False
+
+with attribute_proxy(config, debug=True):
+    print(f"  临时debug模式: {config.debug}")
+print(f"  恢复后debug模式: {config.debug}")
+
+for f in ["out1.txt", "out2.txt"]:
+    if os.path.exists(f):
+        os.remove(f)
+print("\n测试文件已清理")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.3.4 常见应用场景</h3>
+
+            <p>上下文管理器在实际开发中有广泛的应用，包括数据库连接、文件操作、线程锁、配置管理等场景。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 上下文管理器应用场景 - context_applications.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python上下文管理器常见应用场景
+
+import os
+import threading
+import time
+from contextlib import contextmanager
+
+print("=" * 60)
+print("上下文管理器应用场景")
+print("=" * 60)
+
+print("\n1. 数据库连接管理:")
+@contextmanager
+def database_connection(host, port):
+    print(f"  连接数据库 {host}:{port}")
+    connection = {"status": "connected"}
+    try:
+        yield connection
+    finally:
+        print("  关闭数据库连接")
+        connection["status"] = "closed"
+
+with database_connection("localhost", 3306) as conn:
+    print(f"  执行查询，连接状态: {conn['status']}")
+    print(f"  获取结果")
+
+print("\n2. 事务管理:")
+@contextmanager
+def transaction(db):
+    print("  开始事务")
+    db["committed"] = False
+    try:
+        yield db
+        print("  提交事务")
+        db["committed"] = True
+    except Exception as e:
+        print(f"  回滚事务: {e}")
+        raise
+
+db = {}
+try:
+    with transaction(db):
+        print("  执行数据库操作1")
+        print("  执行数据库操作2")
+        raise Exception("模拟错误")
+except:
+    print(f"  最终状态: {db}")
+
+print("\n3. 文件处理增强版:")
+@contextmanager
+def safe_file(filepath, mode='r', encoding='utf-8'):
+    file = None
+    try:
+        file = open(filepath, mode, encoding=encoding)
+        yield file
+    except FileNotFoundError:
+        print(f"  文件不存在: {filepath}")
+        yield None
+    except PermissionError:
+        print(f"  权限不足: {filepath}")
+        yield None
+    finally:
+        if file:
+            file.close()
+            print("  文件已关闭")
+
+with safe_file("test.txt", "w") as f:
+    if f:
+        f.write("安全写入")
+        print("  写入成功")
+
+print("\n4. 线程锁管理:")
+lock = threading.Lock()
+
+@contextmanager
+def acquire_lock(l):
+    l.acquire()
+    try:
+        yield
+    finally:
+        l.release()
+
+counter = 0
+def increment():
+    global counter
+    for _ in range(1000):
+        with acquire_lock(lock):
+            counter += 1
+
+threads = [threading.Thread(target=increment) for _ in range(5)]
+for t in threads:
+    t.start()
+for t in threads:
+    t.join()
+
+print(f"  最终计数器值: {counter}")
+
+print("\n5. 临时目录管理:")
+@contextmanager
+def temp_directory(prefix="tmp_"):
+    import tempfile
+    import shutil
+    dir_path = tempfile.mkdtemp(prefix=prefix)
+    print(f"  创建临时目录: {dir_path}")
+    try:
+        yield dir_path
+    finally:
+        shutil.rmtree(dir_path)
+        print(f"  删除临时目录: {dir_path}")
+
+with temp_directory("demo_") as tmpdir:
+    print(f"  在临时目录中创建文件")
+    with open(os.path.join(tmpdir, "test.txt"), "w") as f:
+        f.write("临时内容")
+    print(f"  临时目录内容: {os.listdir(tmpdir)}")
+
+print("\n6. 配置上下文:")
+@contextmanager
+def configuration(config_dict, **overrides):
+    original = {}
+    for key, value in overrides.items():
+        original[key] = config_dict.get(key)
+        config_dict[key] = value
+    try:
+        yield config_dict
+    finally:
+        for key, value in original.items():
+            if value is None:
+                config_dict.pop(key, None)
+            else:
+                config_dict[key] = value
+
+config = {"debug": False, "timeout": 30}
+
+with configuration(config, debug=True, timeout=60) as cfg:
+    print(f"  当前配置: debug={cfg['debug']}, timeout={cfg['timeout']}")
+
+print(f"  恢复后配置: debug={config['debug']}, timeout={config['timeout']}")
+
+print("\n7. HTTP会话管理:")
+@contextmanager
+def http_session(base_url):
+    print(f"  建立HTTP会话: {base_url}")
+    session = {"base_url": base_url, "cookies": {}}
+    try:
+        yield session
+    finally:
+        print("  关闭HTTP会话")
+        session["cookies"].clear()
+
+with http_session("https://api.example.com") as session:
+    print(f"  发送请求到: {session['base_url']}")
+    session["cookies"]["token"] = "abc123"
+    print(f"  会话cookies: {session['cookies']}")
+
+print("\n所有应用场景演示完成")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 实践练习</h4>
+                <p><strong>练习3.3.1</strong>：实现一个计时器上下文管理器，测量代码执行时间</p>
+                <p><strong>练习3.3.2</strong>：创建一个日志上下文管理器，在进入和退出时自动记录日志</p>
+                <p><strong>练习3.3.3</strong>：使用@contextmanager实现一个重试机制上下文管理器</p>
+                <p><strong>练习3.3.4</strong>：实现一个缓存上下文管理器，自动管理缓存的创建和清理</p>
+                <p><strong>练习3.3.5</strong>：创建一个API调用上下文管理器，自动处理认证和错误重试</p>
+            </div>
+        </section>
+
+        <section id="section-3-4" class="section">
+            <h2><span class="section-icon">📝</span> 3.4 日志系统</h2>
+            
+            <p>日志系统是程序调试、监控和问题排查的重要工具。Python提供了功能强大的logging模块，支持灵活的日志配置和多输出方式。本节将详细介绍如何高效使用Python日志系统。</p>
+
+            <div class="learning-goals">
+                <h4>🎯 学习目标</h4>
+                <ul>
+                    <li>掌握logging模块的基本使用方法</li>
+                    <li>理解日志级别和日志器层次结构</li>
+                    <li>学会配置日志格式和输出方式</li>
+                    <li>掌握文件日志和日志轮转</li>
+                    <li>能够设计合理的日志策略</li>
+                </ul>
+            </div>
+
+            <h3>3.4.1 logging模块基础</h3>
+
+            <p>logging是Python标准库中的日志模块，提供了灵活的日志记录功能，支持多种日志级别和输出方式。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 logging模块基础 - logging_basics.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python logging模块基础
+
+import logging
+
+print("=" * 60)
+print("logging模块基础")
+print("=" * 60)
+
+print("\n1. 基础日志配置:")
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+logger.debug("这是debug信息")
+logger.info("这是info信息")
+logger.warning("这是warning信息")
+logger.error("这是error信息")
+logger.critical("这是critical信息")
+
+print("\n2. 日志级别详解:")
+print("  NOTSET = 0")
+print("  DEBUG = 10")
+print("  INFO = 20")
+print("  WARNING = 30")
+print("  ERROR = 40")
+print("  CRITICAL = 50")
+
+print("\n3. 设置日志级别:")
+logger.setLevel(logging.DEBUG)
+
+print("  当前日志级别:", logging.getLevelName(logger.level))
+print("  设置为DEBUG级别后的输出:")
+
+handler = logging.StreamHandler()
+handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+logger.debug("调试信息")
+logger.info("信息")
+logger.warning("警告")
+
+print("\n4. 不同日志器:")
+app_logger = logging.getLogger("myapp")
+db_logger = logging.getLogger("myapp.database")
+
+print(f"  app_logger: {app_logger.name}")
+print(f"  db_logger: {db_logger.name}")
+print(f"  db_logger父级: {db_logger.parent}")
+
+print("\n5. 使用日志函数而不是日志器:")
+logging.info("直接使用logging函数")
+
+print("\n6. 日志格式说明符:")
+print("  %(name)s - 日志器名称")
+print("  %(levelname)s - 日志级别")
+print("  %(message)s - 日志消息")
+print("  %(asctime)s - 时间戳")
+print("  %(filename)s - 文件名")
+print("  %(lineno)d - 行号")
+print("  %(funcName)s - 函数名")
+
+print("\n7. 获取根日志器:")
+root_logger = logging.getLogger()
+print(f"  根日志器名称: {root_logger.name}")
+print(f"  根日志器级别: {root_logger.level}")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.4.2 日志级别配置</h3>
+
+            <p>合理设置日志级别是日志策略的关键。不同环境可能需要不同的日志级别，开发环境需要详细日志，生产环境则需要精简日志。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 日志级别配置 - log_levels.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python日志级别配置
+
+import logging
+
+print("=" * 60)
+print("日志级别配置")
+print("=" * 60)
+
+print("\n1. 基本日志级别演示:")
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(levelname)s: %(message)s'
+)
+
+logger = logging.getLogger("demo")
+
+logger.debug("调试信息 - 不会在生产环境显示")
+logger.info("普通信息 - 日常运行信息")
+logger.warning("警告信息 - 需要关注")
+logger.error("错误信息 - 发生错误")
+logger.critical("严重错误 - 系统级错误")
+
+print("\n2. 根据环境切换日志级别:")
+import os
+
+def get_log_level():
+    env = os.getenv('ENV', 'production')
+    levels = {
+        'development': logging.DEBUG,
+        'testing': logging.INFO,
+        'production': logging.WARNING
+    }
+    return levels.get(env, logging.WARNING)
+
+level = get_log_level()
+print(f"  当前环境日志级别: {logging.getLevelName(level)}")
+
+print("\n3. 模块级别日志控制:")
+logger_core = logging.getLogger("app.core")
+logger_api = logging.getLogger("app.api")
+logger_db = logging.getLogger("app.database")
+
+logger_core.setLevel(logging.DEBUG)
+logger_api.setLevel(logging.INFO)
+logger_db.setLevel(logging.WARNING)
+
+handler = logging.StreamHandler()
+handler.setFormatter(logging.Formatter('%(name)s - %(levelname)s - %(message)s'))
+logger_core.addHandler(handler)
+logger_api.addHandler(handler)
+logger_db.addHandler(handler)
+
+print("  设置不同模块的日志级别:")
+logger_core.debug("核心模块调试")
+logger_api.info("API模块信息")
+logger_db.warning("数据库警告")
+
+print("\n4. 使用setLevel()控制Handler级别:")
+handler = logging.StreamHandler()
+handler.setLevel(logging.WARNING)
+logger = logging.getLogger("handler_demo")
+logger.setLevel(logging.DEBUG)
+logger.addHandler(handler)
+
+print("  只有WARNING及以上才会输出:")
+logger.debug("这条不显示")
+logger.info("这条不显示")
+logger.warning("这条会显示")
+
+print("\n5. 有效级别和级别继承:")
+parent = logging.getLogger("parent")
+child = logging.getLogger("parent.child")
+grandchild = logging.getLogger("parent.child.grandchild")
+
+print(f"  parent级别: {parent.level} ({logging.getLevelName(parent.level) if parent.level else 'NOTSET'})")
+print(f"  child级别: {child.level} ({logging.getLevelName(child.level) if child.level else 'NOTSET'})")
+print(f"  grandchild级别: {grandchild.level} ({logging.getLevelName(grandchild.level) if grandchild.level else 'NOTSET'})")
+
+print("\n6. 生产环境建议配置:")
+print("  开发环境: DEBUG (显示所有日志)")
+print("  测试环境: INFO (显示信息及以上)")
+print("  生产环境: WARNING (仅警告及以上)")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.4.3 日志格式化</h3>
+
+            <p>良好的日志格式能帮助开发者快速定位问题。logging模块提供了丰富的格式化选项，支持自定义格式和布局。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 日志格式化 - log_formatting.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python日志格式化
+
+import logging
+
+print("=" * 60)
+print("日志格式化")
+print("=" * 60)
+
+print("\n1. 基础格式化配置:")
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+
+logger = logging.getLogger("basic")
+logger.info("这是基本日志格式")
+
+print("\n2. 详细格式化配置:")
+detailed_format = logging.Formatter(
+    fmt='[%(asctime)s] [%(levelname)s] [%(name)s:%(lineno)d] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+
+handler = logging.StreamHandler()
+handler.setFormatter(detailed_format)
+logger_detailed = logging.getLogger("detailed")
+logger_detailed.setLevel(logging.INFO)
+logger_detailed.addHandler(handler)
+
+logger_detailed.info("详细格式日志")
+logger_detailed.warning("警告信息")
+
+print("\n3. 常用格式化符号:")
+print("  %(name)s - 日志器名称")
+print("  %(levelname)s - 日志级别名称")
+print("  %(levelname)s - 级别名称(短)")
+print("  %(message)s - 日志消息")
+print("  %(asctime)s - 时间")
+print("  %(created)f - 创建时间戳")
+print("  %(filename)s - 文件名")
+print("  %(funcName)s - 函数名")
+print("  %(lineno)d - 行号")
+print("  %(module)s - 模块名")
+print("  %(process)d - 进程ID")
+print("  %(thread)d - 线程ID")
+
+print("\n4. 自定义格式示例:")
+class ColoredFormatter(logging.Formatter):
+    COLORS = {
+        'DEBUG': '\033[36m',
+        'INFO': '\033[32m',
+        'WARNING': '\033[33m',
+        'ERROR': '\033[31m',
+        'CRITICAL': '\033[35m',
+    }
+    RESET = '\033[0m'
+
+    def format(self, record):
+        color = self.COLORS.get(record.levelname, self.RESET)
+        record.levelname = f"{color}{record.levelname}{self.RESET}"
+        return super().format(record)
+
+handler = logging.StreamHandler()
+handler.setFormatter(ColoredFormatter('%(levelname)s - %(message)s'))
+logger_color = logging.getLogger("color")
+logger_color.setLevel(logging.INFO)
+logger_color.addHandler(handler)
+
+print("  带颜色的日志输出:")
+logger_color.debug("调试")
+logger_color.info("信息")
+logger_color.warning("警告")
+logger_color.error("错误")
+
+print("\n5. 输出到结构化格式:")
+import json
+
+class JSONFormatter(logging.Formatter):
+    def format(self, record):
+        log_data = {
+            'timestamp': self.formatTime(record),
+            'level': record.levelname,
+            'logger': record.name,
+            'message': record.getMessage(),
+            'module': record.module,
+            'function': record.funcName,
+            'line': record.lineno
+        }
+        return json.dumps(log_data)
+
+handler = logging.StreamHandler()
+handler.setFormatter(JSONFormatter())
+logger_json = logging.getLogger("json")
+logger_json.setLevel(logging.INFO)
+logger_json.addHandler(handler)
+
+logger_json.info("JSON格式日志")
+
+print("\n6. 不同场景的格式化建议:")
+print("  控制台: 简洁格式，便于阅读")
+print("  文件: 详细格式，便于分析")
+print("  API: JSON格式，便于程序解析")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.4.4 文件日志输出</h3>
+
+            <p>将日志输出到文件是生产环境的标准做法，支持日志持久化和后续分析。可以配合日志轮转避免文件过大。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 文件日志输出 - file_logging.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python文件日志输出
+
+import logging
+import os
+from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
+
+print("=" * 60)
+print("文件日志输出")
+print("=" * 60)
+
+print("\n1. 基本文件日志:")
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('app.log', encoding='utf-8')
+    ]
+)
+
+logger = logging.getLogger("file_demo")
+logger.info("写入文件的日志信息")
+
+print("  日志已写入 app.log")
+print("  查看文件内容:")
+with open('app.log', 'r', encoding='utf-8') as f:
+    print(f.read())
+
+print("\n2. 同时输出到控制台和文件:")
+console_handler = logging.StreamHandler()
+file_handler = logging.FileHandler('combined.log', encoding='utf-8')
+
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+console_handler.setFormatter(formatter)
+file_handler.setFormatter(formatter)
+
+logger_combined = logging.getLogger("combined")
+logger_combined.setLevel(logging.DEBUG)
+logger_combined.addHandler(console_handler)
+logger_combined.addHandler(file_handler)
+
+logger_combined.info("这条日志同时输出到控制台和文件")
+
+print("\n3. 日志轮转 - RotatingFileHandler:")
+rotating_handler = RotatingFileHandler(
+    'rotating.log',
+    maxBytes=1024,
+    backupCount=3,
+    encoding='utf-8'
+)
+rotating_handler.setFormatter(logging.Formatter('%(message)s'))
+
+logger_rotating = logging.getLogger("rotating")
+logger_rotating.setLevel(logging.INFO)
+logger_rotating.addHandler(rotating_handler)
+
+for i in range(10):
+    logger_rotating.info(f"日志消息 {i+1}")
+
+print("  创建了日志轮转文件:")
+for f in os.listdir('.'):
+    if 'rotating' in f:
+        print(f"    {f}")
+
+print("\n4. 时间轮转日志 - TimedRotatingFileHandler:")
+time_handler = TimedRotatingFileHandler(
+    'timed.log',
+    when='second',
+    interval=5,
+    backupCount=3,
+    encoding='utf-8'
+)
+time_handler.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
+time_handler.suffix = "%Y%m%d_%H%M%S"
+
+logger_timed = logging.getLogger("timed")
+logger_timed.setLevel(logging.INFO)
+logger_timed.addHandler(time_handler)
+
+logger_timed.info("时间轮转日志")
+print("  创建了时间轮转日志文件")
+
+print("\n5. 日志文件配置最佳实践:")
+print("  ✓ 使用合理的日志级别")
+print("  ✓ 设置合适的日志格式")
+print("  ✓ 配置日志轮转避免磁盘满")
+print("  ✓ 分离不同级别的日志文件")
+print("  ✓ 定期清理过期日志")
+
+print("\n6. 模块化日志配置:")
+def setup_logger(name, log_file, level=logging.INFO):
+    formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    )
+    
+    file_handler = logging.FileHandler(log_file, encoding='utf-8')
+    file_handler.setFormatter(formatter)
+    
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    logger.addHandler(file_handler)
+    
+    return logger
+
+app_logger = setup_logger("app", "app_module.log")
+app_logger.info("模块化日志配置示例")
+
+print("\n7. 清理测试文件:")
+test_files = ['app.log', 'combined.log', 'rotating.log', 
+               'rotating.log.1', 'rotating.log.2', 'rotating.log.3',
+               'timed.log', 'app_module.log']
+for f in test_files:
+    if os.path.exists(f):
+        os.remove(f)
+        print(f"  删除: {f}")
+print("\n测试文件已清理")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <h3>3.4.5 日志配置最佳实践</h3>
+
+            <p>良好的日志实践能提高程序的可维护性和问题排查效率。本节总结日志使用的最佳实践和常见模式。</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">🐍 日志最佳实践 - logging_best_practices.py</span>
+                    <div class="code-actions">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor"># Python日志配置最佳实践
+
+import logging
+import logging.config
+import yaml
+import os
+
+print("=" * 60)
+print("日志配置最佳实践")
+print("=" * 60)
+
+print("\n1. 使用配置文件管理日志:")
+LOGGING_CONFIG = """
+version: 1
+disable_existing_loggers: False
+
+formatters:
+  simple:
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  detailed:
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(filename)s:%(lineno)d - %(message)s'
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: simple
+    stream: ext://sys.stdout
+  file:
+    class: logging.FileHandler
+    level: INFO
+    formatter: detailed
+    filename: config_demo.log
+    encoding: utf-8
+
+root:
+  level: DEBUG
+  handlers: [console, file]
+
+loggers:
+  myapp:
+    level: DEBUG
+    handlers: [console, file]
+    propagate: no
+"""
+
+with open('logging_config.yaml', 'w') as f:
+    f.write(LOGGING_CONFIG)
+
+with open('logging_config.yaml', 'r') as f:
+    config = yaml.safe_load(f)
+
+logging.config.dictConfig(config)
+logger = logging.getLogger("myapp")
+logger.info("使用配置文件初始化日志")
+
+print("\n2. 结构化日志数据:")
+logger_struct = logging.getLogger("structured")
+logger_struct.setLevel(logging.INFO)
+
+class StructuredLogger:
+    def __init__(self, name):
+        self.logger = logging.getLogger(name)
+    
+    def log(self, level, message, **kwargs):
+        extra_data = " | ".join(f"{k}={v}" for k, v in kwargs.items())
+        full_message = f"{message} | {extra_data}"
+        self.logger.log(level, full_message)
+    
+    def info(self, message, **kwargs):
+        self.log(logging.INFO, message, **kwargs)
+    
+    def error(self, message, **kwargs):
+        self.log(logging.ERROR, message, **kwargs)
+
+log = StructuredLogger("structured")
+log.info("用户登录", user_id=123, ip="192.168.1.1")
+log.error("请求失败", endpoint="/api/users", status=500)
+
+print("\n3. 日志性能优化:")
+print("  使用lazy formatting避免不必要的字符串格式化:")
+logger_perf = logging.getLogger("performance")
+if logger_perf.isEnabledFor(logging.DEBUG):
+    expensive_result = str([i**2 for i in range(1000)])
+    logger_perf.debug(f"计算结果: {expensive_result}")
+
+print("\n4. 记录异常堆栈:")
+logger_exception = logging.getLogger("exception")
+try:
+    result = 10 / 0
+except Exception:
+    logger_exception.exception("发生除零错误")
+
+print("\n5. 日志分组和命名约定:")
+print("  推荐命名:")
+print("    app - 应用日志")
+print("    app.api - API日志")
+print("    app.db - 数据库日志")
+print("    app.auth - 认证日志")
+print("    app.payment - 支付日志")
+
+print("\n6. 不同环境的日志策略:")
+print("  开发环境:")
+print("    - 级别: DEBUG")
+print("    - 输出: 控制台")
+print("    - 格式: 彩色、简洁")
+print()
+print("  生产环境:")
+print("    - 级别: INFO/WARNING")
+print("    - 输出: 文件+syslog")
+print("    - 格式: JSON结构化")
+print("    - 轮转: 按大小或时间")
+
+print("\n7. 日志审计要点:")
+audit_logger = logging.getLogger("audit")
+audit_logger.setLevel(logging.INFO)
+audit_logger.info("用户123执行了删除操作", target="订单456", action="delete")
+
+print("\n8. 清理配置文件:")
+if os.path.exists('logging_config.yaml'):
+    os.remove('logging_config.yaml')
+if os.path.exists('config_demo.log'):
+    os.remove('config_demo.log')
+print("配置文件已清理")</textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 实践练习</h4>
+                <p><strong>练习3.4.1</strong>：为你的应用程序配置一个完整的日志系统，支持控制台和文件输出</p>
+                <p><strong>练习3.4.2</strong>：实现一个日志上下文管理器，在进入函数时记录日志</p>
+                <p><strong>练习3.4.3</strong>：配置日志轮转，当日志文件达到10MB时自动创建新文件</p>
+                <p><strong>练习3.4.4</strong>：创建一个审计日志系统，记录用户的所有重要操作</p>
+                <p><strong>练习3.4.5</strong>：使用JSON格式配置日志，实现结构化日志输出</p>
+            </div>
+
+            <div class="resource-box">
+                <h4>📚 学习资源推荐</h4>
+                <div class="resource-list">
+                    <div class="resource-item">
+                        <span class="resource-icon">🔗</span>
+                        <span>Python官方文档 - logging模块：docs.python.org/zh-cn/3/library/logging.html</span>
+                    </div>
+                    <div class="resource-item">
+                        <span class="resource-icon">📖</span>
+                        <span>《Python编程：从入门到实践》- 文件操作与异常处理章节</span>
+                    </div>
+                    <div class="resource-item">
+                        <span class="resource-icon">🎬</span>
+                        <span>B站：Python文件操作与异常处理实战教程</span>
+                    </div>
+                    <div class="resource-item">
+                        <span class="resource-icon">💻</span>
+                        <span>GitHub：Python最佳实践项目 - 日志配置示例</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 钟心果 | Python数据分析师 | <a href="index.html">返回首页</a> | <a href="python-course.html">返回课程主页</a></p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#00d2ff' },
+                shape: { type: 'circle', stroke: { width: 0, color: '#000000' } },
+                opacity: { 
+                    value: 0.5, 
+                    random: true,
+                    anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
+                },
+                size: { 
+                    value: 3, 
+                    random: true,
+                    anim: { enable: true, speed: 2, size_min: 0.1, sync: false }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#00d2ff',
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    attract: { enable: true, rotateX: 600, rotateY: 1200 }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'repulse' },
+                    onclick: { enable: true, mode: 'push' }
+                },
+                modes: {
+                    repulse: { distance: 100, duration: 0.4 },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        window.addEventListener('scroll', function() {
+            const progressBar = document.getElementById('progressBar');
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = (scrollTop / scrollHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+
+        document.querySelectorAll('.code-editor').forEach(function(textarea) {
+            CodeMirror.fromTextArea(textarea, {
+                mode: 'python',
+                theme: 'monokai',
+                lineNumbers: true,
+                indentUnit: 4,
+                tabSize: 4
+            });
+        });
+
+        function runCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const output = codeBlock.querySelector('.code-output');
+            let code = '';
+
+            const cm = codeBlock.querySelector('.CodeMirror').CodeMirror;
+            code = cm.getValue();
+
+            output.innerHTML = '正在运行...\n\n';
+            output.classList.add('show');
+
+            setTimeout(function() {
+                try {
+                    let logs = [];
+
+                    const originalLog = console.log;
+                    console.log = function() {
+                        const args = Array.from(arguments);
+                        logs.push(args.map(arg =>
+                            typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+                        ).join(' '));
+                    };
+
+                    eval(code);
+
+                    console.log = originalLog;
+
+                    if (logs.length > 0) {
+                        output.innerHTML = logs.join('\n');
+                    } else {
+                        output.innerHTML = '代码执行完成（无输出）';
+                    }
+                } catch (error) {
+                    output.innerHTML = '错误: ' + error.message;
+                }
+            }, 100);
+        }
+
+        function resetCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const output = codeBlock.querySelector('.code-output');
+            output.classList.remove('show');
+            output.innerHTML = '';
+        }
+
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const cm = codeBlock.querySelector('.CodeMirror').CodeMirror;
+            const code = cm.getValue();
+
+            navigator.clipboard.writeText(code).then(function() {
+                const originalText = button.textContent;
+                button.textContent = '已复制!';
+                setTimeout(function() {
+                    button.textContent = originalText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

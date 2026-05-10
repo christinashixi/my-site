@@ -1,0 +1,3203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第五章：AI与机器学习入门 - Python数据分析师</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.8;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 50%, #24243e 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 210, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 210, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(40px); }
+        }
+
+        .light-effect {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            z-index: 2;
+            animation: floatLight 15s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .light-1 {
+            background: #00d2ff;
+            top: -200px;
+            left: -200px;
+        }
+
+        .light-2 {
+            background: #7b2ff7;
+            bottom: -200px;
+            right: -200px;
+            animation-delay: -5s;
+        }
+
+        .light-3 {
+            background: #00ff88;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 400px;
+            animation-delay: -10s;
+        }
+
+        @keyframes floatLight {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.1); }
+            50% { transform: translate(0, -100px) scale(1); }
+            75% { transform: translate(-50px, -50px) scale(0.9); }
+        }
+
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 15px 50px;
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #00d2ff;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            color: #00d2ff;
+            background: rgba(0, 210, 255, 0.1);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #00d2ff, #7b2ff7, #00ff88);
+            z-index: 999;
+            transition: width 0.1s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            padding: 100px 20px 50px;
+        }
+
+        .chapter-header {
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .chapter-badge {
+            display: inline-block;
+            padding: 10px 30px;
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(123, 47, 247, 0.1));
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            border-radius: 50px;
+            color: #00d2ff;
+            font-size: 0.9em;
+            font-weight: 500;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .chapter-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3em;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 30px rgba(0, 210, 255, 0.5);
+        }
+
+        .chapter-header p {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .toc-nav {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 210, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .toc-nav h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00d2ff;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .toc-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            list-style: none;
+        }
+
+        .toc-list a {
+            display: block;
+            padding: 12px 20px;
+            background: rgba(0, 210, 255, 0.05);
+            border: 1px solid rgba(0, 210, 255, 0.1);
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .toc-list a:hover {
+            background: rgba(0, 210, 255, 0.15);
+            border-color: rgba(0, 210, 255, 0.3);
+            color: #00d2ff;
+            transform: translateX(5px);
+        }
+
+        .toc-list a span {
+            color: #00d2ff;
+            margin-right: 10px;
+        }
+
+        .section {
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(0, 210, 255, 0.1);
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: rgba(0, 210, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00d2ff, #7b2ff7, #00ff88);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .section:hover::before {
+            opacity: 1;
+        }
+
+        .section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2em;
+            color: #fff;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 210, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section h2 .section-icon {
+            font-size: 1.2em;
+        }
+
+        .section h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4em;
+            color: #00d2ff;
+            margin: 35px 0 20px;
+            padding-left: 15px;
+            border-left: 4px solid #7b2ff7;
+        }
+
+        .section h4 {
+            font-size: 1.2em;
+            color: #fff;
+            margin: 25px 0 15px;
+        }
+
+        .learning-goals {
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .learning-goals h4 {
+            color: #00ff88;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .learning-goals ul {
+            margin: 15px 0 0 20px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .learning-goals li {
+            margin: 8px 0;
+        }
+
+        .concept-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .concept-card {
+            background: rgba(0, 210, 255, 0.05);
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 210, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .concept-card h4 {
+            color: #00d2ff;
+            margin-top: 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1em;
+        }
+
+        .concept-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95em;
+        }
+
+        .code-example {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            border-radius: 15px;
+            margin: 25px 0;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+        }
+
+        .code-title {
+            color: #00d2ff;
+            font-weight: 600;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .code-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .code-btn {
+            padding: 6px 15px;
+            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            border-radius: 8px;
+            color: #00d2ff;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .code-btn:hover {
+            background: rgba(0, 210, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .code-output {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px 20px;
+            border-top: 1px solid rgba(0, 210, 255, 0.1);
+            display: none;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .code-output.show {
+            display: block;
+        }
+
+        .exercise-section {
+            background: linear-gradient(135deg, rgba(123, 47, 247, 0.1), rgba(0, 210, 255, 0.05));
+            border: 1px solid rgba(123, 47, 247, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .exercise-section h3 {
+            color: #7b2ff7;
+            border-left-color: #7b2ff7;
+        }
+
+        .exercise-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(123, 47, 247, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .exercise-item h4 {
+            color: #7b2ff7;
+            margin-top: 0;
+        }
+
+        .exercise-item p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 210, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 210, 255, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .resource-card h4 {
+            color: #00d2ff;
+            margin-top: 0;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .resource-card .resource-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .flow-diagram {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .flow-steps {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .flow-step {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(123, 47, 247, 0.1));
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            border-radius: 12px;
+            padding: 20px 25px;
+            min-width: 150px;
+            transition: all 0.3s ease;
+        }
+
+        .flow-step:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.2);
+        }
+
+        .flow-step .step-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2em;
+            color: #00d2ff;
+            font-weight: 700;
+        }
+
+        .flow-step .step-text {
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 10px;
+        }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            color: #00d2ff;
+            font-size: 2em;
+        }
+
+        .tip-box {
+            background: rgba(0, 210, 255, 0.08);
+            border-left: 4px solid #00d2ff;
+            border-radius: 0 10px 10px 0;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tip-box.warning {
+            background: rgba(255, 193, 7, 0.08);
+            border-left-color: #ffc107;
+        }
+
+        .tip-box.success {
+            background: rgba(0, 255, 136, 0.08);
+            border-left-color: #00ff88;
+        }
+
+        .tip-box h4 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .glossary {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 210, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .glossary-term {
+            display: flex;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(0, 210, 255, 0.03);
+            border-radius: 10px;
+        }
+
+        .glossary-term dt {
+            color: #00d2ff;
+            font-weight: 600;
+            min-width: 150px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .glossary-term dd {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid rgba(0, 210, 255, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.1em;
+        }
+
+        .footer a {
+            color: #00d2ff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #7b2ff7;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #00d2ff, #7b2ff7);
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 0.9em;
+                padding: 6px 10px;
+            }
+
+            .chapter-header h1 {
+                font-size: 2em;
+            }
+
+            .section {
+                padding: 25px 20px;
+            }
+
+            .section h2 {
+                font-size: 1.5em;
+            }
+
+            .flow-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="grid-bg"></div>
+    <div class="light-effect light-1"></div>
+    <div class="light-effect light-2"></div>
+    <div class="light-effect light-3"></div>
+
+    <nav class="nav-container">
+        <a href="index.html" class="nav-logo">钟心果</a>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="python-course.html">课程主页</a></li>
+            <li><a href="python-course-unit4.html">上一章</a></li>
+        </ul>
+    </nav>
+
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="container">
+        <header class="chapter-header">
+            <div class="chapter-badge">🤖 AI 时代核心技能</div>
+            <h1>第五章：AI与机器学习入门</h1>
+            <p>从零基础到掌握机器学习核心算法，调用大模型API，让AI成为你的得力助手</p>
+        </header>
+
+        <nav class="toc-nav">
+            <h3>📚 章节导航</h3>
+            <div class="toc-list">
+                <a href="#section-5-1"><span>5.1</span>机器学习基础概念</a>
+                <a href="#section-5-2"><span>5.2</span>Scikit-learn快速入门</a>
+                <a href="#section-5-3"><span>5.3</span>实战项目：成绩预测模型</a>
+                <a href="#section-5-4"><span>5.4</span>大模型API调用入门</a>
+                <a href="#section-5-5"><span>5.5</span>未来展望与学习路径</a>
+            </div>
+        </nav>
+
+        <section class="section" id="section-5-1">
+            <h2><span class="section-icon">🧠</span>5.1 机器学习基础概念</h2>
+            
+            <div class="learning-goals">
+                <h4>🎯 学习目标</h4>
+                <ul>
+                    <li>理解什么是机器学习及其与传统编程的区别</li>
+                    <li>掌握机器学习的三种主要类型</li>
+                    <li>了解数据集划分的重要性</li>
+                    <li>认识过拟合与欠拟合问题</li>
+                    <li>掌握基础的特征工程方法</li>
+                </ul>
+            </div>
+
+            <h3>什么是机器学习？</h3>
+            <p>机器学习是人工智能的一个分支，它让计算机能够<strong>从数据中学习</strong>，而不是被明确编程。就像人类通过经验学习一样，机器学习算法通过分析大量数据来发现规律、做出预测。</p>
+            
+            <div class="tip-box">
+                <h4>💡 对比理解</h4>
+                <p><strong>传统编程：</strong>规则 + 数据 = 答案（程序员编写明确规则）</p>
+                <p><strong>机器学习：</strong>答案 + 数据 = 规则（算法自动发现规则）</p>
+            </div>
+
+            <h3>机器学习分类</h3>
+            <div class="concept-cards">
+                <div class="concept-card">
+                    <h4>📊 监督学习</h4>
+                    <p>从标注好的训练数据中学习，每个样本都有对应的"正确答案"。用于分类（预测类别）和回归（预测数值）任务。</p>
+                    <p><strong>应用场景：</strong>垃圾邮件识别、房价预测、销售额预测</p>
+                </div>
+                <div class="concept-card">
+                    <h4>📈 无监督学习</h4>
+                    <p>从无标注的数据中学习，发现数据内部的隐藏结构和模式。用于聚类（分组）和降维任务。</p>
+                    <p><strong>应用场景：</strong>客户分群、异常检测、推荐系统</p>
+                </div>
+                <div class="concept-card">
+                    <h4>🎮 强化学习</h4>
+                    <p>通过与环境交互学习，智能体根据奖励信号不断优化策略。用于序列决策问题。</p>
+                    <p><strong>应用场景：</strong>游戏AI、机器人控制、自动驾驶</p>
+                </div>
+            </div>
+
+            <h3>数据集划分</h3>
+            <p>将数据划分为训练集、验证集和测试集是防止模型"死记硬背"的关键步骤：</p>
+            <div class="flow-diagram">
+                <p style="color: rgba(255,255,255,0.7);">数据集划分流程</p>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-num">60-80%</div>
+                        <div class="step-text">训练集<br>模型学习</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-num">10-20%</div>
+                        <div class="step-text">验证集<br>调参优化</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-num">10-20%</div>
+                        <div class="step-text">测试集<br>最终评估</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>过拟合与欠拟合</h3>
+            <div class="concept-cards">
+                <div class="concept-card">
+                    <h4>⚠️ 过拟合 (Overfitting)</h4>
+                    <p>模型在训练数据上表现很好，但在新数据上表现差。就像学生只会做做过的题目，遇到新题就不会了。</p>
+                    <p><strong>解决方法：</strong>增加数据量、正则化、Dropout、减少模型复杂度</p>
+                </div>
+                <div class="concept-card">
+                    <h4>📉 欠拟合 (Underfitting)</h4>
+                    <p>模型在训练数据和的新数据上都表现不好。就像学生没有学会基本知识，做什么题都错。</p>
+                    <p><strong>解决方法：</strong>增加模型复杂度、增加训练轮数、添加特征</p>
+                </div>
+            </div>
+
+            <h3>特征工程基础</h3>
+            <p>特征工程是将原始数据转换为模型能更好理解的特征的过程，是机器学习成功的关键：</p>
+            <div class="glossary">
+                <dl>
+                    <div class="glossary-term">
+                        <dt>特征缩放</dt>
+                        <dd>将数值特征标准化或归一化到相似范围，如将身高(cm)和体重(kg)都缩放到0-1</dd>
+                    </div>
+                    <div class="glossary-term">
+                        <dt>类别编码</dt>
+                        <dd>将文本类别转换为数字，如将"红/绿/蓝"编码为1/2/3</dd>
+                    </div>
+                    <div class="glossary-term">
+                        <dt>特征组合</dt>
+                        <dd>将多个特征组合成新特征，如将"长"和"宽"组合成"面积"</dd>
+                    </div>
+                    <div class="glossary-term">
+                        <dt>缺失值处理</dt>
+                        <dd>填充或删除缺失数据，常用方法包括均值填充、中位数填充</dd>
+                    </div>
+                </dl>
+            </div>
+
+            <h3>代码示例</h3>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例1：监督学习 vs 无监督学习对比</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+# 导入必要的库
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.cluster import KMeans
+
+print("=" * 50)
+print("🤖 机器学习基础示例：鸢尾花数据集")
+print("=" * 50)
+
+# 加载经典的鸢尾花数据集（监督学习示例）
+iris = load_iris()
+X, y = iris.data, iris.target
+feature_names = iris.feature_names
+target_names = iris.target_names
+
+print(f"\n📊 数据集信息：")
+print(f"   样本数量: {len(X)}")
+print(f"   特征数量: {len(feature_names)}")
+print(f"   类别: {list(target_names)}")
+
+# 数据集划分（训练集80%，测试集20%）
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+print(f"\n📂 数据划分：")
+print(f"   训练集: {len(X_train)} 样本")
+print(f"   测试集: {len(X_test)} 样本")
+
+# 特征标准化
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# 训练监督学习模型（逻辑回归）
+clf = LogisticRegression(max_iter=200, random_state=42)
+clf.fit(X_train_scaled, y_train)
+accuracy = clf.score(X_test_scaled, y_test)
+
+print(f"\n🎯 监督学习（逻辑回归）准确率: {accuracy:.2%}")
+
+# 无监督学习示例（K-Means聚类）
+print(f"\n📈 无监督学习（K-Means聚类）：")
+kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
+clusters = kmeans.fit_predict(X)
+
+# 计算聚类准确率
+from sklearn.metrics import adjusted_rand_score
+ari = adjusted_rand_score(y, clusters)
+print(f"   聚类与真实标签的调整兰德指数: {ari:.2f}")
+print(f"   （接近1表示聚类效果好）")
+
+print("\n" + "=" * 50)
+print("✅ 机器学习基础示例完成！")
+print("=" * 50)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例2：过拟合与欠拟合可视化</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+import numpy as np
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import cross_val_score
+
+print("=" * 60)
+print("📉 过拟合与欠拟合的演示")
+print("=" * 60)
+
+# 生成非线性数据（带有噪声的正弦曲线）
+np.random.seed(42)
+X_train = np.linspace(0, 4, 20)
+y_train_data = np.sin(X_train) + np.random.normal(0, 0.3, 20)
+X_test = np.linspace(0, 4, 100)
+y_test_data = np.sin(X_test)
+
+# 创建不同复杂度的模型
+degrees = [1, 3, 15]  # 欠拟合、适中、过拟合
+model_names = ['欠拟合 (degree=1)', '适中 (degree=3)', '过拟合 (degree=15)']
+
+print(f"\n🔍 模型复杂度对性能的影响：")
+print("-" * 60)
+
+for i, (degree, name) in enumerate(zip(degrees, model_names)):
+    # 创建多项式回归管道
+    model = Pipeline([
+        ('poly', PolynomialFeatures(degree=degree)),
+        ('linear', LinearRegression())
+    ])
+    
+    # 交叉验证评估
+    train_scores = cross_val_score(model, X_train.reshape(-1,1), y_train_data, cv=5)
+    
+    # 训练并预测
+    model.fit(X_train.reshape(-1,1), y_train_data)
+    train_pred = model.predict(X_train.reshape(-1,1))
+    test_pred = model.predict(X_test.reshape(-1,1))
+    
+    # 计算训练和测试误差
+    train_mse = np.mean((y_train_data - train_pred) ** 2)
+    test_mse = np.mean((y_test_data - test_pred) ** 2)
+    
+    print(f"\n{name}:")
+    print(f"  训练集 MSE: {train_mse:.4f}")
+    print(f"  测试集 MSE: {test_mse:.4f}")
+    print(f"  交叉验证分数: {train_scores.mean():.3f} (+/- {train_scores.std()*2:.3f})")
+
+print("\n" + "-" * 60)
+print("📌 关键发现：")
+print("   • 欠拟合: 训练和测试误差都很高，模型太简单")
+print("   • 适中: 训练和测试误差接近，泛化能力强")
+print("   • 过拟合: 训练误差低但测试误差高，记住了噪声")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例3：特征工程实战</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder, OneHotEncoder
+
+print("=" * 60)
+print("🔧 特征工程基础示例")
+print("=" * 60)
+
+# 创建示例数据集
+df = pd.DataFrame({
+    'height': [170, 165, 180, 155, 175],  # 身高(cm)
+    'weight': [65, 55, 80, 45, 70],       # 体重(kg)
+    'city': ['北京', '上海', '北京', '深圳', '上海'],  # 城市
+    'gender': ['M', 'F', 'M', 'F', 'M']   # 性别
+})
+
+print("\n📊 原始数据：")
+print(df)
+
+# 1. 标准化 (Z-score)
+print("\n\n1️⃣ 标准化 (Z-score Normalization)：")
+print("   将数据转换为均值0，标准差1的分布")
+scaler = StandardScaler()
+df_scaled = scaler.fit_transform(df[['height', 'weight']])
+print("   height (标准化):", np.round(df_scaled[:, 0], 2))
+print("   weight (标准化):", np.round(df_scaled[:, 1], 2))
+
+# 2. 归一化 (Min-Max)
+print("\n\n2️⃣ 归一化 (Min-Max Scaling)：")
+print("   将数据缩放到指定范围（默认0-1）")
+minmax_scaler = MinMaxScaler()
+df_minmax = minmax_scaler.fit_transform(df[['height', 'weight']])
+print("   height (归一化):", np.round(df_minmax[:, 0], 2))
+print("   weight (归一化):", np.round(df_minmax[:, 1], 2))
+
+# 3. 标签编码
+print("\n\n3️⃣ 标签编码 (Label Encoding)：")
+print("   将类别转换为数字（适用于有序类别）")
+le = LabelEncoder()
+df['city_encoded'] = le.fit_transform(df['city'])
+print("   城市映射:", dict(zip(le.classes_, range(len(le.classes_)))))
+print("   city_encoded:", df['city_encoded'].tolist())
+
+# 4. 独热编码
+print("\n\n4️⃣ 独热编码 (One-Hot Encoding)：")
+print("   将类别转换为二进制列（适用于无序类别）")
+ohe = OneHotEncoder(sparse_output=False)
+gender_encoded = ohe.fit_transform(df[['gender']])
+print("   性别独热编码列:", ohe.categories_[0].tolist())
+print("   编码结果:")
+for i, row in enumerate(gender_encoded):
+    print(f"   {df['gender'].iloc[i]} -> {row}")
+
+# 5. 特征组合
+print("\n\n5️⃣ 特征组合 (Feature Combination)：")
+df['bmi'] = df['weight'] / (df['height']/100) ** 2
+df['height_weight_ratio'] = df['height'] / df['weight']
+print("   BMI (体质指数):", np.round(df['bmi'], 2))
+print("   身高体重比:", np.round(df['height_weight_ratio'], 2))
+
+print("\n" + "=" * 60)
+print("✅ 特征工程示例完成！")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例4：三种学习类型对比</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+import numpy as np
+from sklearn.datasets import make_classification, make_blobs, make_moons
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.cluster import KMeans
+from sklearn.neighbors import KNeighborsClassifier
+
+print("=" * 60)
+print("🎯 三种机器学习类型对比")
+print("=" * 60)
+
+# 1. 监督学习 - 分类
+print("\n\n1️⃣ 监督学习（分类）：")
+X, y = make_classification(n_samples=200, n_features=2, n_redundant=0,
+                           n_informative=2, n_clusters_per_class=1, 
+                           class_sep=2, random_state=42)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+clf = LogisticRegression(random_state=42)
+clf.fit(X_train, y_train)
+accuracy = clf.score(X_test, y_test)
+print(f"   ✓ 使用逻辑回归进行二分类")
+print(f"   ✓ 准确率: {accuracy:.2%}")
+print(f"   ✓ 数据特点: 每个样本都有标签(0或1)")
+
+# 2. 无监督学习 - 聚类
+print("\n\n2️⃣ 无监督学习（聚类）：")
+X_blobs, _ = make_blobs(n_samples=200, centers=3, cluster_std=1.0, random_state=42)
+
+kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
+labels = kmeans.fit_predict(X_blobs)
+
+unique_labels = np.unique(labels)
+print(f"   ✓ 使用K-Means将数据分成 {len(unique_labels)} 组")
+print(f"   ✓ 各组样本数: {[(label, np.sum(labels==label)) for label in unique_labels]}")
+print(f"   ✓ 数据特点: 没有标签，算法自动发现结构")
+
+# 3. 半监督学习演示
+print("\n\n3️⃣ 半监督学习：")
+print("   （介于监督和无监督之间，部分数据有标签）")
+
+X_moons, y_moons = make_moons(n_samples=300, noise=0.1, random_state=42)
+
+# 模拟半监督场景：只给10%的数据打标签
+n_labeled = 30
+indices_labeled = np.random.choice(len(X_moons), n_labeled, replace=False)
+indices_unlabeled = np.array([i for i in range(len(X_moons)) if i not in indices_labeled])
+
+X_labeled = X_moons[indices_labeled]
+y_labeled = y_moons[indices_labeled]
+X_unlabeled = X_moons[indices_unlabeled]
+
+print(f"   ✓ 有标签样本: {n_labeled} 个")
+print(f"   ✓ 无标签样本: {len(X_unlabeled)} 个")
+print(f"   ✓ 策略: 先用标签数据训练，再用无标签数据微调")
+
+# 简单演示：只用有标签数据训练
+clf_semi = KNeighborsClassifier(n_neighbors=3)
+clf_semi.fit(X_labeled, y_labeled)
+accuracy_semi = clf_semi.score(X_labeled, y_labeled)
+print(f"   ✓ 小样本训练准确率: {accuracy_semi:.2%}")
+
+print("\n" + "=" * 60)
+print("📌 总结：")
+print("   • 监督学习：需要大量标注数据，效果好")
+print("   • 无监督学习：不需要标注，发现隐藏结构")
+print("   • 半监督学习：标注数据少时可用")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="exercise-section">
+                <h3>📝 章节练习</h3>
+                <div class="exercise-item">
+                    <h4>练习 5.1.1：区分学习类型</h4>
+                    <p>思考以下场景应该使用哪种机器学习方法，并说明理由：</p>
+                    <p>1. 根据用户购物历史预测其是否会购买某商品</p>
+                    <p>2. 将客户按照消费行为分成不同群体</p>
+                    <p>3. 训练AI玩Flappy Bird游戏</p>
+                </div>
+                <div class="exercise-item">
+                    <h4>练习 5.1.2：分析过拟合问题</h4>
+                    <p>某同学训练模型时发现训练准确率99%，但测试准确率只有60%，请分析原因并提出解决方案。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="section-5-2">
+            <h2><span class="section-icon">🔬</span>5.2 Scikit-learn快速入门</h2>
+            
+            <div class="learning-goals">
+                <h4>🎯 学习目标</h4>
+                <ul>
+                    <li>了解Scikit-learn库的核心功能和使用场景</li>
+                    <li>掌握数据加载和预处理方法</li>
+                    <li>学会使用常见机器学习算法</li>
+                    <li>理解并计算各种评估指标</li>
+                    <li>掌握交叉验证的原理和实现</li>
+                </ul>
+            </div>
+
+            <h3>Scikit-learn简介</h3>
+            <p>Scikit-learn（简称sklearn）是Python最流行的机器学习库，提供了从数据预处理到模型训练、评估的完整工具链。它的设计遵循统一的API规范，学习曲线平缓，适合初学者入门机器学习。</p>
+
+            <div class="tip-box success">
+                <h4>✨ 安装方法</h4>
+                <p><code>pip install scikit-learn</code> 或 <code>conda install scikit-learn</code></p>
+            </div>
+
+            <h3>Scikit-learn核心模块</h3>
+            <div class="concept-cards">
+                <div class="concept-card">
+                    <h4>sklearn.datasets</h4>
+                    <p>内置经典数据集，如鸢尾花、波士顿房价、手写数字等</p>
+                </div>
+                <div class="concept-card">
+                    <h4>sklearn.preprocessing</h4>
+                    <p>数据预处理：标准化、归一化、编码、填充缺失值</p>
+                </div>
+                <div class="concept-card">
+                    <h4>sklearn.model_selection</h4>
+                    <p>模型选择：训练测试集划分、交叉验证、网格搜索</p>
+                </div>
+                <div class="concept-card">
+                    <h4>sklearn.linear_model</h4>
+                    <p>线性模型：线性回归、逻辑回归、岭回归、Lasso</p>
+                </div>
+                <div class="concept-card">
+                    <h4>sklearn.tree</h4>
+                    <p>决策树：分类树、回归树</p>
+                </div>
+                <div class="concept-card">
+                    <h4>sklearn.ensemble</h4>
+                    <p>集成学习：随机森林、梯度提升、AdaBoost</p>
+                </div>
+            </div>
+
+            <h3>模型训练基本流程</h3>
+            <div class="flow-diagram">
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-num">1</div>
+                        <div class="step-text">数据准备<br>加载&清洗</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-num">2</div>
+                        <div class="step-text">数据预处理<br>特征工程</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-num">3</div>
+                        <div class="step-text">模型选择<br>初始化</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-num">4</div>
+                        <div class="step-text">模型训练<br>fit()</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-num">5</div>
+                        <div class="step-text">模型预测<br>predict()</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-num">6</div>
+                        <div class="step-text">模型评估<br>score()</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>模型评估指标</h3>
+            <div class="concept-cards">
+                <div class="concept-card">
+                    <h4>🎯 准确率 (Accuracy)</h4>
+                    <p>预测正确的样本占总样本的比例。<code>Accuracy = (TP+TN) / (TP+TN+FP+FN)</code></p>
+                    <p><strong>适用：</strong>类别平衡的分类问题</p>
+                </div>
+                <div class="concept-card">
+                    <h4>🔍 精确率 (Precision)</h4>
+                    <p>预测为正的样本中，真正为正的比例。<code>Precision = TP / (TP+FP)</code></p>
+                    <p><strong>适用：</strong>假阳性代价高的场景（如垃圾邮件识别）</p>
+                </div>
+                <div class="concept-card">
+                    <h4>📡 召回率 (Recall)</h4>
+                    <p>所有正样本中，被正确预测的比例。<code>Recall = TP / (TP+FN)</code></p>
+                    <p><strong>适用：</strong>假阴性代价高的场景（如疾病检测）</p>
+                </div>
+                <div class="concept-card">
+                    <h4>⚖️ F1分数 (F1-Score)</h4>
+                    <p>精确率和召回率的调和平均。<code>F1 = 2 * (P*R) / (P+R)</code></p>
+                    <p><strong>适用：</strong>类别不平衡问题的综合评估</p>
+                </div>
+            </div>
+
+            <h3>代码示例</h3>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例1：数据集加载与探索</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+import numpy as np
+import pandas as pd
+from sklearn.datasets import load_iris, load_digits, load_wine
+
+print("=" * 60)
+print("📊 Scikit-learn 内置数据集一览")
+print("=" * 60)
+
+# 1. 鸢尾花数据集（分类）
+print("\n\n1️⃣ 鸢尾花数据集 (Iris)：")
+iris = load_iris()
+print(f"   样本数: {iris.data.shape[0]}, 特征数: {iris.data.shape[1]}")
+print(f"   特征名: {list(iris.feature_names)}")
+print(f"   类别: {list(iris.target_names)}")
+print(f"   各类别样本数: {np.bincount(iris.target)}")
+
+# 2. 手写数字数据集
+print("\n\n2️⃣ 手写数字数据集 (Digits)：")
+digits = load_digits()
+print(f"   样本数: {digits.data.shape[0]}, 特征数: {digits.data.shape[1]}")
+print(f"   图像尺寸: 8x8 像素")
+print(f"   类别: 0-9 共10类")
+print(f"   各类别样本数: {np.bincount(digits.target)}")
+
+# 3. 葡萄酒数据集
+print("\n\n3️⃣ 葡萄酒数据集 (Wine)：")
+wine = load_wine()
+print(f"   样本数: {wine.data.shape[0]}, 特征数: {wine.data.shape[1]}")
+print(f"   特征名: {list(wine.feature_names)[:5]}... (共13个)")
+print(f"   类别: {list(wine.target_names)}")
+
+# 数据转换为DataFrame方便查看
+print("\n\n📋 鸢尾花数据DataFrame预览：")
+df_iris = pd.DataFrame(iris.data, columns=iris.feature_names)
+df_iris['species'] = [iris.target_names[i] for i in iris.target]
+print(df_iris.head())
+print(f"\n数据统计信息：")
+print(df_iris.describe())
+
+print("\n" + "=" * 60)
+print("✅ 数据集加载完成！")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例2：数据预处理完整流程</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
+from sklearn.model_selection import train_test_split
+
+print("=" * 60)
+print("🔧 数据预处理完整流程")
+print("=" * 60)
+
+# 创建模拟的原始数据（包含缺失值和异常值）
+np.random.seed(42)
+data = {
+    'age': [25, 30, 35, 40, 45, 50, 55, 60, 100],  # 100是异常值
+    'income': [3000, 5000, 8000, 12000, 15000, np.nan, 25000, 30000, 50000],
+    'score': [60, 70, 75, 80, 85, 88, 90, 92, np.nan]
+}
+df = pd.DataFrame(data)
+
+print("\n📊 原始数据（含缺失值和异常值）：")
+print(df)
+print(f"\n缺失值统计: {df.isnull().sum().to_dict()}")
+print(f"异常值检测: age列存在100岁这个异常值")
+
+# Step 1: 处理缺失值
+print("\n\n1️⃣ 处理缺失值：")
+print("   方法1: 删除含缺失值的行")
+df_clean = df.dropna()
+print(f"   删除后样本数: {len(df_clean)}")
+
+print("\n   方法2: 用均值/中位数填充")
+df_filled = df.copy()
+df_filled['income'].fillna(df_filled['income'].median(), inplace=True)
+df_filled['score'].fillna(df_filled['score'].mean(), inplace=True)
+print(f"   income填充值: {df['income'].median()}")
+print(f"   score填充值: {df['score'].mean():.2f}")
+print(df_filled)
+
+# Step 2: 处理异常值
+print("\n\n2️⃣ 处理异常值：")
+print("   使用IQR方法识别并处理异常值")
+Q1 = df_filled['age'].quantile(0.25)
+Q3 = df_filled['age'].quantile(0.75)
+IQR = Q3 - Q1
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+print(f"   Q1={Q1}, Q3={Q3}, IQR={IQR}")
+print(f"   正常范围: [{lower_bound}, {upper_bound}]")
+
+# 将异常值替换为边界值
+df_filled['age'] = df_filled['age'].clip(lower_bound, upper_bound)
+print(f"   异常值处理后: {df_filled['age'].tolist()}")
+
+# Step 3: 特征缩放
+print("\n\n3️⃣ 特征缩放：")
+
+X = df_filled.values
+feature_names = ['age', 'income', 'score']
+
+# 标准化 (Z-score)
+scaler_std = StandardScaler()
+X_std = scaler_std.fit_transform(X)
+print("\n   标准化 (Z-score):")
+print(f"   均值: {np.round(X_std.mean(axis=0), 4)}")
+print(f"   标准差: {np.round(X_std.std(axis=0), 4)}")
+
+# 归一化 (Min-Max)
+scaler_minmax = MinMaxScaler()
+X_minmax = scaler_minmax.fit_transform(X)
+print("\n   归一化 (Min-Max 0-1):")
+print(f"   最小值: {X_minmax.min(axis=0)}")
+print(f"   最大值: {X_minmax.max(axis=0)}")
+
+print("\n" + "=" * 60)
+print("✅ 数据预处理完成！")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例3：常用分类算法对比</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+
+print("=" * 60)
+print("🤖 常用分类算法对比")
+print("=" * 60)
+
+# 加载数据
+iris = load_iris()
+X, y = iris.data, iris.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+
+# 标准化
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# 定义模型
+models = {
+    '逻辑回归': LogisticRegression(max_iter=200, random_state=42),
+    '决策树': DecisionTreeClassifier(max_depth=5, random_state=42),
+    '随机森林': RandomForestClassifier(n_estimators=100, random_state=42),
+    '梯度提升': GradientBoostingClassifier(n_estimators=100, random_state=42),
+    'K近邻': KNeighborsClassifier(n_neighbors=5),
+    'SVM': SVC(kernel='rbf', random_state=42)
+}
+
+print("\n📊 各算法性能对比（鸢尾花数据集）：")
+print("-" * 60)
+print(f"{'算法':<12} {'训练准确率':<12} {'测试准确率':<12} {'交叉验证':<12}")
+print("-" * 60)
+
+results = []
+for name, model in models.items():
+    # 训练模型
+    model.fit(X_train_scaled, y_train)
+    
+    # 计算训练准确率
+    train_acc = model.score(X_train_scaled, y_train)
+    
+    # 计算测试准确率
+    test_acc = model.score(X_test_scaled, y_test)
+    
+    # 5折交叉验证
+    cv_scores = cross_val_score(model, X_train_scaled, y_train, cv=5)
+    
+    print(f"{name:<12} {train_acc:<12.4f} {test_acc:<12.4f} {cv_scores.mean():.4f}±{cv_scores.std():.3f}")
+    results.append((name, test_acc, cv_scores.mean()))
+
+print("-" * 60)
+
+# 找出最佳模型
+best_idx = max(range(len(results)), key=lambda i: results[i][2])
+print(f"\n🏆 交叉验证最佳模型: {results[best_idx][0]}")
+print(f"   平均准确率: {results[best_idx][2]:.4f}")
+
+print("\n📌 算法选择建议：")
+print("   • 逻辑回归: 线性可分问题，快速 baseline")
+print("   • 决策树: 可解释性强，易于理解")
+print("   • 随机森林: 抗过拟合，处理高维数据")
+print("   • 梯度提升: 精度高，适合竞赛")
+print("   • K近邻: 简单，适合小数据集")
+print("   • SVM: 高维数据效果好，核函数灵活")
+
+print("\n" + "=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例4：模型评估指标详解</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+import numpy as np
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import (accuracy_score, precision_score, recall_score, 
+                             f1_score, confusion_matrix, classification_report)
+
+print("=" * 60)
+print("📏 模型评估指标详解")
+print("=" * 60)
+
+# 使用乳腺癌数据集（类别不平衡）
+data = load_breast_cancer()
+X, y = data.data, data.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+model = LogisticRegression(max_iter=500, random_state=42)
+model.fit(X_train_scaled, y_train)
+y_pred = model.predict(X_test_scaled)
+y_pred_proba = model.predict_proba(X_test_scaled)[:, 1]
+
+# 计算各项指标
+accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+f1 = f1_score(y_test, y_pred)
+
+print(f"\n📊 基本评估指标：")
+print(f"   准确率 (Accuracy):  {accuracy:.4f} ({accuracy:.2%})")
+print(f"   精确率 (Precision): {precision:.4f} ({precision:.2%})")
+print(f"   召回率 (Recall):    {recall:.4f} ({recall:.2%})")
+print(f"   F1分数 (F1-Score):  {f1:.4f} ({f1:.2%})")
+
+# 混淆矩阵
+cm = confusion_matrix(y_test, y_pred)
+print(f"\n📋 混淆矩阵：")
+print(f"               预测阴性  预测阳性")
+print(f"   实际阴性      {cm[0,0]:4d}      {cm[0,1]:4d}")
+print(f"   实际阳性      {cm[1,0]:4d}      {cm[1,1]:4d}")
+
+tn, fp, fn, tp = cm.ravel()
+print(f"\n   真正例 (TP): {tp} - 正确预测的阳性")
+print(f"   真负例 (TN): {tn} - 正确预测的阴性")
+print(f"   假正例 (FP): {fp} - 错误预测为阳性")
+print(f"   假负例 (FN): {fn} - 错误预测为阴性")
+
+# 详细报告
+print(f"\n📝 分类详细报告：")
+print(classification_report(y_test, y_pred, target_names=['恶性', '良性']))
+
+# 调整阈值的影响
+print("=" * 60)
+print("\n🔧 调整预测阈值的影响：")
+thresholds = [0.3, 0.5, 0.7]
+for thresh in thresholds:
+    y_pred_thresh = (y_pred_proba >= thresh).astype(int)
+    prec = precision_score(y_test, y_pred_thresh)
+    rec = recall_score(y_test, y_pred_thresh)
+    print(f"   阈值={thresh}: 精确率={prec:.3f}, 召回率={rec:.3f}")
+
+print("\n📌 指标选择原则：")
+print("   • 精确率优先：减少误报（如垃圾邮件过滤）")
+print("   • 召回率优先：减少漏报（如疾病检测）")
+print("   • F1分数优先：平衡精确率和召回率")
+
+print("\n" + "=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例5：交叉验证详解</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
+from sklearn.ensemble import RandomForestClassifier
+
+print("=" * 60)
+print("🔄 交叉验证详解")
+print("=" * 60)
+
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# 基础K折交叉验证
+print("\n1️⃣ K折交叉验证 (K-Fold)：")
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+model = RandomForestClassifier(n_estimators=50, random_state=42)
+
+fold_scores = []
+for fold, (train_idx, val_idx) in enumerate(kf.split(X), 1):
+    X_train, X_val = X[train_idx], X[val_idx]
+    y_train, y_val = y[train_idx], y[val_idx]
+    
+    model.fit(X_train, y_train)
+    score = model.score(X_val, y_val)
+    fold_scores.append(score)
+    print(f"   Fold {fold}: {score:.4f}")
+
+print(f"\n   平均准确率: {np.mean(fold_scores):.4f}")
+print(f"   标准差: {np.std(fold_scores):.4f}")
+print(f"   95%置信区间: [{np.mean(fold_scores) - 1.96*np.std(fold_scores):.4f}, {np.mean(fold_scores) + 1.96*np.std(fold_scores):.4f}]")
+
+# 分层K折交叉验证
+print("\n\n2️⃣ 分层K折交叉验证 (Stratified K-Fold)：")
+print("   保证每折中各类别比例与整体一致")
+skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+
+strat_scores = cross_val_score(model, X, y, cv=skf)
+print(f"   各折准确率: {np.round(strat_scores, 4)}")
+print(f"   平均准确率: {strat_scores.mean():.4f} ± {strat_scores.std():.4f}")
+
+# 留一法交叉验证
+print("\n\n3️⃣ 留一法交叉验证 (Leave-One-Out)：")
+from sklearn.model_selection import LeaveOneOut
+loo = LeaveOneOut()
+
+# 由于LOO计算量大，只用前50个样本演示
+X_small, y_small = X[:50], y[:50]
+loo_scores = cross_val_score(model, X_small, y_small, cv=loo)
+print(f"   样本数: {len(X_small)}")
+print(f"   平均准确率: {loo_scores.mean():.4f}")
+print(f"   特点: 每次只留1个样本做验证，结果最可靠但计算量大")
+
+# 学习曲线分析
+print("\n\n4️⃣ 学习曲线分析：")
+train_sizes, train_scores, val_scores = cross_val_score(
+    model, X, y, cv=5
+)
+
+print(f"   平均交叉验证分数: {train_scores.mean():.4f}")
+print(f"   分数标准差: {train_scores.std():.4f}")
+
+print("\n" + "=" * 60)
+print("📌 交叉验证选择建议：")
+print("   • 小数据集: 使用留一法或分层K折")
+print("   • 大数据集: 使用标准K折（计算更快）")
+print("   • 类别不平衡: 必须使用分层K折")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例6：回归模型完整实战</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+import numpy as np
+import pandas as pd
+from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression, Ridge, Lasso
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+
+print("=" * 60)
+print("📈 回归模型完整实战：房价预测")
+print("=" * 60)
+
+# 加载加州房价数据集
+housing = fetch_california_housing()
+X, y = housing.data, housing.target
+feature_names = housing.feature_names
+
+print(f"\n📊 数据集信息：")
+print(f"   样本数: {len(X)}")
+print(f"   特征数: {len(feature_names)}")
+print(f"   特征: {list(feature_names)}")
+print(f"   目标: 房价（单位：10万美元）")
+print(f"   房价范围: {y.min():.2f} ~ {y.max():.2f}")
+
+# 数据划分
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 标准化
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# 定义模型
+models = {
+    '线性回归': LinearRegression(),
+    '岭回归': Ridge(alpha=1.0),
+    'Lasso回归': Lasso(alpha=0.01),
+    '随机森林': RandomForestRegressor(n_estimators=100, random_state=42),
+    '梯度提升': GradientBoostingRegressor(n_estimators=100, random_state=42)
+}
+
+print(f"\n📏 各模型性能对比：")
+print("-" * 70)
+print(f"{'模型':<12} {'MAE':<10} {'RMSE':<10} {'R²':<10} {'CV分数':<12}")
+print("-" * 70)
+
+results = []
+for name, model in models.items():
+    # 训练
+    model.fit(X_train_scaled, y_train)
+    y_pred = model.predict(X_test_scaled)
+    
+    # 评估指标
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
+    
+    # 交叉验证
+    cv_scores = cross_val_score(model, X_train_scaled, y_train, cv=5)
+    
+    print(f"{name:<12} {mae:<10.4f} {rmse:<10.4f} {r2:<10.4f} {cv_scores.mean():.4f}±{cv_scores.std():.3f}")
+    results.append((name, r2, rmse))
+
+print("-" * 70)
+
+# 最佳模型
+best_idx = max(range(len(results)), key=lambda i: results[i][1])
+print(f"\n🏆 最佳模型: {results[best_idx][0]}")
+print(f"   R²分数: {results[best_idx][1]:.4f} (解释了{results[best_idx][1]*100:.1f}%的房价变化)")
+print(f"   RMSE: {results[best_idx][2]:.4f} (平均预测误差约${results[best_idx][2]*100000:.0f})")
+
+# 特征重要性（使用随机森林）
+rf_model = models['随机森林']
+feature_importance = pd.DataFrame({
+    'feature': feature_names,
+    'importance': rf_model.feature_importances_
+}).sort_values('importance', ascending=False)
+
+print(f"\n📊 特征重要性（随机森林）：")
+for idx, row in feature_importance.head(5).iterrows():
+    bar = '█' * int(row['importance'] * 50)
+    print(f"   {row['feature']:<12} {row['importance']:.4f} {bar}")
+
+print("\n" + "=" * 60)
+print("📌 回归模型选择建议：")
+print("   • 线性回归: 简单快速，适合线性关系")
+print("   • 岭/Lasso: 带正则化，防止过拟合")
+print("   • 随机森林: 抗过拟合，处理非线性")
+print("   • 梯度提升: 精度高，适合竞赛")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="exercise-section">
+                <h3>📝 章节练习</h3>
+                <div class="exercise-item">
+                    <h4>练习 5.2.1：选择合适的算法</h4>
+                    <p>针对以下场景，应该选择哪种评估指标？请说明理由：</p>
+                    <p>1. 信用卡欺诈检测（误报一个正常交易 vs 漏掉一个欺诈）</p>
+                    <p>2. 电影推荐系统</p>
+                    <p>3. 肿瘤良性/恶性判断</p>
+                </div>
+                <div class="exercise-item">
+                    <h4>练习 5.2.2：交叉验证实践</h4>
+                    <p>使用sklearn的make_classification生成一个二分类数据集，分别使用K折和分层K折进行交叉验证，比较结果的差异。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="section-5-3">
+            <h2><span class="section-icon">📊</span>5.3 实战项目：成绩预测模型</h2>
+            
+            <div class="learning-goals">
+                <h4>🎯 学习目标</h4>
+                <ul>
+                    <li>掌握机器学习项目的完整流程</li>
+                    <li>学会数据探索和可视化分析</li>
+                    <li>实践特征工程的具体方法</li>
+                    <li>能够进行模型选择和调优</li>
+                    <li>学会对新数据进行预测</li>
+                </ul>
+            </div>
+
+            <h3>项目背景</h3>
+            <p>某高中教务处希望根据学生的平时表现数据，预测其期末考试成绩。这可以帮助教师提前识别需要关注的学生，实现个性化教学。</p>
+
+            <div class="tip-box">
+                <h4>📋 项目需求</h4>
+                <p><strong>输入特征：</strong>学习时长、出勤率、作业完成率、平时测验均分、预习时间、复习时间、课外学习、提问次数</p>
+                <p><strong>输出目标：</strong>期末考试成绩（0-100分）</p>
+                <p><strong>性能要求：</strong>R² > 0.8，MAE < 5分</p>
+            </div>
+
+            <h3>项目流程</h3>
+            <div class="flow-diagram">
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-num">1</div>
+                        <div class="step-text">数据准备<br>生成&探索</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-num">2</div>
+                        <div class="step-text">特征工程<br>数据清洗</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-num">3</div>
+                        <div class="step-text">模型训练<br>选择调优</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-num">4</div>
+                        <div class="step-text">模型评估<br>验证性能</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-num">5</div>
+                        <div class="step-text">预测应用<br>部署使用</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>代码示例</h3>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例1：数据准备与探索</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+import numpy as np
+import pandas as pd
+
+print("=" * 60)
+print("📊 步骤1：数据准备与探索")
+print("=" * 60)
+
+# 模拟学生成绩数据集
+np.random.seed(42)
+n_samples = 500
+
+data = {
+    # 学习相关特征
+    'study_hours': np.random.normal(6, 2, n_samples),  # 每日学习时长
+    'attendance_rate': np.random.uniform(0.7, 1.0, n_samples),  # 出勤率
+    'homework_complete': np.random.uniform(0.6, 1.0, n_samples),  # 作业完成率
+    'quiz_avg': np.random.normal(75, 10, n_samples),  # 平时测验均分
+    'preview_time': np.random.exponential(0.5, n_samples),  # 预习时间(小时/天)
+    'review_time': np.random.exponential(1, n_samples),  # 复习时间(小时/天)
+    'extra_study': np.random.choice([0, 1, 2, 3], n_samples, p=[0.3, 0.4, 0.2, 0.1]),  # 课外学习
+    'question_asked': np.random.poisson(2, n_samples),  # 课堂提问次数
+    
+    # 环境因素
+    'sleep_hours': np.random.normal(7.5, 1, n_samples),  # 睡眠时间
+    'stress_level': np.random.uniform(1, 10, n_samples),  # 压力水平
+}
+
+df = pd.DataFrame(data)
+
+# 生成期末成绩（基于特征的加权组合 + 噪声）
+base_score = (
+    df['study_hours'] * 3 +
+    df['attendance_rate'] * 20 +
+    df['homework_complete'] * 15 +
+    df['quiz_avg'] * 0.3 +
+    df['preview_time'] * 5 +
+    df['review_time'] * 4 +
+    df['extra_study'] * 2 +
+    df['question_asked'] * 1.5 -
+    (df['stress_level'] - 5) * 0.5 +
+    20
+)
+
+# 添加噪声并限制范围
+df['final_score'] = np.clip(base_score + np.random.normal(0, 5, n_samples), 0, 100)
+
+print(f"\n📊 数据集概览：")
+print(f"   样本数: {len(df)}")
+print(f"   特征数: {len(df.columns) - 1}")
+print(f"   目标变量: final_score (期末成绩)")
+
+print(f"\n📋 数据统计信息：")
+print(df.describe().round(2))
+
+print(f"\n🎯 目标变量分布：")
+print(f"   最高分: {df['final_score'].max():.1f}")
+print(f"   最低分: {df['final_score'].min():.1f}")
+print(f"   平均分: {df['final_score'].mean():.1f}")
+print(f"   中位数: {df['final_score'].median():.1f}")
+print(f"   标准差: {df['final_score'].std():.1f}")
+
+# 相关性分析
+print(f"\n🔗 与成绩相关性最强的特征（Top 5）：")
+correlations = df.corr()['final_score'].drop('final_score').sort_values(ascending=False)
+for feature, corr in correlations.head().items():
+    print(f"   {feature}: {corr:.3f}")
+
+print("\n" + "=" * 60)
+print("✅ 数据探索完成！")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例2：特征工程实现</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+
+print("=" * 60)
+print("🔧 步骤2：特征工程实现")
+print("=" * 60)
+
+# 重新生成数据
+np.random.seed(42)
+n_samples = 500
+
+df = pd.DataFrame({
+    'study_hours': np.random.normal(6, 2, n_samples),
+    'attendance_rate': np.random.uniform(0.7, 1.0, n_samples),
+    'homework_complete': np.random.uniform(0.6, 1.0, n_samples),
+    'quiz_avg': np.random.normal(75, 10, n_samples),
+    'preview_time': np.random.exponential(0.5, n_samples),
+    'review_time': np.random.exponential(1, n_samples),
+    'extra_study': np.random.choice([0, 1, 2, 3], n_samples, p=[0.3, 0.4, 0.2, 0.1]),
+    'question_asked': np.random.poisson(2, n_samples),
+    'sleep_hours': np.random.normal(7.5, 1, n_samples),
+    'stress_level': np.random.uniform(1, 10, n_samples),
+})
+
+base_score = (
+    df['study_hours'] * 3 + df['attendance_rate'] * 20 +
+    df['homework_complete'] * 15 + df['quiz_avg'] * 0.3 +
+    df['preview_time'] * 5 + df['review_time'] * 4 +
+    df['extra_study'] * 2 + df['question_asked'] * 1.5 -
+    (df['stress_level'] - 5) * 0.5 + 20
+)
+df['final_score'] = np.clip(base_score + np.random.normal(0, 5, n_samples), 0, 100)
+
+# 1. 创建新特征
+print("\n1️⃣ 创建新特征：")
+
+# 学习效率特征
+df['learning_efficiency'] = df['study_hours'] / (df['sleep_hours'] + 1)
+print("   ✓ learning_efficiency = study_hours / (sleep_hours + 1)")
+
+# 总投入时间
+df['total_time_investment'] = df['study_hours'] + df['preview_time'] + df['review_time']
+print("   ✓ total_time_investment = study_hours + preview_time + review_time")
+
+# 学业态度评分（综合）
+df['study_attitude'] = (df['attendance_rate'] + df['homework_complete'] + 
+                        df['question_asked'] / 10) / 3
+print("   ✓ study_attitude = 综合出勤率、作业完成、提问次数")
+
+# 压力调整后的学习时间
+df['adjusted_study_time'] = df['study_hours'] * (1 - df['stress_level'] / 20)
+print("   ✓ adjusted_study_time = study_hours * (1 - stress_level/20)")
+
+# 2. 特征分组
+print("\n2️⃣ 特征分组：")
+feature_groups = {
+    '时间投入': ['study_hours', 'preview_time', 'review_time', 'total_time_investment'],
+    '学业表现': ['attendance_rate', 'homework_complete', 'quiz_avg', 'study_attitude'],
+    '学习行为': ['extra_study', 'question_asked', 'learning_efficiency', 'adjusted_study_time'],
+    '环境影响': ['sleep_hours', 'stress_level']
+}
+
+for group, features in feature_groups.items():
+    print(f"\n   {group}:")
+    for f in features:
+        if f in df.columns:
+            print(f"      • {f}")
+
+# 3. 特征缩放
+print("\n3️⃣ 特征缩放：")
+X = df.drop('final_score', axis=1)
+y = df['final_score']
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+X_scaled_df = pd.DataFrame(X_scaled, columns=X.columns)
+
+print(f"\n   缩放前均值: {X.mean().mean():.2f}")
+print(f"   缩放后均值: {X_scaled.mean():.4f}")
+print(f"   缩放前标准差: {X.std().mean():.2f}")
+print(f"   缩放后标准差: {X_scaled.std():.4f}")
+
+# 4. 特征重要性分析
+print("\n4️⃣ 特征重要性分析：")
+from sklearn.ensemble import RandomForestRegressor
+rf = RandomForestRegressor(n_estimators=100, random_state=42)
+rf.fit(X_scaled, y)
+
+importance = pd.DataFrame({
+    'feature': X.columns,
+    'importance': rf.feature_importances_
+}).sort_values('importance', ascending=False)
+
+print("\n   特征重要性排名：")
+for i, (_, row) in enumerate(importance.iterrows(), 1):
+    bar = '█' * int(row['importance'] * 40)
+    print(f"   {i:2d}. {row['feature']:<20} {row['importance']:.4f} {bar}")
+
+print("\n" + "=" * 60)
+print("✅ 特征工程完成！")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例3：模型选择与训练</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression, Ridge, Lasso
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+
+print("=" * 60)
+print("🤖 步骤3：模型选择与训练")
+print("=" * 60)
+
+# 准备数据
+np.random.seed(42)
+n_samples = 500
+
+df = pd.DataFrame({
+    'study_hours': np.random.normal(6, 2, n_samples),
+    'attendance_rate': np.random.uniform(0.7, 1.0, n_samples),
+    'homework_complete': np.random.uniform(0.6, 1.0, n_samples),
+    'quiz_avg': np.random.normal(75, 10, n_samples),
+    'preview_time': np.random.exponential(0.5, n_samples),
+    'review_time': np.random.exponential(1, n_samples),
+    'extra_study': np.random.choice([0, 1, 2, 3], n_samples),
+    'question_asked': np.random.poisson(2, n_samples),
+    'sleep_hours': np.random.normal(7.5, 1, n_samples),
+    'stress_level': np.random.uniform(1, 10, n_samples),
+})
+
+base_score = (
+    df['study_hours'] * 3 + df['attendance_rate'] * 20 +
+    df['homework_complete'] * 15 + df['quiz_avg'] * 0.3 +
+    df['preview_time'] * 5 + df['review_time'] * 4 +
+    df['extra_study'] * 2 + df['question_asked'] * 1.5 -
+    (df['stress_level'] - 5) * 0.5 + 20
+)
+df['final_score'] = np.clip(base_score + np.random.normal(0, 5, n_samples), 0, 100)
+
+X = df.drop('final_score', axis=1)
+y = df['final_score']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# 1. 模型对比
+print("\n1️⃣ 模型性能对比：")
+print("-" * 70)
+
+models = {
+    '线性回归': LinearRegression(),
+    '岭回归': Ridge(alpha=1.0),
+    'Lasso回归': Lasso(alpha=0.1),
+    '决策树': DecisionTreeRegressor(max_depth=10, random_state=42),
+    '随机森林': RandomForestRegressor(n_estimators=100, random_state=42),
+    '梯度提升': GradientBoostingRegressor(n_estimators=100, random_state=42),
+}
+
+results = []
+for name, model in models.items():
+    model.fit(X_train_scaled, y_train)
+    y_pred = model.predict(X_test_scaled)
+    
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
+    
+    cv_scores = cross_val_score(model, X_train_scaled, y_train, cv=5)
+    
+    print(f"{name:<12} MAE:{mae:5.2f} RMSE:{rmse:5.2f} R²:{r2:.4f} CV:{cv_scores.mean():.4f}±{cv_scores.std():.3f}")
+    results.append((name, r2, mae, rmse, cv_scores.mean()))
+
+print("-" * 70)
+
+# 2. 超参数调优（以随机森林为例）
+print("\n\n2️⃣ 随机森林超参数调优：")
+param_grid = {
+    'n_estimators': [50, 100, 200],
+    'max_depth': [5, 10, 15],
+    'min_samples_split': [2, 5, 10]
+}
+
+print("   参数搜索空间：")
+for key, values in param_grid.items():
+    print(f"   • {key}: {values}")
+
+rf = RandomForestRegressor(random_state=42)
+grid_search = GridSearchCV(rf, param_grid, cv=5, scoring='r2', n_jobs=-1)
+grid_search.fit(X_train_scaled, y_train)
+
+print(f"\n   最佳参数: {grid_search.best_params_}")
+print(f"   最佳交叉验证分数: {grid_search.best_score_:.4f}")
+
+# 3. 训练最佳模型
+print("\n\n3️⃣ 训练最终模型：")
+best_model = grid_search.best_estimator_
+best_model.fit(X_train_scaled, y_train)
+
+y_pred_final = best_model.predict(X_test_scaled)
+final_mae = mean_absolute_error(y_test, y_pred_final)
+final_rmse = np.sqrt(mean_squared_error(y_test, y_pred_final))
+final_r2 = r2_score(y_test, y_pred_final)
+
+print(f"\n   最终模型性能：")
+print(f"   ✓ MAE (平均绝对误差): {final_mae:.2f} 分")
+print(f"   ✓ RMSE (均方根误差): {final_rmse:.2f} 分")
+print(f"   ✓ R² (决定系数): {final_r2:.4f} ({final_r2*100:.1f}%)")
+
+# 需求验证
+print(f"\n   📋 需求验证：")
+print(f"   {'✓' if final_r2 > 0.8 else '✗'} R² > 0.8: {final_r2:.4f} {'✓ 达标' if final_r2 > 0.8 else '✗ 未达标'}")
+print(f"   {'✓' if final_mae < 5 else '✗'} MAE < 5: {final_mae:.2f} {'✓ 达标' if final_mae < 5 else '✗ 未达标'}")
+
+print("\n" + "=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例4：模型评估与可视化</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+
+print("=" * 60)
+print("📊 步骤4：模型评估与可视化分析")
+print("=" * 60)
+
+# 准备数据
+np.random.seed(42)
+n_samples = 500
+
+df = pd.DataFrame({
+    'study_hours': np.random.normal(6, 2, n_samples),
+    'attendance_rate': np.random.uniform(0.7, 1.0, n_samples),
+    'homework_complete': np.random.uniform(0.6, 1.0, n_samples),
+    'quiz_avg': np.random.normal(75, 10, n_samples),
+    'preview_time': np.random.exponential(0.5, n_samples),
+    'review_time': np.random.exponential(1, n_samples),
+    'extra_study': np.random.choice([0, 1, 2, 3], n_samples),
+    'question_asked': np.random.poisson(2, n_samples),
+    'sleep_hours': np.random.normal(7.5, 1, n_samples),
+    'stress_level': np.random.uniform(1, 10, n_samples),
+})
+
+base_score = (
+    df['study_hours'] * 3 + df['attendance_rate'] * 20 +
+    df['homework_complete'] * 15 + df['quiz_avg'] * 0.3 +
+    df['preview_time'] * 5 + df['review_time'] * 4 +
+    df['extra_study'] * 2 + df['question_asked'] * 1.5 -
+    (df['stress_level'] - 5) * 0.5 + 20
+)
+df['final_score'] = np.clip(base_score + np.random.normal(0, 5, n_samples), 0, 100)
+
+X = df.drop('final_score', axis=1)
+y = df['final_score']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# 训练模型
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train_scaled, y_train)
+y_pred = model.predict(X_test_scaled)
+
+# 1. 残差分析
+print("\n1️⃣ 残差分析：")
+residuals = y_test - y_pred
+print(f"   残差均值: {residuals.mean():.4f} (应接近0)")
+print(f"   残差标准差: {residuals.std():.2f}")
+print(f"   最大残差: {residuals.max():.2f}")
+print(f"   最小残差: {residuals.min():.2f}")
+
+# 2. 预测区间分析
+print("\n\n2️⃣ 预测区间分析：")
+errors = np.abs(y_test - y_pred)
+within_3pts = np.mean(errors <= 3) * 100
+within_5pts = np.mean(errors <= 5) * 100
+within_10pts = np.mean(errors <= 10) * 100
+
+print(f"   预测误差在3分以内: {within_3pts:.1f}%")
+print(f"   预测误差在5分以内: {within_5pts:.1f}%")
+print(f"   预测误差在10分以内: {within_10pts:.1f}%")
+
+# 3. 分段性能分析
+print("\n\n3️⃣ 分段性能分析：")
+bins = [0, 60, 75, 85, 100]
+labels = ['不及格(0-60)', '及格(60-75)', '良好(75-85)', '优秀(85-100)']
+
+for i, (lower, upper) in enumerate(zip(bins[:-1], bins[1:])):
+    mask = (y_test >= lower) & (y_test < upper)
+    if mask.sum() > 0:
+        segment_mae = errors[mask].mean()
+        segment_r2 = r2_score(y_test[mask], y_pred[mask])
+        print(f"   {labels[i]}: 样本数={mask.sum():3d}, MAE={segment_mae:.2f}, R²={segment_r2:.3f}")
+
+# 4. 异常预测分析
+print("\n\n4️⃣ 异常预测分析：")
+threshold = 2 * errors.std()
+outliers = errors > threshold
+print(f"   异常预测阈值: {threshold:.2f} 分 (2倍标准差)")
+print(f"   异常预测数量: {outliers.sum()} 个 ({outliers.mean()*100:.1f}%)")
+
+if outliers.sum() > 0:
+    outlier_indices = np.where(outliers)[0][:5]
+    print(f"\n   部分异常预测示例：")
+    for idx in outlier_indices:
+        print(f"   学生{idx+1}: 实际={y_test.iloc[idx]:.1f}, 预测={y_pred[idx]:.1f}, 误差={errors.iloc[idx]:.1f}")
+
+print("\n" + "=" * 60)
+print("✅ 模型评估完成！")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例5：预测新学生成绩</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.preprocessing import StandardScaler
+
+print("=" * 60)
+print("🎯 步骤5：预测新学生成绩")
+print("=" * 60)
+
+# 重新训练模型
+np.random.seed(42)
+n_samples = 500
+
+df = pd.DataFrame({
+    'study_hours': np.random.normal(6, 2, n_samples),
+    'attendance_rate': np.random.uniform(0.7, 1.0, n_samples),
+    'homework_complete': np.random.uniform(0.6, 1.0, n_samples),
+    'quiz_avg': np.random.normal(75, 10, n_samples),
+    'preview_time': np.random.exponential(0.5, n_samples),
+    'review_time': np.random.exponential(1, n_samples),
+    'extra_study': np.random.choice([0, 1, 2, 3], n_samples),
+    'question_asked': np.random.poisson(2, n_samples),
+    'sleep_hours': np.random.normal(7.5, 1, n_samples),
+    'stress_level': np.random.uniform(1, 10, n_samples),
+})
+
+base_score = (
+    df['study_hours'] * 3 + df['attendance_rate'] * 20 +
+    df['homework_complete'] * 15 + df['quiz_avg'] * 0.3 +
+    df['preview_time'] * 5 + df['review_time'] * 4 +
+    df['extra_study'] * 2 + df['question_asked'] * 1.5 -
+    (df['stress_level'] - 5) * 0.5 + 20
+)
+df['final_score'] = np.clip(base_score + np.random.normal(0, 5, n_samples), 0, 100)
+
+X = df.drop('final_score', axis=1)
+y = df['final_score']
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_scaled, y)
+
+print("\n📋 新学生信息录入：")
+print("-" * 50)
+
+# 新学生数据
+new_student = {
+    'study_hours': 8,
+    'attendance_rate': 0.95,
+    'homework_complete': 0.90,
+    'quiz_avg': 80,
+    'preview_time': 1.0,
+    'review_time': 2.0,
+    'extra_study': 2,
+    'question_asked': 3,
+    'sleep_hours': 7.0,
+    'stress_level': 4
+}
+
+student_df = pd.DataFrame([new_student])
+print(student_df.T)
+
+# 数据预处理
+student_scaled = scaler.transform(student_df)
+
+# 预测
+predicted_score = model.predict(student_scaled)[0]
+
+print("\n" + "-" * 50)
+print(f"🎯 预测结果：{predicted_score:.1f} 分")
+
+# 成绩等级
+if predicted_score >= 90:
+    grade = "A (优秀)"
+elif predicted_score >= 80:
+    grade = "B (良好)"
+elif predicted_score >= 70:
+    grade = "C (中等)"
+elif predicted_score >= 60:
+    grade = "D (及格)"
+else:
+    grade = "F (不及格)"
+
+print(f"📊 成绩等级：{grade}")
+
+# 改进建议
+print("\n💡 个性化学习建议：")
+
+if new_student['study_hours'] < 7:
+    print(f"   ✨ 建议增加每日学习时间至7-8小时")
+if new_student['preview_time'] < 1:
+    print(f"   ✨ 建议加强课前预习，每次1小时以上")
+if new_student['review_time'] < 1.5:
+    print(f"   ✨ 建议增加课后复习时间，巩固知识点")
+if new_student['question_asked'] < 3:
+    print(f"   ✨ 建议课堂上积极提问，主动思考")
+if new_student['stress_level'] > 6:
+    print(f"   ✨ 建议适当放松，保持良好心态")
+
+# 批量预测示例
+print("\n" + "=" * 60)
+print("📊 批量预测示例：")
+print("=" * 60)
+
+batch_students = pd.DataFrame([
+    {'study_hours': 6, 'attendance_rate': 0.90, 'homework_complete': 0.85, 
+     'quiz_avg': 75, 'preview_time': 0.5, 'review_time': 1.0, 
+     'extra_study': 1, 'question_asked': 2, 'sleep_hours': 7.5, 'stress_level': 5},
+    {'study_hours': 4, 'attendance_rate': 0.75, 'homework_complete': 0.60, 
+     'quiz_avg': 60, 'preview_time': 0.2, 'review_time': 0.5, 
+     'extra_study': 0, 'question_asked': 1, 'sleep_hours': 6.5, 'stress_level': 7},
+    {'study_hours': 9, 'attendance_rate': 1.00, 'homework_complete': 0.95, 
+     'quiz_avg': 88, 'preview_time': 1.5, 'review_time': 2.5, 
+     'extra_study': 3, 'question_asked': 5, 'sleep_hours': 8.0, 'stress_level': 3},
+])
+
+batch_scaled = scaler.transform(batch_students)
+batch_predictions = model.predict(batch_scaled)
+
+print(f"\n   学生A: 预测成绩 {batch_predictions[0]:.1f} 分")
+print(f"   学生B: 预测成绩 {batch_predictions[1]:.1f} 分")
+print(f"   学生C: 预测成绩 {batch_predictions[2]:.1f} 分")
+
+print("\n" + "=" * 60)
+print("✅ 预测完成！")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="exercise-section">
+                <h3>📝 章节练习</h3>
+                <div class="exercise-item">
+                    <h4>练习 5.3.1：扩展项目</h4>
+                    <p>在现有基础上添加新特征，如：学生是否参加补习班、家长教育程度等，观察模型性能变化。</p>
+                </div>
+                <div class="exercise-item">
+                    <h4>练习 5.3.2：部署实践</h4>
+                    <p>将模型保存为pickle文件，并编写一个简单的函数，输入学生信息返回预测成绩。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="section-5-4">
+            <h2><span class="section-icon">🤖</span>5.4 大模型API调用入门</h2>
+            
+            <div class="learning-goals">
+                <h4>🎯 学习目标</h4>
+                <ul>
+                    <li>了解OpenAI API的基本架构和使用方式</li>
+                    <li>掌握API密钥的安全配置方法</li>
+                    <li>学会调用ChatGPT进行对话</li>
+                    <li>理解Prompt工程的核心技巧</li>
+                    <li>能够将大模型能力应用到实际场景</li>
+                </ul>
+            </div>
+
+            <h3>OpenAI API概述</h3>
+            <p>OpenAI API提供了对GPT系列大模型的编程访问能力。通过API，开发者可以将强大的语言理解、生成能力集成到自己的应用程序中。</p>
+
+            <div class="concept-cards">
+                <div class="concept-card">
+                    <h4>🌐 API架构</h4>
+                    <p>基于RESTful设计，通过HTTP请求与模型交互。支持对话、文本补全、嵌入等多种任务类型。</p>
+                </div>
+                <div class="concept-card">
+                    <h4>💰 计费方式</h4>
+                    <p>按token计费，输入和输出分别计费。不同模型价格不同，GPT-4比GPT-3.5贵但能力更强。</p>
+                </div>
+                <div class="concept-card">
+                    <h4>🔒 安全限制</h4>
+                    <p>内置内容过滤，但开发者仍需实施自己的安全措施，防止滥用和误导性输出。</p>
+                </div>
+            </div>
+
+            <h3>常见API接口</h3>
+            <div class="glossary">
+                <dl>
+                    <div class="glossary-term">
+                        <dt>Chat API</dt>
+                        <dd>对话补全接口，适合聊天机器人和多轮对话场景</dd>
+                    </div>
+                    <div class="glossary-term">
+                        <dt>Completions API</dt>
+                        <dd>文本补全接口，适合单轮文本生成任务</dd>
+                    </div>
+                    <div class="glossary-term">
+                        <dt>Embeddings API</dt>
+                        <dd>文本嵌入接口，用于语义搜索、相似度计算</dd>
+                    </div>
+                    <div class="glossary-term">
+                        <dt>Fine-tuning</dt>
+                        <dd>模型微调，定制特定领域或风格的AI助手</dd>
+                    </div>
+                </dl>
+            </div>
+
+            <h3>代码示例</h3>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例1：OpenAI API基础调用</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+print("=" * 60)
+print("🤖 OpenAI API 调用流程")
+print("=" * 60)
+
+print("""
+📋 API调用基本流程：
+
+1️⃣ 安装依赖
+   pip install openai
+
+2️⃣ 配置API密钥
+   import openai
+   openai.api_key = "your-api-key"  # 或设置环境变量
+   
+   # 建议使用环境变量（更安全）：
+   # import os
+   # openai.api_key = os.environ.get("OPENAI_API_KEY")
+
+3️⃣ 调用Chat API
+   response = openai.ChatCompletion.create(
+       model="gpt-3.5-turbo",  # 或 "gpt-4"
+       messages=[
+           {"role": "system", "content": "你是一个有帮助的助手"},
+           {"role": "user", "content": "什么是Python？"}
+       ],
+       temperature=0.7,  # 控制随机性（0-2）
+       max_tokens=500   # 最大生成token数
+   )
+   
+4️⃣ 解析响应
+   print(response.choices[0].message.content)
+""")
+
+# 模拟API响应结构
+mock_response = {
+    "id": "chatcmpl-123",
+    "object": "chat.completion",
+    "model": "gpt-3.5-turbo-0301",
+    "usage": {
+        "prompt_tokens": 20,
+        "completion_tokens": 150,
+        "total_tokens": 170
+    },
+    "choices": [
+        {
+            "message": {
+                "role": "assistant",
+                "content": "Python是一种高级编程语言..."
+            },
+            "finish_reason": "stop",
+            "index": 0
+        }
+    ]
+}
+
+import json
+print("\n📊 API响应结构示例：")
+print(json.dumps(mock_response, indent=2, ensure_ascii=False))
+
+print("\n\n📊 关键参数说明：")
+print("-" * 40)
+params = [
+    ("model", "模型名称", "gpt-3.5-turbo / gpt-4"),
+    ("messages", "对话历史", "[{role, content}, ...]"),
+    ("temperature", "随机性", "0-2，越高越随机"),
+    ("max_tokens", "最大输出", "限制生成长度"),
+]
+for param, desc, example in params:
+    print(f"   • {param}: {desc} (例: {example})")
+
+print("\n" + "=" * 60)
+print("💡 费用优化建议：")
+print("   • 优先使用 gpt-3.5-turbo（性价比高）")
+print("   • 设置合理的 max_tokens 避免浪费")
+print("   • 使用 system prompt 设定角色减少输入token")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例2：Prompt工程基础</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+print("=" * 60)
+print("📝 Prompt工程基础技巧")
+print("=" * 60)
+
+print("""
+🤖 Prompt工程是优化AI输出的关键技术
+
+📌 核心原则：
+   1. 清晰具体 - 明确说明你想要什么
+   2. 提供上下文 - 给足背景信息
+   3. 设定角色 - 让AI扮演特定身份
+   4. 结构化输出 - 指定输出格式
+
+🔧 常用技巧：
+""")
+
+# 技巧1：角色设定
+print("\n1️⃣ 角色设定技巧")
+print("-" * 50)
+
+prompt_bad = "解释一下什么是机器学习"
+prompt_good = """你是一位资深数据科学家，用通俗易懂的方式向初学者解释概念。
+
+请解释：什么是机器学习？
+
+要求：
+- 使用生活中的例子
+- 控制在100字以内
+- 避免专业术语"""
+
+print("❌ 弱Prompt:")
+print(f'   "{prompt_bad}"')
+print("\n✅ 强Prompt:")
+print(f'   """{prompt_good}"""')
+
+# 技巧2：结构化输出
+print("\n\n2️⃣ 结构化输出技巧")
+print("-" * 50)
+
+prompt_struct = """分析以下产品的市场前景，JSON格式输出：
+{
+    "summary": "一句话总结",
+    "strengths": ["优势1", "优势2"],
+    "weaknesses": ["劣势1", "劣势2"],
+    "risk_level": "低/中/高"
+}
+
+产品：智能手表
+"""
+
+print("示例Prompt:")
+print(prompt_struct)
+
+# 技巧3：Few-shot学习
+print("\n\n3️⃣ Few-shot示例学习")
+print("-" * 50)
+
+few_shot_prompt = """把中文翻译成英文：
+
+例子：
+输入：我爱你
+输出：I love you
+
+输入：机器学习很有趣
+输出："""
+
+print("示例Prompt:")
+print(few_shot_prompt)
+
+print("\n" + "=" * 60)
+print("📋 Prompt优化清单：")
+print("   □ 任务是否清晰明确？")
+print("   □ 是否提供了足够的上下文？")
+print("   □ 输出格式是否指定？")
+print("   □ 是否有安全限制？")
+print("   □ 是否需要few-shot示例？")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例3：文本分析应用</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+print("=" * 60)
+print("📊 文本分析应用案例")
+print("=" * 60)
+
+print("""
+🔍 应用场景1：情感分析
+
+传统方法需要训练模型，现在可以用大模型直接分析：
+""")
+
+# 模拟情感分析
+reviews = [
+    "这个产品太棒了，完全超出预期！物流也很快",
+    "一般般，没有宣传的那么好用",
+    "太差了，等了一周才到货，质量也不行",
+    "还不错，价格实惠，会推荐给朋友"
+]
+
+print("评论情感分析示例：")
+print("-" * 50)
+
+for review in reviews:
+    print(f"评论：{review}")
+    # 简化判断逻辑
+    positive_words = ["棒", "好", "快", "实惠", "推荐", "超", "不错"]
+    negative_words = ["差", "慢", "糟", "烂", "不好", "不行", "等"]
+    
+    pos_count = sum(1 for w in positive_words if w in review)
+    neg_count = sum(1 for w in negative_words if w in review)
+    
+    if pos_count > neg_count:
+        sentiment = "正面 😊"
+    elif neg_count > pos_count:
+        sentiment = "负面 😞"
+    else:
+        sentiment = "中性 😐"
+    
+    print(f"情感：{sentiment}\n")
+
+print("-" * 50)
+
+print("""
+🔍 应用场景2：文本摘要
+
+自动提取长文本的关键信息：
+""")
+
+long_text = """
+Python数据分析实战课程学习总结：
+
+第一章学习了Python基础语法，包括变量、数据类型、条件语句和循环结构。
+第二章深入学习了NumPy和Pandas，这是数据分析的核心库。
+第三章掌握了数据可视化，使用Matplotlib和Seaborn创建各种图表。
+第四章进行了实战项目，通过分析电商数据完成了销售报表。
+
+课程特色：
+1. 理论与实践结合，每个知识点都有配套练习
+2. 项目驱动的学习方式
+3. 老师讲解清晰，答疑及时
+4. 提供了完整的代码和数据集
+"""
+
+print("原始文本：")
+print(long_text[:150] + "...")
+
+print("\n\n自动摘要：")
+print("→ Python数据分析课程涵盖基础语法、NumPy/Pandas、数据可视化和实战项目。课程特色是理论与实践结合、项目驱动，适合数据分析入门学员。")
+
+print("""
+🔍 应用场景3：关键词提取
+
+自动识别文本中的关键信息：
+""")
+
+text = """
+在刚刚结束的2024年高考中，广东省共有75万考生报名参加。
+今年高考报名人数比去年增加了5%，创下历史新高。
+"""
+
+print("原文：")
+print(text)
+
+print("\n关键词提取结果：")
+keywords = ["2024年高考", "广东省", "75万考生", "报名人数增加5%", "历史新高"]
+print(f"→ {', '.join(keywords)}")
+
+print("""
+🔍 应用场景4：文本分类
+
+自动对文章进行主题分类：
+""")
+
+articles = [
+    ("苹果公司发布新一代iPhone", "科技"),
+    ("央行宣布降准0.5个百分点", "财经"),
+    ("中国队夺得世界杯冠军", "体育"),
+    ("科学家发现新的系外行星", "科技"),
+]
+
+print("文章分类示例：")
+for title, category in articles:
+    print(f"   标题：{title}")
+    print(f"   分类：{category}\n")
+
+print("=" * 60)
+print("📋 实际应用注意事项：")
+print("   • 设置合理的max_tokens避免截断")
+print("   • 对于大量文本，考虑先分割再分析")
+print("   • 敏感内容需要额外过滤")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-header">
+                    <span class="code-title">📝 示例4：智能问答系统</span>
+                    <div class="code-buttons">
+                        <button class="code-btn" onclick="runCode(this)">▶️ 运行</button>
+                        <button class="code-btn" onclick="resetCode(this)">🔄 重置</button>
+                        <button class="code-btn" onclick="copyCode(this)">📋 复制</button>
+                    </div>
+                </div>
+                <textarea class="code-editor">
+print("=" * 60)
+print("💬 智能问答系统构建")
+print("=" * 60)
+
+print("""
+🎯 问答系统应用场景：
+   • 客服机器人
+   • 知识库问答
+   • 学习辅导助手
+   • 产品FAQ
+""")
+
+print("""
+📋 系统架构：
+
+   ┌─────────────┐
+   │   用户输入   │
+   └──────┬──────┘
+          │
+          ▼
+   ┌─────────────┐
+   │ 意图识别     │
+   └──────┬──────┘
+          │
+          ▼
+   ┌─────────────┐
+   │ 知识检索     │
+   └──────┬──────┘
+          │
+          ▼
+   ┌─────────────┐
+   │ 答案生成     │
+   └──────┬──────┘
+          │
+          ▼
+   ┌─────────────┐
+   │   返回结果   │
+   └─────────────┘
+""")
+
+print("\n📝 基础问答实现示例：")
+
+# 模拟问答
+questions = [
+    ("这个课程要学多久？", "课程学制为4个月，每周上课5天。"),
+    ("学费是多少？", "课程学费为8800元，包含所有教学内容。"),
+    ("学完能找到工作吗？", "课程毕业后提供就业推荐服务。"),
+    ("我没有基础能学吗？", "课程从Python基础开始教起，适合零基础。"),
+]
+
+print("\n问答示例：")
+for q, a in questions:
+    print(f"\n❓ 用户：{q}")
+    print(f"🤖 助手：{a}")
+
+print("\n\n" + "=" * 60)
+print("🔧 高级功能实现")
+print("=" * 60)
+
+print("""
+📌 1. 多轮对话上下文管理
+
+对话历史存储：
+""")
+
+# 模拟对话历史
+conversation_history = [
+    {"role": "system", "content": "你是一个Python助教。"},
+    {"role": "user", "content": "Python的列表是什么？"},
+    {"role": "assistant", "content": "列表是Python中一种有序的可变数据结构..."},
+    {"role": "user", "content": "那元组呢？"},
+]
+
+print("对话历史结构：")
+for msg in conversation_history:
+    role_map = {"system": "系统", "user": "用户", "assistant": "助手"}
+    content = msg["content"][:30] + "..." if len(msg["content"]) > 30 else msg["content"]
+    print(f'   {role_map[msg["role"]]}：{content}')
+
+print("\n📌 2. 意图识别")
+
+intent_examples = [
+    ("我想报名课程", "报名咨询"),
+    ("在哪里上课？", "课程咨询"),
+    ("作业不会做", "学习帮助"),
+    ("怎么退课？", "教务问题"),
+]
+
+print("意图识别示例：")
+for query, intent in intent_examples:
+    print(f"   \"{query}\" → {intent}")
+
+print("\n📌 3. 答案置信度处理")
+
+print("""
+根据模型返回的finish_reason判断答案质量：
+- "stop": 正常完成，答案可信
+- "length": 达到max_tokens限制，可能不完整
+- "content_filter": 内容被过滤，需要人工介入
+""")
+
+print("\n" + "=" * 60)
+print("📋 部署注意事项：")
+print("   • 合理设置超时时间")
+print("   • 实现错误重试机制")
+print("   • 添加限流保护")
+print("   • 记录对话日志用于优化")
+print("=" * 60)
+                </textarea>
+                <div class="code-output"></div>
+            </div>
+
+            <div class="exercise-section">
+                <h3>📝 章节练习</h3>
+                <div class="exercise-item">
+                    <h4>练习 5.4.1：API密钥安全使用</h4>
+                    <p>创建一个Python脚本，使用环境变量存储API密钥，并实现基本的对话功能。</p>
+                </div>
+                <div class="exercise-item">
+                    <h4>练习 5.4.2：Prompt优化实践</h4>
+                    <p>选择一个实际场景（如：自动生成商品描述），设计并优化Prompt，对比不同Prompt的效果差异。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="section-5-5">
+            <h2><span class="section-icon">🚀</span>5.5 未来展望与学习路径</h2>
+            
+            <div class="learning-goals">
+                <h4>🎯 学习目标</h4>
+                <ul>
+                    <li>了解AI技术的发展趋势</li>
+                    <li>规划个人学习路径</li>
+                    <li>探索职业发展方向</li>
+                    <li>获取优质学习资源</li>
+                </ul>
+            </div>
+
+            <h3>AI发展趋势</h3>
+            <div class="concept-cards">
+                <div class="concept-card">
+                    <h4>🎯 多模态AI</h4>
+                    <p>整合文本、图像、音频、视频等多种模态的理解和生成能力。GPT-4V已经支持图像理解，未来将出现更多跨模态应用。</p>
+                </div>
+                <div class="concept-card">
+                    <h4>⚡ 本地化部署</h4>
+                    <p>随着模型压缩技术发展，更小的模型可以在消费级设备上运行。Llama、ChatGLM等开源模型降低了使用门槛。</p>
+                </div>
+                <div class="concept-card">
+                    <h4>🔧 AI Agent</h4>
+                    <p>AI Agent能够自主规划、调用工具、完成复杂任务。AutoGPT等项目展示了AI自主完成目标的能力。</p>
+                </div>
+                <div class="concept-card">
+                    <h4>🏢 企业AI应用</h4>
+                    <p>大模型与业务流程结合，提升效率。客服、内容生成、数据分析等领域正在快速落地。</p>
+                </div>
+            </div>
+
+            <h3>推荐学习资源</h3>
+            <div class="resource-cards">
+                <div class="resource-card">
+                    <div class="resource-icon">📚</div>
+                    <h4>在线课程</h4>
+                    <p><strong>Coursera:</strong> Andrew Ng的机器学习课程</p>
+                    <p><strong>Fast.ai:</strong> 实践导向的深度学习课程</p>
+                    <p><strong>Kaggle:</strong> 微学习和实战练习</p>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">📖</div>
+                    <h4>经典书籍</h4>
+                    <p><strong>《Hands-On ML》:</strong> 机器学习实战必读</p>
+                    <p><strong>《Deep Learning》:</strong> 深度学习理论经典</p>
+                    <p><strong>《Python深度学习》:</strong> Keras作者编写</p>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">🛠️</div>
+                    <h4>工具平台</h4>
+                    <p><strong>Hugging Face:</strong> 模型和数据集库</p>
+                    <p><strong>Google Colab:</strong> 免费GPU资源</p>
+                    <p><strong>Kaggle:</strong> 竞赛和数据平台</p>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">👥</div>
+                    <h4>社区论坛</h4>
+                    <p><strong>Reddit:</strong> r/MachineLearning</p>
+                    <p><strong>知乎:</strong> AI和数据分析话题</p>
+                    <p><strong>GitHub:</strong> 开源项目和代码</p>
+                </div>
+            </div>
+
+            <h3>职业发展方向</h3>
+            <div class="flow-diagram">
+                <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px;">AI与数据分析职业路径</p>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-num">入门</div>
+                        <div class="step-text">Python开发<br>数据分析</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-num">进阶</div>
+                        <div class="step-text">机器学习<br>深度学习</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-num">专业</div>
+                        <div class="step-text">NLP/计算机视觉<br>大模型应用</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-num">专家</div>
+                        <div class="step-text">AI架构师<br>算法研究员</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="concept-cards">
+                <div class="concept-card">
+                    <h4>📊 数据分析师</h4>
+                    <p>使用SQL、Python、BI工具分析数据，为业务决策提供支持。需掌握统计学基础和数据可视化技能。</p>
+                    <p><strong>薪资范围：</strong>8K-20K</p>
+                </div>
+                <div class="concept-card">
+                    <h4>🤖 机器学习工程师</h4>
+                    <p>设计、实现和部署机器学习模型，解决实际问题。需扎实的算法基础和工程能力。</p>
+                    <p><strong>薪资范围：</strong>15K-35K</p>
+                </div>
+                <div class="concept-card">
+                    <h4>🔬 AI研究员</h4>
+                    <p>进行前沿AI研究，提出新算法和方法。需硕士及以上学历和深厚的数学功底。</p>
+                    <p><strong>薪资范围：</strong>30K+</p>
+                </div>
+            </div>
+
+            <h3>实践项目建议</h3>
+            <div class="glossary">
+                <div class="glossary-term">
+                    <dt>初级项目</dt>
+                    <dd>电影推荐系统、客户流失预测、房价预测、邮件垃圾分类</dd>
+                </div>
+                <div class="glossary-term">
+                    <dt>中级项目</dt>
+                    <dd>聊天机器人、图像识别应用、NLP情感分析平台、实时数据分析看板</dd>
+                </div>
+                <div class="glossary-term">
+                    <dt>高级项目</dt>
+                    <dd>大模型微调、垂直领域知识库、自动化机器学习平台、多模态应用</dd>
+                </div>
+            </div>
+
+            <div class="tip-box success">
+                <h4>💡 学习建议</h4>
+                <p><strong>1. 夯实基础：</strong>数学（概率统计、线性代数）和编程是根本</p>
+                <p><strong>2. 动手实践：</strong>每个知识点都要coding实现，不要只看理论</p>
+                <p><strong>3. 参与竞赛：</strong>Kaggle、天池等平台可以快速提升</p>
+                <p><strong>4. 关注前沿：</strong>阅读论文、关注技术博客，保持学习</p>
+                <p><strong>5. 建立作品集：</strong>GitHub记录项目，面试时展示</p>
+            </div>
+
+            <div class="exercise-section">
+                <h3>📝 课程总结</h3>
+                <p>通过本课程的学习，你已经掌握了：</p>
+                <ul style="margin: 20px 0; color: rgba(255,255,255,0.8);">
+                    <li>✅ Python编程基础和数据结构</li>
+                    <li>✅ 数据分析核心库（NumPy、Pandas、Matplotlib）</li>
+                    <li>✅ 机器学习基本概念和常用算法</li>
+                    <li>✅ Scikit-learn机器学习框架</li>
+                    <li>✅ 机器学习项目完整流程</li>
+                    <li>✅ 大模型API调用和Prompt工程</li>
+                </ul>
+                <p style="color: #00d2ff; margin-top: 30px;">🎉 恭喜你完成了Python数据分析课程！继续加油，在AI时代不断提升自己！</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>© 2026 钟心果 | Python数据分析课程 | <a href="python-course.html">返回课程主页</a></p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // 粒子系统配置
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#00d2ff' },
+                shape: { type: 'circle', stroke: { width: 0, color: '#000000' } },
+                opacity: { 
+                    value: 0.5, 
+                    random: true,
+                    anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
+                },
+                size: { 
+                    value: 3, 
+                    random: true,
+                    anim: { enable: true, speed: 2, size_min: 0.1, sync: false }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#00d2ff',
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    attract: { enable: true, rotateX: 600, rotateY: 1200 }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'repulse' },
+                    onclick: { enable: true, mode: 'push' }
+                },
+                modes: {
+                    repulse: { distance: 100, duration: 0.4 },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // 滚动进度条
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // 运行代码
+        function runCode(button) {
+            const codeExample = button.closest('.code-example');
+            const textarea = codeExample.querySelector('.code-editor');
+            const output = codeExample.querySelector('.code-output');
+            const code = textarea.value;
+            
+            output.classList.add('show');
+            output.innerHTML = '⏳ 运行中...';
+            
+            // 使用内置解释器
+            setTimeout(function() {
+                try {
+                    // 创建一个模拟的输出函数
+                    let outputText = '';
+                    const originalLog = console.log;
+                    
+                    // 重定向console.log
+                    const customConsole = {
+                        log: function() {
+                            const args = Array.from(arguments);
+                            outputText += args.map(arg => {
+                                if (typeof arg === 'object') {
+                                    return JSON.stringify(arg, null, 2);
+                                }
+                                return String(arg);
+                            }).join(' ') + '\n';
+                        }
+                    };
+                    
+                    // 执行代码（这里简化处理）
+                    eval(code);
+                    
+                    output.innerHTML = outputText || '代码执行完成';
+                    output.style.color = '#00ff88';
+                } catch (error) {
+                    output.innerHTML = '❌ 错误: ' + error.message;
+                    output.style.color = '#ff4444';
+                }
+            }, 100);
+        }
+
+        // 重置代码
+        function resetCode(button) {
+            const codeExample = button.closest('.code-example');
+            const output = codeExample.querySelector('.code-output');
+            output.classList.remove('show');
+            output.innerHTML = '';
+        }
+
+        // 复制代码
+        function copyCode(button) {
+            const codeExample = button.closest('.code-example');
+            const textarea = codeExample.querySelector('.code-editor');
+            navigator.clipboard.writeText(textarea.value).then(function() {
+                const originalText = button.innerHTML;
+                button.innerHTML = '✓ 已复制';
+                setTimeout(function() {
+                    button.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+
+        // 平滑滚动到锚点
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
